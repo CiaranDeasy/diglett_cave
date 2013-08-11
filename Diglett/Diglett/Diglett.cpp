@@ -3,7 +3,7 @@
 
 const float DIGLETT_SPEED = 3.f;
 
-int main() {
+int not_main() {
 	sf::View full( sf::FloatRect( 0.f, 0.f, 200.f, 200.f ) );
 	sf::View mini( sf::FloatRect( 0.f, 0.f, 200.f, 200.f ) );
 	full.setViewport( sf::FloatRect( 0.f, 0.f, 1.f, 1.f ) );
@@ -72,4 +72,5 @@ int main() {
 		window.draw(diglett);
         window.display();
     }	
+	return -1;
 }
