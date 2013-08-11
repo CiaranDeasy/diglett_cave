@@ -3,7 +3,7 @@
 
 int main() {
 	std::cout << "hello, world!\n";
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(200, 200), "Diglett");
     sf::CircleShape shape(100.f);
 	sf::RectangleShape square(sf::Vector2f(200.f,100.f));
 	sf::CircleShape nose(10.f);
