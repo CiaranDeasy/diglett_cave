@@ -4,6 +4,10 @@
 const float DIGLETT_SPEED = 3.f;
 
 int main() {
+	sf::View full( sf::FloatRect( 0.f, 0.f, 200.f, 200.f ) );
+	sf::View mini( sf::FloatRect( 0.f, 0.f, 200.f, 200.f ) );
+	full.setViewport( sf::FloatRect( 0.f, 0.f, 1.f, 1.f ) );
+	mini.setViewport( sf::FloatRect( 0.75f, 0.f, 0.25f, 0.25f ) );
 	std::cout << "Use the up and down arrows to move the Diglett!!!\n";
 	std::cout << "Or use the left analog stick! CONTROLLER SUPPORT!!!!!\n";
     sf::RenderWindow window( sf::VideoMode( 200, 200 ), "Diglett" );
@@ -62,6 +66,9 @@ int main() {
 			diglett.move( 0, ( stickPosition / 100 ) * DIGLETT_SPEED );
 		}
         window.clear();
+		window.setView(full);
+		window.draw(diglett);
+		window.setView(mini);
 		window.draw(diglett);
         window.display();
     }	
