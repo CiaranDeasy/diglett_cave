@@ -5,13 +5,12 @@ const int CHUNK_SIDE = 20;
 class Chunk {
     Tile tiles[CHUNK_SIDE][CHUNK_SIDE];
 public:
-    // Banish this sick filth
-    enum Type {
-        Overworld,
-        Underworld
-    };
-    Chunk( void );
-    Chunk( Type );
+    // Constructor which takes a type of tile and makes a chunk consisting 
+    // entirely of tiles of that type.
+    Chunk( Tile::Type );
     ~Chunk( void );
+private:
+    // Default constructor not supported.
+    Chunk( void );
 };
 
