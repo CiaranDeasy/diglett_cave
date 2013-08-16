@@ -9,8 +9,10 @@ public:
     // entirely of tiles of that type.
     Chunk( Tile::Type );
     ~Chunk( void );
-private:
+
     // Default constructor not supported.
+    // Present to keep arrays happy.
     Chunk( void );
+private:
 };
 
