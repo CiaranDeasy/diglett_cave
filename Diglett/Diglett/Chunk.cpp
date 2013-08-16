@@ -8,6 +8,9 @@ Chunk::Chunk( Tile::Type type ) {
     }
 }
 
+Chunk::Chunk( void ) {
+    // Not a valid constructor. 
+}
 
 Chunk::~Chunk( void ) {
 }
