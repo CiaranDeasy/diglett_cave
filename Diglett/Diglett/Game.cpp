@@ -5,6 +5,7 @@
 
 const std::string WINDOW_TITLE = "Diglett";
 const int PIXELS_PER_TILE = 64;
+const float PLAYER_SPEED = 0.2;
 
 // For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
 // need to always round towards negative infinity. C++ always rounds towards 
@@ -32,6 +33,11 @@ sf::Vector2f coordsGameToWindow( sf::Vector2f in ) {
     return sf::Vector2f( in.x * 64, in.y * -64 );
 }
 
+// Converts a tile index to a point in window (drawing) co-ordinates.
+sf::Vector2f coordsTileToWindow( sf::Vector2i in ) {
+    return coordsGameToWindow( sf::Vector2f( in.x, in.y ) );
+}
+
 int main() {
     // Create the initial objects.
     sf::RenderWindow window( sf::VideoMode( 800, 600 ), WINDOW_TITLE );
@@ -55,27 +61,61 @@ int main() {
     renderer.display();
     sf::Texture dirtTexture = renderer.getTexture();
     sf::Sprite dirtSprite(dirtTexture);
+	window.setFramerateLimit(60);
 
     // Main loop.
     while( window.isOpen() ) {
         // Handle window events.
         sf::Event event;
         while( window.pollEvent( event ) ) {
-            if( event.type == sf::Event::Closed )
+            if( event.type == sf::Event::Closed ) {
                 window.close();
+                return 0;
+            }
+        }
+        // Take player movement.
+		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ) {
+			player->move( 0, PLAYER_SPEED );
+        }
+		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) ) {
+			player->move( 0, -PLAYER_SPEED );
+        }
+		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) ) {
+			player->move( -PLAYER_SPEED, 0 );
+        }
+		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ) {
+			player->move( PLAYER_SPEED, 0 );
         }
         // Draw the world.
         worldView.setCenter( coordsGameToWindow( player->getPosition() ) );
         window.setView( worldView );
         window.clear();
         sf::Vector2i playerChunk = coordsGameToChunk( player->getPosition() );
-        /*for( int x = playerChunk.x - 1; x < playerChunk.x + 1; x++ ) {
-            for( int y = playerChunk.y - 1;  y < playerChunk.y + 1; x++ ) {
+        //std::cout << "PlayerChunk = " << playerChunk.x << "," << playerChunk.y 
+        //        << "\n";
+        for( int x = playerChunk.x - 1; x < playerChunk.x + 1; x++ ) {
+            for( int y = playerChunk.y - 1;  y < playerChunk.y + 1; y++ ) {
+                //std::cout << "getChunk( " << x << ", " << y << ")\n";
                 Chunk nextChunk = worldData->getChunk( x, y );
                 for( int i = 0; i < CHUNK_SIDE; i++ ) {
                     for( int j = 0; j < CHUNK_SIDE; j++ ) {
-                        Tile nextTile = nextChunk.tiles[i][j];
-                    }*/
+                        Tile nextTile = nextChunk.getTile( i, j );
+                        sf::Vector2i tilePosition = sf::Vector2i( 
+                                nextChunk.getPosition().x + i,
+                                nextChunk.getPosition().y + j );
+                        dirtSprite.setPosition( coordsTileToWindow( tilePosition ) );
+                        if( tilePosition.x == 0 && tilePosition.y == 0 ) {
+                            dirtSprite.setColor( sf::Color::Red );
+                        }
+                        else {
+                            dirtSprite.setColor( sf::Color::White );
+                        }
+                        window.draw( dirtSprite );
+                    }
+                }
+            }
+        }
+        window.display();
 	}
     return 0;
 }
