@@ -11,8 +11,12 @@ WorldData::WorldData(void) {
     yOffset = -10;
     for( int i = 0; i < 20; i++ ) {
         for( int j = 0; j < 10; j++ ) {
-            chunks[i][j] = Chunk::Chunk( Tile::Type::Surface );
-            chunks[i][j+10] = Chunk::Chunk( Tile::Type::Dirt );
+            chunks[i][j] = Chunk::Chunk( 
+                    sf::Vector2i( i + xOffset, j + yOffset ), 
+                    Tile::Type::Surface );
+            chunks[i][j+10] = Chunk::Chunk( 
+                    sf::Vector2i( i + xOffset, j + yOffset ), 
+                    Tile::Type::Dirt );
         }
     }
 }
