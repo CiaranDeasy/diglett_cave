@@ -74,6 +74,7 @@ int main() {
             }
         }
         // Take player movement.
+        // Keyboard
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ) {
 			player->move( 0, PLAYER_SPEED );
         }
@@ -86,6 +87,15 @@ int main() {
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ) {
 			player->move( PLAYER_SPEED, 0 );
         }
+        // Controller
+		float stickPositionX = sf::Joystick::getAxisPosition( 0, sf::Joystick::X );
+		float stickPositionY = sf::Joystick::getAxisPosition( 0, sf::Joystick::Y );
+		if( stickPositionX > 20 || stickPositionX < -20 ) {
+			player->move( ( stickPositionX / 100 ) * PLAYER_SPEED, 0 );
+		}
+		if( stickPositionY > 20 || stickPositionY < -20 ) {
+			player->move( 0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
+		}
         // Draw the world.
         worldView.setCenter( coordsGameToWindow( player->getPosition() ) );
         window.setView( worldView );
