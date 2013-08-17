@@ -2,6 +2,10 @@
 #include "Chunk.h"
 #include "Tile.h"
 
+Chunk WorldData::getChunk( int x, int y ) {
+    return chunks[x + xOffset][ y + yOffset];
+}
+
 WorldData::WorldData(void) {
     xOffset = -10;
     yOffset = -10;
@@ -13,7 +17,5 @@ WorldData::WorldData(void) {
     }
 }
 
-
-WorldData::~WorldData(void)
-{
+WorldData::~WorldData(void) {
 }
