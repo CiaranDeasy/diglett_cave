@@ -6,7 +6,7 @@
 const std::string WINDOW_TITLE = "Diglett";
 const int PIXELS_PER_TILE = 64;
 const float PLAYER_SPEED = 0.2;
-const float ZOOM = 8.0;
+const float ZOOM = 1.0;
 
 // For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
 // need to always round towards negative infinity. C++ always rounds towards 
@@ -70,9 +70,10 @@ sf::Sprite *makeCircleSprite( sf::Color color ) {
     // Make the render area.
     sf::RenderTexture renderer;
     renderer.create( PIXELS_PER_TILE, PIXELS_PER_TILE );
-    renderer.clear();
+    renderer.clear( sf::Color::Transparent );
+    
     // Draw the filling colour over it.
-    sf::CircleShape circle( PIXELS_PER_TILE );
+    sf::CircleShape circle( PIXELS_PER_TILE / 2 );
     circle.setFillColor( color );
     renderer.draw( circle );
     // Make the sprite.
@@ -81,7 +82,7 @@ sf::Sprite *makeCircleSprite( sf::Color color ) {
     // Copy the texture to the heap to prevent deallocation.
     // We can probably do something smarter than this at some point.
     sf::Texture *texturePointer = new sf::Texture( texture );
-    return new sf::Sprite( texture );
+    return new sf::Sprite( *texturePointer );
 }
 
 int main() {
