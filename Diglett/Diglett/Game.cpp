@@ -6,6 +6,7 @@
 const std::string WINDOW_TITLE = "Diglett";
 const int PIXELS_PER_TILE = 64;
 const float PLAYER_SPEED = 0.2;
+const float ZOOM = 8.0;
 
 // For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
 // need to always round towards negative infinity. C++ always rounds towards 
@@ -38,30 +39,65 @@ sf::Vector2f coordsTileToWindow( sf::Vector2i in ) {
     return coordsGameToWindow( sf::Vector2f( in.x, in.y ) );
 }
 
+// Constructs a square tile sprite of the specified color, with black outline.
+sf::Sprite *makeSquareSprite( sf::Color color ) {
+    // Make the render area.
+    sf::RenderTexture renderer;
+    renderer.create( PIXELS_PER_TILE, PIXELS_PER_TILE );
+    renderer.clear();
+    // Draw the outline.
+    sf::RectangleShape outline( sf::Vector2f( PIXELS_PER_TILE, 
+            PIXELS_PER_TILE ) );
+    outline.setFillColor( sf::Color::Black );
+    renderer.draw( outline );
+    // Draw the filling colour over it.
+    sf::RectangleShape fill( sf::Vector2f( PIXELS_PER_TILE - 2, 
+            PIXELS_PER_TILE - 2 ) );
+    fill.setFillColor( color );
+    fill.move( 1.0f, 1.0f );
+    renderer.draw( fill );
+    // Make the sprite.
+    renderer.display();
+    sf::Texture texture = renderer.getTexture();
+    // Copy the texture to the heap to prevent deallocation.
+    // We can probably do something smarter than this at some point.
+    sf::Texture *texturePointer = new sf::Texture( texture );
+    return new sf::Sprite( *texturePointer );
+}
+
+// Constructs a circle sprite of the specified color.
+sf::Sprite *makeCircleSprite( sf::Color color ) {
+    // Make the render area.
+    sf::RenderTexture renderer;
+    renderer.create( PIXELS_PER_TILE, PIXELS_PER_TILE );
+    renderer.clear();
+    // Draw the filling colour over it.
+    sf::CircleShape circle( PIXELS_PER_TILE );
+    circle.setFillColor( color );
+    renderer.draw( circle );
+    // Make the sprite.
+    renderer.display();
+    sf::Texture texture = renderer.getTexture();
+    // Copy the texture to the heap to prevent deallocation.
+    // We can probably do something smarter than this at some point.
+    sf::Texture *texturePointer = new sf::Texture( texture );
+    return new sf::Sprite( texture );
+}
+
 int main() {
     // Create the initial objects.
     sf::RenderWindow window( sf::VideoMode( 800, 600 ), WINDOW_TITLE );
+	window.setFramerateLimit(60);
     sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 800, 600 ) );
     worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
+    worldView.zoom( ZOOM );
     WorldData *worldData = new WorldData();
     Player *player = new Player();
 
     // Prepare the sprites.
-    // Dirt sprite.
-    sf::RenderTexture renderer;
-    renderer.create( 64, 64 );
-    renderer.clear();
-    sf::RectangleShape outline( sf::Vector2f( 64.0f, 64.0f ) );
-    outline.setFillColor( sf::Color::Black );
-    sf::RectangleShape dirt( sf::Vector2f( 62.0f, 62.0f ) );
-    dirt.setFillColor( sf::Color( 126, 64, 0, 255 ) );
-    dirt.move( 1.0f, 1.0f );
-    renderer.draw( outline );
-    renderer.draw( dirt );
-    renderer.display();
-    sf::Texture dirtTexture = renderer.getTexture();
-    sf::Sprite dirtSprite(dirtTexture);
-	window.setFramerateLimit(60);
+    sf::Sprite *surfaceSprite = makeSquareSprite( sf::Color::Blue );
+    sf::Sprite *dirtSprite = makeSquareSprite( sf::Color( 126, 64, 0, 255 ) );
+    sf::Sprite *playerSprite = makeCircleSprite( sf::Color::Magenta );
 
     // Main loop.
     while( window.isOpen() ) {
@@ -103,28 +139,37 @@ int main() {
         sf::Vector2i playerChunk = coordsGameToChunk( player->getPosition() );
         //std::cout << "PlayerChunk = " << playerChunk.x << "," << playerChunk.y 
         //        << "\n";
-        for( int x = playerChunk.x - 1; x < playerChunk.x + 1; x++ ) {
-            for( int y = playerChunk.y - 1;  y < playerChunk.y + 1; y++ ) {
-                //std::cout << "getChunk( " << x << ", " << y << ")\n";
-                Chunk nextChunk = worldData->getChunk( x, y );
-                for( int i = 0; i < CHUNK_SIDE; i++ ) {
-                    for( int j = 0; j < CHUNK_SIDE; j++ ) {
-                        Tile nextTile = nextChunk.getTile( i, j );
-                        sf::Vector2i tilePosition = sf::Vector2i( 
-                                nextChunk.getPosition().x + i,
-                                nextChunk.getPosition().y + j );
-                        dirtSprite.setPosition( coordsTileToWindow( tilePosition ) );
-                        if( tilePosition.x == 0 && tilePosition.y == 0 ) {
-                            dirtSprite.setColor( sf::Color::Red );
-                        }
-                        else {
-                            dirtSprite.setColor( sf::Color::White );
-                        }
-                        window.draw( dirtSprite );
-                    }
+        for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
+          for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
+            //std::cout << "getChunk( " << x << ", " << y << ")\n";
+            Chunk nextChunk = worldData->getChunk( x, y );
+            for( int i = 0; i < CHUNK_SIDE; i++ ) {
+              for( int j = 0; j < CHUNK_SIDE; j++ ) {
+                Tile nextTile = nextChunk.getTile( i, j );
+                sf::Vector2i tilePosition = sf::Vector2i( 
+                        nextChunk.getPosition().x + i,
+                        nextChunk.getPosition().y + j );
+                // Colour the origin red, for reference.
+                if( tilePosition.x == 0 && tilePosition.y == 0 ) {
+                    dirtSprite->setColor( sf::Color::Red );
+                    dirtSprite->setPosition( coordsTileToWindow( tilePosition ) );
+                    window.draw( *dirtSprite );
+                    dirtSprite->setColor( sf::Color::White );
                 }
+                else if( nextTile.getType() == Tile::Dirt ) {
+                    dirtSprite->setPosition( coordsTileToWindow( tilePosition ) );
+                    window.draw( *dirtSprite );
+                }
+                else if( nextTile.getType() == Tile::Surface ) {
+                    surfaceSprite->setPosition( coordsTileToWindow( tilePosition ) );
+                    window.draw( *surfaceSprite );
+                }
+              }
             }
+          }
         }
+        playerSprite->setPosition( coordsGameToWindow( player->getPosition() ) );
+        window.draw( *playerSprite );
         window.display();
 	}
     return 0;
