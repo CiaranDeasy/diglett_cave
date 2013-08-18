@@ -138,11 +138,8 @@ int main() {
         window.setView( worldView );
         window.clear();
         sf::Vector2i playerChunk = coordsGameToChunk( player->getPosition() );
-        //std::cout << "PlayerChunk = " << playerChunk.x << "," << playerChunk.y 
-        //        << "\n";
         for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
           for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
-            //std::cout << "getChunk( " << x << ", " << y << ")\n";
             Chunk nextChunk = worldData->getChunk( x, y );
             for( int i = 0; i < CHUNK_SIDE; i++ ) {
               for( int j = 0; j < CHUNK_SIDE; j++ ) {
