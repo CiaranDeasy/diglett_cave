@@ -2,11 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "WorldData.h"
 #include "Player.h"
+#include "Constants.h"
 
-const std::string WINDOW_TITLE = "Diglett";
-const int PIXELS_PER_TILE = 64;
-const float PLAYER_SPEED = 0.2;
-const float ZOOM = 1.0;
 
 // For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
 // need to always round towards negative infinity. C++ always rounds towards 
@@ -91,7 +88,7 @@ int main() {
 	window.setFramerateLimit(60);
     sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 800, 600 ) );
     worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
-    worldView.zoom( ZOOM );
+    worldView.zoom( CAMERA_ZOOM );
     WorldData *worldData = new WorldData();
     Player *player = new Player();
 

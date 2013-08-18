@@ -1,7 +1,7 @@
 #pragma once
 #include "Tile.h"
 #include <SFML/System.hpp>
-const int CHUNK_SIDE = 20;
+#include "Constants.h"
 
 class Chunk {
 public:

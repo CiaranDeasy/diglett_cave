@@ -3,9 +3,6 @@
 #include "Chunk.h"
 #include "Tile.h"
 
-const int HORIZONTAL_CHUNKS = 20;
-const int VERTICAL_CHUNKS = 20;
-
 class WorldData {
 public:
     Chunk getChunk( int x, int y );
