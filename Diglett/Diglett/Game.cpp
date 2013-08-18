@@ -4,6 +4,11 @@
 #include "Player.h"
 #include "Constants.h"
 
+// Universal objects.
+WorldData *worldData = new WorldData();
+Player *player = new Player();
+sf::RenderWindow window( sf::VideoMode( 800, 600 ), WINDOW_TITLE );
+sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 800, 600 ) );
 
 // For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
 // need to always round towards negative infinity. C++ always rounds towards 
@@ -82,16 +87,14 @@ sf::Sprite *makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
-int main() {
-    // Create the initial objects.
-    sf::RenderWindow window( sf::VideoMode( 800, 600 ), WINDOW_TITLE );
+void init() {
 	window.setFramerateLimit(60);
-    sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 800, 600 ) );
     worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
     worldView.zoom( CAMERA_ZOOM );
-    WorldData *worldData = new WorldData();
-    Player *player = new Player();
+}
 
+int main() {
+    init();
     // Prepare the sprites.
     sf::Sprite *surfaceSprite = makeSquareSprite( sf::Color::Blue );
     sf::Sprite *dirtSprite = makeSquareSprite( sf::Color( 126, 64, 0, 255 ) );
