@@ -7,8 +7,7 @@
 // Universal objects.
 WorldData *worldData = new WorldData();
 Player *player = new Player();
-sf::RenderWindow window( 
-    sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), WINDOW_TITLE );
+sf::RenderWindow *window = NULL;
 sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), 
                     sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
 
@@ -90,7 +89,10 @@ sf::Sprite *makeCircleSprite( sf::Color color ) {
 }
 
 void init() {
-	window.setFramerateLimit(60);
+    window = new sf::RenderWindow( 
+            sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), 
+            WINDOW_TITLE );
+	window->setFramerateLimit(60);
     worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
     worldView.zoom( CAMERA_ZOOM );
 }
@@ -103,12 +105,12 @@ int main() {
     sf::Sprite *playerSprite = makeCircleSprite( sf::Color::Magenta );
 
     // Main loop.
-    while( window.isOpen() ) {
+    while( window->isOpen() ) {
         // Handle window events.
         sf::Event event;
-        while( window.pollEvent( event ) ) {
+        while( window->pollEvent( event ) ) {
             if( event.type == sf::Event::Closed ) {
-                window.close();
+                window->close();
                 return 0;
             }
         }
@@ -139,8 +141,8 @@ int main() {
 		}
         // Draw the world.
         worldView.setCenter( coordsGameToWindow( player->getPosition() ) );
-        window.setView( worldView );
-        window.clear();
+        window->setView( worldView );
+        window->clear();
         sf::Vector2i playerChunk = coordsGameToChunk( player->getPosition() );
         for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
           for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
@@ -155,24 +157,24 @@ int main() {
                 if( tilePosition.x == 0 && tilePosition.y == 0 ) {
                     dirtSprite->setColor( sf::Color::Red );
                     dirtSprite->setPosition( coordsTileToWindow( tilePosition ) );
-                    window.draw( *dirtSprite );
+                    window->draw( *dirtSprite );
                     dirtSprite->setColor( sf::Color::White );
                 }
                 else if( nextTile.getType() == Tile::Dirt ) {
                     dirtSprite->setPosition( coordsTileToWindow( tilePosition ) );
-                    window.draw( *dirtSprite );
+                    window->draw( *dirtSprite );
                 }
                 else if( nextTile.getType() == Tile::Surface ) {
                     surfaceSprite->setPosition( coordsTileToWindow( tilePosition ) );
-                    window.draw( *surfaceSprite );
+                    window->draw( *surfaceSprite );
                 }
               }
             }
           }
         }
         playerSprite->setPosition( coordsGameToWindow( player->getPosition() ) );
-        window.draw( *playerSprite );
-        window.display();
+        window->draw( *playerSprite );
+        window->display();
 	}
     return 0;
 }
