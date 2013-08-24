@@ -1,12 +1,12 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "WorldData.h"
-#include "Player.h"
+#include "player.h"
 #include "Constants.h"
 
 // Universal objects.
-WorldData *worldData = new WorldData();
-Player *player = new Player();
+WorldData worldData = WorldData();
+Player player = Player();
 sf::RenderWindow *window = NULL;
 sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), 
                     sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
@@ -117,36 +117,36 @@ int main() {
         // Take player movement.
         // Keyboard
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ) {
-			player->move( 0, PLAYER_SPEED );
+			player.move( 0, PLAYER_SPEED );
         }
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) ) {
-			player->move( 0, -PLAYER_SPEED );
+			player.move( 0, -PLAYER_SPEED );
         }
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) ) {
-			player->move( -PLAYER_SPEED, 0 );
+			player.move( -PLAYER_SPEED, 0 );
         }
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ) {
-			player->move( PLAYER_SPEED, 0 );
+			player.move( PLAYER_SPEED, 0 );
         }
         // Controller
 		float stickPositionX = sf::Joystick::getAxisPosition( 0, sf::Joystick::X );
 		float stickPositionY = sf::Joystick::getAxisPosition( 0, sf::Joystick::Y );
 		if( stickPositionX > CONTROLLER_DEADZONE || 
             stickPositionX < -CONTROLLER_DEADZONE ) {
-			player->move( ( stickPositionX / 100 ) * PLAYER_SPEED, 0 );
+			player.move( ( stickPositionX / 100 ) * PLAYER_SPEED, 0 );
 		}
 		if( stickPositionY > CONTROLLER_DEADZONE || 
             stickPositionY < -CONTROLLER_DEADZONE ) {
-			player->move( 0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
+			player.move( 0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
 		}
         // Draw the world.
-        worldView.setCenter( coordsGameToWindow( player->getPosition() ) );
+        worldView.setCenter( coordsGameToWindow( player.getPosition() ) );
         window->setView( worldView );
         window->clear();
-        sf::Vector2i playerChunk = coordsGameToChunk( player->getPosition() );
+        sf::Vector2i playerChunk = coordsGameToChunk( player.getPosition() );
         for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
           for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
-            Chunk nextChunk = worldData->getChunk( x, y );
+            Chunk nextChunk = worldData.getChunk( x, y );
             for( int i = 0; i < CHUNK_SIDE; i++ ) {
               for( int j = 0; j < CHUNK_SIDE; j++ ) {
                 Tile nextTile = nextChunk.getTile( i, j );
@@ -172,7 +172,7 @@ int main() {
             }
           }
         }
-        playerSprite->setPosition( coordsGameToWindow( player->getPosition() ) );
+        playerSprite->setPosition( coordsGameToWindow( player.getPosition() ) );
         window->draw( *playerSprite );
         window->display();
 	}
