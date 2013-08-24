@@ -7,8 +7,10 @@
 // Universal objects.
 WorldData *worldData = new WorldData();
 Player *player = new Player();
-sf::RenderWindow window( sf::VideoMode( 800, 600 ), WINDOW_TITLE );
-sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), sf::Vector2f( 800, 600 ) );
+sf::RenderWindow window( 
+    sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), WINDOW_TITLE );
+sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), 
+                    sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
 
 // For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
 // need to always round towards negative infinity. C++ always rounds towards 
