@@ -127,10 +127,12 @@ int main() {
         // Controller
 		float stickPositionX = sf::Joystick::getAxisPosition( 0, sf::Joystick::X );
 		float stickPositionY = sf::Joystick::getAxisPosition( 0, sf::Joystick::Y );
-		if( stickPositionX > 20 || stickPositionX < -20 ) {
+		if( stickPositionX > CONTROLLER_DEADZONE || 
+            stickPositionX < -CONTROLLER_DEADZONE ) {
 			player->move( ( stickPositionX / 100 ) * PLAYER_SPEED, 0 );
 		}
-		if( stickPositionY > 20 || stickPositionY < -20 ) {
+		if( stickPositionY > CONTROLLER_DEADZONE || 
+            stickPositionY < -CONTROLLER_DEADZONE ) {
 			player->move( 0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
 		}
         // Draw the world.

@@ -14,4 +14,8 @@ const int VERTICAL_CHUNKS = 20;
 // Number of tiles in a chunk.
 const int CHUNK_SIDE = 20;
 
+// Minimum displacement required on analogue stick axis to accept as movement.
+// Value 0-100.
+const float CONTROLLER_DEADZONE = 20;
+
 #endif
