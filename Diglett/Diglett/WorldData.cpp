@@ -6,6 +6,12 @@ Chunk WorldData::getChunk( int x, int y ) {
     return chunks[x + xOffset][ y + yOffset];
 }
 
+WorldData& WorldData::getWorldData() {
+    return singleton;
+}
+
+WorldData WorldData::singleton = WorldData();
+
 WorldData::WorldData(void) {
     xOffset = 10;
     yOffset = 10;

@@ -1,15 +1,10 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "WorldData.h"
-#include "player.h"
 #include "Constants.h"
+#include "WorldData.h"
+#include "Player.h"
 
-// Universal objects.
-WorldData worldData = WorldData();
-Player player = Player();
 sf::RenderWindow *window = NULL;
-sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), 
-                    sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
 
 // For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
 // need to always round towards negative infinity. C++ always rounds towards 
@@ -93,11 +88,13 @@ void init() {
             sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), 
             WINDOW_TITLE );
 	window->setFramerateLimit(60);
-    worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
-    worldView.zoom( CAMERA_ZOOM );
 }
 
 int main() {
+    sf::View worldView( sf::Vector2f( 0.0f, 0.0f ), 
+            sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
+    worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
+    worldView.zoom( CAMERA_ZOOM );
     init();
     // Prepare the sprites.
     sf::Sprite *surfaceSprite = makeSquareSprite( sf::Color::Blue );
@@ -117,36 +114,42 @@ int main() {
         // Take player movement.
         // Keyboard
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ) {
-			player.move( 0, PLAYER_SPEED );
+			Player::getPlayer().move( 0, PLAYER_SPEED );
         }
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) ) {
-			player.move( 0, -PLAYER_SPEED );
+			Player::getPlayer().move( 0, -PLAYER_SPEED );
         }
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) ) {
-			player.move( -PLAYER_SPEED, 0 );
+			Player::getPlayer().move( -PLAYER_SPEED, 0 );
         }
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ) {
-			player.move( PLAYER_SPEED, 0 );
+			Player::getPlayer().move( PLAYER_SPEED, 0 );
         }
         // Controller
-		float stickPositionX = sf::Joystick::getAxisPosition( 0, sf::Joystick::X );
-		float stickPositionY = sf::Joystick::getAxisPosition( 0, sf::Joystick::Y );
+        float stickPositionX = 
+            sf::Joystick::getAxisPosition( 0, sf::Joystick::X );
+        float stickPositionY = 
+            sf::Joystick::getAxisPosition( 0, sf::Joystick::Y );
 		if( stickPositionX > CONTROLLER_DEADZONE || 
             stickPositionX < -CONTROLLER_DEADZONE ) {
-			player.move( ( stickPositionX / 100 ) * PLAYER_SPEED, 0 );
+			Player::getPlayer().move( 
+                ( stickPositionX / 100 ) * PLAYER_SPEED, 0 );
 		}
 		if( stickPositionY > CONTROLLER_DEADZONE || 
             stickPositionY < -CONTROLLER_DEADZONE ) {
-			player.move( 0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
+            Player::getPlayer().move( 
+                0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
 		}
         // Draw the world.
-        worldView.setCenter( coordsGameToWindow( player.getPosition() ) );
+        worldView.setCenter( coordsGameToWindow( 
+            Player::getPlayer().getPosition() ) );
         window->setView( worldView );
         window->clear();
-        sf::Vector2i playerChunk = coordsGameToChunk( player.getPosition() );
+        sf::Vector2i playerChunk = coordsGameToChunk( 
+            Player::getPlayer().getPosition() );
         for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
           for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
-            Chunk nextChunk = worldData.getChunk( x, y );
+            Chunk nextChunk = WorldData::getWorldData().getChunk( x, y );
             for( int i = 0; i < CHUNK_SIDE; i++ ) {
               for( int j = 0; j < CHUNK_SIDE; j++ ) {
                 Tile nextTile = nextChunk.getTile( i, j );
@@ -156,23 +159,27 @@ int main() {
                 // Colour the origin red, for reference.
                 if( tilePosition.x == 0 && tilePosition.y == 0 ) {
                     dirtSprite->setColor( sf::Color::Red );
-                    dirtSprite->setPosition( coordsTileToWindow( tilePosition ) );
+                    dirtSprite->setPosition( 
+                        coordsTileToWindow( tilePosition ) );
                     window->draw( *dirtSprite );
                     dirtSprite->setColor( sf::Color::White );
                 }
                 else if( nextTile.getType() == Tile::Dirt ) {
-                    dirtSprite->setPosition( coordsTileToWindow( tilePosition ) );
+                    dirtSprite->setPosition( 
+                        coordsTileToWindow( tilePosition ) );
                     window->draw( *dirtSprite );
                 }
                 else if( nextTile.getType() == Tile::Surface ) {
-                    surfaceSprite->setPosition( coordsTileToWindow( tilePosition ) );
+                    surfaceSprite->setPosition( 
+                        coordsTileToWindow( tilePosition ) );
                     window->draw( *surfaceSprite );
                 }
               }
             }
           }
         }
-        playerSprite->setPosition( coordsGameToWindow( player.getPosition() ) );
+        playerSprite->setPosition( coordsGameToWindow( 
+            Player::getPlayer().getPosition() ) );
         window->draw( *playerSprite );
         window->display();
 	}
