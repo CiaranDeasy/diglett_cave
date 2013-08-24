@@ -6,6 +6,11 @@ sf::Vector2f Player::getPosition() {
 }
 
 void Player::move( float x, float y ) {
+    // The program will crash if attempting to load a chunk outside the world.
+    // Constrain movement until infinite worlds are implemented.
+    if( position.x + x > 150 || position.x + x < -150 
+        || position.y + y > 150 || position.y + y < -150 ) 
+        return;
     position = sf::Vector2f( position.x + x, position.y + y );
 }
 
