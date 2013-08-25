@@ -3,39 +3,9 @@
 #include "Constants.h"
 #include "WorldData.h"
 #include "Player.h"
+#include "Utility.h"
 
 sf::RenderWindow *window = NULL;
-
-// For co-ordinate conversion from world co-ordinates to chunk co-ordinates, we
-// need to always round towards negative infinity. C++ always rounds towards 
-// zero. Today we correct that mistake.
-int roundToMoreNegative( float f ) {
-    if( f > 0 ) return (int) f;
-    else return ( (int) f ) - 1;
-}
-
-// Converts a point in game co-ordinates to a tile index.
-sf::Vector2i coordsGameToTile( sf::Vector2f in ) {
-    return sf::Vector2i( roundToMoreNegative( in.x ), 
-            roundToMoreNegative( in.y ) );
-}
-
-// Converts a point in game co-ordinates to a chunk index.
-sf::Vector2i coordsGameToChunk( sf::Vector2f in ) {
-    return sf::Vector2i( roundToMoreNegative( in.x / CHUNK_SIDE ), 
-            roundToMoreNegative( in.y / CHUNK_SIDE ) );
-}
-
-// Converts a point in game co-ordinates to a point in window (drawing) 
-// co-ordinates.
-sf::Vector2f coordsGameToWindow( sf::Vector2f in ) {
-    return sf::Vector2f( in.x * 64, in.y * -64 );
-}
-
-// Converts a tile index to a point in window (drawing) co-ordinates.
-sf::Vector2f coordsTileToWindow( sf::Vector2i in ) {
-    return coordsGameToWindow( sf::Vector2f( in.x, in.y ) );
-}
 
 // Constructs a square tile sprite of the specified color, with black outline.
 sf::Sprite *makeSquareSprite( sf::Color color ) {
@@ -141,11 +111,11 @@ int main() {
                 0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
 		}
         // Draw the world.
-        worldView.setCenter( coordsGameToWindow( 
+        worldView.setCenter( Utility::coordsGameToWindow( 
             Player::getPlayer().getPosition() ) );
         window->setView( worldView );
         window->clear();
-        sf::Vector2i playerChunk = coordsGameToChunk( 
+        sf::Vector2i playerChunk = Utility::coordsGameToChunk( 
             Player::getPlayer().getPosition() );
         for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
           for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
@@ -160,25 +130,25 @@ int main() {
                 if( tilePosition.x == 0 && tilePosition.y == 0 ) {
                     dirtSprite->setColor( sf::Color::Red );
                     dirtSprite->setPosition( 
-                        coordsTileToWindow( tilePosition ) );
+                        Utility::coordsTileToWindow( tilePosition ) );
                     window->draw( *dirtSprite );
                     dirtSprite->setColor( sf::Color::White );
                 }
                 else if( nextTile.getType() == Tile::Dirt ) {
                     dirtSprite->setPosition( 
-                        coordsTileToWindow( tilePosition ) );
+                        Utility::coordsTileToWindow( tilePosition ) );
                     window->draw( *dirtSprite );
                 }
                 else if( nextTile.getType() == Tile::Surface ) {
                     surfaceSprite->setPosition( 
-                        coordsTileToWindow( tilePosition ) );
+                        Utility::coordsTileToWindow( tilePosition ) );
                     window->draw( *surfaceSprite );
                 }
               }
             }
           }
         }
-        playerSprite->setPosition( coordsGameToWindow( 
+        playerSprite->setPosition( Utility::coordsGameToWindow( 
             Player::getPlayer().getPosition() ) );
         window->draw( *playerSprite );
         window->display();
