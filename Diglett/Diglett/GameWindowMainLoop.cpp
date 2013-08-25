@@ -86,6 +86,7 @@ void GameWindow::mainLoop() {
         playerSprite->setPosition( Utility::coordsGameToWindow( 
             Player::getPlayer().getPosition() ) );
         window->draw( *playerSprite );
+        drawDebugOverlay();
         window->display();
 	}
 }

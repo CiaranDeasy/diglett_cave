@@ -3,6 +3,7 @@
 #include "WorldData.h"
 #include "Player.h"
 #include "Utility.h"
+#include <sstream>
 
 GameWindow *GameWindow::singleton = NULL;
 
@@ -18,6 +19,7 @@ void GameWindow::createSprites() {
     tileSprites[Tile::Dirt] = makeSquareSprite( sf::Color( 126, 64, 0, 255 ) );
     tileSprites[Tile::Air] = makeSquareSprite( sf::Color( 156, 94, 0, 255 ) );
     playerSprite = makeCircleSprite( sf::Color::Magenta );
+    playerSprite->setOrigin( 32, 32 );
 
 }
 
@@ -67,16 +69,54 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
+void GameWindow::drawDebugOverlay() {
+    sf::RenderTexture renderer;
+    renderer.create( 120, 100 );
+    renderer.clear( sf::Color( 0, 0, 0, 127 ) );
+
+    sf::Text text;
+    text.setFont( debugFont );
+    float xPos = Player::getPlayer().getPosition().x;
+    std::ostringstream o;
+    o << "Player Position = \n(" << Player::getPlayer().getPosition().x 
+        << ", " << Player::getPlayer().getPosition().y << ")";
+    text.setString( o.str() );
+    text.setCharacterSize( 12 );
+    text.setColor( sf::Color::Blue );
+    text.setPosition( 5, 5 );
+    renderer.draw( text );
+    renderer.display();
+    sf::Texture texture = renderer.getTexture();
+    sf::Texture debugOverlayTexture = sf::Texture( texture );
+    sf::Sprite debugOverlay( debugOverlayTexture );
+    debugOverlay.setPosition( -400, 200 );
+
+    window->setView( interfaceView );
+    window->draw( debugOverlay );
+}
+
 GameWindow::GameWindow(void) {
     window = new sf::RenderWindow( 
             sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), 
             WINDOW_TITLE );
 	window->setFramerateLimit(60);
+    
     worldView = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
             sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
     worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
     worldView.zoom( CAMERA_ZOOM );
+    
+    interfaceView = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
+            sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
+    interfaceView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
+    interfaceView.zoom( 1.0 );
+
     createSprites();
+
+    if ( !debugFont.loadFromFile( DEBUG_FONT ) ) {
+        std::cerr << "Failed to load font: " << DEBUG_FONT << "\n";
+        exit(1);
+    }
 }
 
 GameWindow::~GameWindow(void) {
