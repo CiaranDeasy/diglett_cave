@@ -23,4 +23,7 @@ const float CONTROLLER_DEADZONE = 20;
 // Width and height of the window.
 const sf::Vector2i WINDOW_RESOLUTION( 800, 600 );
 
+// Path to font file for debug overlay.
+const std::string DEBUG_FONT = "Fonts/segoeui.ttf";
+
 #endif
