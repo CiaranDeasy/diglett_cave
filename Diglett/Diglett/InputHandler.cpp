@@ -26,16 +26,32 @@ void InputHandler::processInputs() {
 
     // Keyboard movement.
     if( !skipKeyboard ) {
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ) {
+        bool up = sf::Keyboard::isKeyPressed( sf::Keyboard::Up );
+        bool down = sf::Keyboard::isKeyPressed( sf::Keyboard::Down );
+        bool left = sf::Keyboard::isKeyPressed( sf::Keyboard::Left );
+        bool right = sf::Keyboard::isKeyPressed( sf::Keyboard::Right );
+		if( up && left ) {
+			Player::getPlayer().move( -DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
+        }
+		else if( up && right ) {
+			Player::getPlayer().move( DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
+        }
+		else if( down && left ) {
+			Player::getPlayer().move( -DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
+        }
+		else if( down && right ) {
+			Player::getPlayer().move( DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
+        }
+		else if( up ) {
 			Player::getPlayer().move( 0, PLAYER_SPEED );
         }
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) ) {
+		else if( down ) {
 			Player::getPlayer().move( 0, -PLAYER_SPEED );
         }
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) ) {
+		else if( left) {
 			Player::getPlayer().move( -PLAYER_SPEED, 0 );
         }
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ) {
+		else if( right ) {
 			Player::getPlayer().move( PLAYER_SPEED, 0 );
         }
     }
