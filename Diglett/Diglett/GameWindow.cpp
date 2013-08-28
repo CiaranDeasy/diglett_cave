@@ -76,7 +76,7 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
 void GameWindow::drawDebugOverlay() {
     sf::RenderTexture renderer;
     renderer.create( 120, 100 );
-    renderer.clear( sf::Color( 0, 0, 0, 127 ) );
+    renderer.clear( sf::Color( 0, 0, 0, 207 ) );
 
     sf::Text text;
     text.setFont( debugFont );
