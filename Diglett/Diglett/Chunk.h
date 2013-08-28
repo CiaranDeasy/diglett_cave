@@ -6,7 +6,10 @@
 class Chunk {
 public:
     sf::Vector2i getPosition();
-    Tile getTile( int x, int y );
+    // Takes index relative to the chunk's own array.
+    Tile getRelativeTile( int x, int y );
+    // Takes index of tile in absolute world co-ordinates.
+    Tile getAbsoluteTile( int x, int y );
 
     // Constructor which takes a type of tile and makes a chunk consisting 
     // entirely of tiles of that type.

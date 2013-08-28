@@ -35,7 +35,7 @@ void GameWindow::mainLoop() {
             Chunk nextChunk = WorldData::getWorldData().getChunk( x, y );
             for( int i = 0; i < CHUNK_SIDE; i++ ) {
               for( int j = 0; j < CHUNK_SIDE; j++ ) {
-                Tile nextTile = nextChunk.getTile( i, j );
+                Tile nextTile = nextChunk.getRelativeTile( i, j );
                 sf::Vector2i tilePosition = sf::Vector2i( 
                         nextChunk.getPosition().x + i,
                         nextChunk.getPosition().y + j );
