@@ -14,6 +14,10 @@ GameWindow *GameWindow::getGameWindow() {
     return singleton;
 }
 
+void GameWindow::toggleDebugOverlay() {
+    showDebugOverlay = !showDebugOverlay;
+}
+
 void GameWindow::createSprites() {
     tileSprites[Tile::Surface] = makeSquareSprite( sf::Color::Blue );
     tileSprites[Tile::Dirt] = makeSquareSprite( sf::Color( 126, 64, 0, 255 ) );
@@ -117,6 +121,7 @@ GameWindow::GameWindow(void) {
         std::cerr << "Failed to load font: " << DEBUG_FONT << "\n";
         exit(1);
     }
+    showDebugOverlay = false;
 }
 
 GameWindow::~GameWindow(void) {

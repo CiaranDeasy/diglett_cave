@@ -8,6 +8,7 @@ public:
     static GameWindow *getGameWindow();
     void GameWindow::mainLoop();
     ~GameWindow(void);
+    void toggleDebugOverlay();
 private: 
 
     static GameWindow *singleton;
@@ -18,6 +19,7 @@ private:
     sf::View worldView;
     sf::View interfaceView;
     sf::Font debugFont;
+    bool showDebugOverlay;
 
     void createSprites();
     sf::Sprite *makeSquareSprite( sf::Color );

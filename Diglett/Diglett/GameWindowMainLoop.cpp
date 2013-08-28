@@ -16,8 +16,12 @@ void GameWindow::mainLoop() {
                 window->close();
                 exit(0);
             }
+            if( event.type == sf::Event::JoystickButtonPressed ||
+                event.type == sf::Event::KeyPressed ) {
+                InputHandler::addEvent( event );
+            }
         }
-        // Take player movement.
+        // Take player input.
         InputHandler::processInputs();
         // Draw the world.
         worldView.setCenter( Utility::coordsGameToWindow( 
@@ -60,7 +64,9 @@ void GameWindow::mainLoop() {
         playerSprite->setPosition( Utility::coordsGameToWindow( 
             Player::getPlayer().getPosition() ) );
         window->draw( *playerSprite );
-        drawDebugOverlay();
+        if( showDebugOverlay ) {
+            drawDebugOverlay();
+        }
         window->display();
 	}
 }

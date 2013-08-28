@@ -2,11 +2,12 @@
 #include "Constants.h"
 #include <SFML/Window.hpp>
 #include "Player.h"
+#include "GameWindow.h"
 
 void InputHandler::processInputs() {
     bool skipKeyboard = false;
 
-    // Controller
+    // Controller movement.
     float stickPositionX = 
         sf::Joystick::getAxisPosition( 0, sf::Joystick::X );
     float stickPositionY = 
@@ -23,7 +24,7 @@ void InputHandler::processInputs() {
         skipKeyboard = true;
     }
 
-    // Keyboard
+    // Keyboard movement.
     if( !skipKeyboard ) {
 		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ) {
 			Player::getPlayer().move( 0, PLAYER_SPEED );
@@ -38,4 +39,32 @@ void InputHandler::processInputs() {
 			Player::getPlayer().move( PLAYER_SPEED, 0 );
         }
     }
+
+    // Process events passed from the GameWindow.
+    // These events will be keys or buttons being pressed.
+    for( int i = 0; i < buttonsPressed.size(); i++ ) {
+        sf::Event& e = buttonsPressed[i];
+        // Joystick buttons.
+        if( e.type == sf::Event::JoystickButtonPressed ) {
+          if( e.joystickButton.button == 6 ) {
+              GameWindow::getGameWindow()->toggleDebugOverlay();
+          }
+        }
+        // Keyboard keys.
+        else if( e.type == sf::Event::KeyPressed ) {
+          if( e.key.code == sf::Keyboard::F3 ) {
+              GameWindow::getGameWindow()->toggleDebugOverlay();
+          }
+        }
+    }
+
+    // Clear all the events.
+    buttonsPressed.clear();
 }
+
+void InputHandler::addEvent( sf::Event e ) {
+    buttonsPressed.push_back( e );
+}
+
+// Initialise the list of button events to an empty vector.
+std::vector<sf::Event> InputHandler::buttonsPressed = std::vector<sf::Event>();
