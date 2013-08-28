@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "WorldData.h"
 #include <SFML/Graphics.hpp>
+#include "InputHandler.h"
 
 void GameWindow::mainLoop() {
 
@@ -17,34 +18,7 @@ void GameWindow::mainLoop() {
             }
         }
         // Take player movement.
-        // Keyboard
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ) {
-			Player::getPlayer().move( 0, PLAYER_SPEED );
-        }
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) ) {
-			Player::getPlayer().move( 0, -PLAYER_SPEED );
-        }
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) ) {
-			Player::getPlayer().move( -PLAYER_SPEED, 0 );
-        }
-		if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ) {
-			Player::getPlayer().move( PLAYER_SPEED, 0 );
-        }
-        // Controller
-        float stickPositionX = 
-            sf::Joystick::getAxisPosition( 0, sf::Joystick::X );
-        float stickPositionY = 
-            sf::Joystick::getAxisPosition( 0, sf::Joystick::Y );
-		if( stickPositionX > CONTROLLER_DEADZONE || 
-            stickPositionX < -CONTROLLER_DEADZONE ) {
-			Player::getPlayer().move( 
-                ( stickPositionX / 100 ) * PLAYER_SPEED, 0 );
-		}
-		if( stickPositionY > CONTROLLER_DEADZONE || 
-            stickPositionY < -CONTROLLER_DEADZONE ) {
-            Player::getPlayer().move( 
-                0, ( stickPositionY / 100 ) * -PLAYER_SPEED );
-		}
+        InputHandler::processInputs();
         // Draw the world.
         worldView.setCenter( Utility::coordsGameToWindow( 
             Player::getPlayer().getPosition() ) );
