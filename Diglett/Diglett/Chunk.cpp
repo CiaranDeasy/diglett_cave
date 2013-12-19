@@ -16,7 +16,9 @@ Chunk::Chunk( sf::Vector2i pos, Tile::Type type ) {
     position = pos;
     for( int i = 0; i < CHUNK_SIDE; i++ ) {
         for( int j = 0; j < CHUNK_SIDE; j++ ) {
-            tiles[i][j] = Tile( type );
+            // MASSIVE HACK!!! TODO: REMOVE!!!
+            if( i == 5 && j == 5 ) tiles[i][j] = Tile( Tile::Dirt );
+            else tiles[i][j] = Tile( type );
         }
     }
 }
