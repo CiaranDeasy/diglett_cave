@@ -89,7 +89,7 @@ void GameWindow::drawDebugOverlay() {
         << ", " << Player::getPlayer().getPosition().y << ")";
     text.setString( o.str() );
     text.setCharacterSize( 12 );
-    text.setColor( sf::Color::Blue );
+    text.setColor( sf::Color::White);
     text.setPosition( 5, 5 );
     renderer.draw( text );
     renderer.display();
