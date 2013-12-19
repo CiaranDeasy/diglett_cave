@@ -6,6 +6,12 @@ Chunk WorldData::getChunk( int x, int y ) {
     return chunks[x + xOffset][ y + yOffset];
 }
 
+Tile WorldData::getTile( int x, int y ) {
+    Chunk& chunk = getChunk( floor( ((float) x)/CHUNK_SIDE ), 
+            floor( ((float) y)/CHUNK_SIDE ));
+    return chunk.getAbsoluteTile(x, y);
+}
+
 WorldData& WorldData::getWorldData() {
     return singleton;
 }
