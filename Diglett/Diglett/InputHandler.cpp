@@ -26,10 +26,14 @@ sf::Vector2f InputHandler::processInputs() {
 
     // Keyboard movement.
     if( !skipKeyboard ) {
-        bool up = sf::Keyboard::isKeyPressed( sf::Keyboard::Up );
-        bool down = sf::Keyboard::isKeyPressed( sf::Keyboard::Down );
-        bool left = sf::Keyboard::isKeyPressed( sf::Keyboard::Left );
-        bool right = sf::Keyboard::isKeyPressed( sf::Keyboard::Right );
+        bool up = sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) ||
+                sf::Keyboard::isKeyPressed( sf::Keyboard::W );
+        bool down = sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) ||
+                sf::Keyboard::isKeyPressed( sf::Keyboard::S );
+        bool left = sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) ||
+                sf::Keyboard::isKeyPressed( sf::Keyboard::A );
+        bool right = sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ||
+                sf::Keyboard::isKeyPressed( sf::Keyboard::D );
 		if( up && left ) {
 			return sf::Vector2f( -DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
         }
