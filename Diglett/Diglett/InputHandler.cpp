@@ -4,9 +4,6 @@
 #include "Player.h"
 #include "GameWindow.h"
 
-#define TAN30 0.57735
-#define TAN60 1.73205
-
 sf::Vector2f InputHandler::processInputs() {
     bool skipKeyboard = false;
 
@@ -20,11 +17,6 @@ sf::Vector2f InputHandler::processInputs() {
         stickPositionX < -CONTROLLER_DEADZONE || 
         stickPositionY > CONTROLLER_DEADZONE ||
         stickPositionY < -CONTROLLER_DEADZONE ) {
-
-        // Classify direction of movement.
-        directionOfMovement = classifyDirectionOfMovement(
-                stickPositionX, stickPositionY );
-
         return sf::Vector2f( 
             ( stickPositionX / 100 ) * PLAYER_SPEED, 
             ( stickPositionY / 100 ) * -PLAYER_SPEED );
@@ -39,35 +31,27 @@ sf::Vector2f InputHandler::processInputs() {
         bool left = sf::Keyboard::isKeyPressed( sf::Keyboard::Left );
         bool right = sf::Keyboard::isKeyPressed( sf::Keyboard::Right );
 		if( up && left ) {
-            directionOfMovement = Northwest;
 			return sf::Vector2f( -DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
         }
 		else if( up && right ) {
-            directionOfMovement = Northeast;
 			return sf::Vector2f( DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
         }
 		else if( down && left ) {
-            directionOfMovement = Southwest;
 			return sf::Vector2f( -DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
         }
 		else if( down && right ) {
-            directionOfMovement = Southeast;
 			return sf::Vector2f( DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
         }
 		else if( up ) {
-            directionOfMovement = North;
             return sf::Vector2f( 0, PLAYER_SPEED );
         }
 		else if( down ) {
-            directionOfMovement = South;
             return sf::Vector2f( 0, -PLAYER_SPEED );
         }
 		else if( left) {
-            directionOfMovement = West;
             return sf::Vector2f( -PLAYER_SPEED, 0 );
         }
 		else if( right ) {
-            directionOfMovement = East;
 			return sf::Vector2f( PLAYER_SPEED, 0 );
         }
     }
@@ -97,48 +81,6 @@ sf::Vector2f InputHandler::processInputs() {
 void InputHandler::addEvent( sf::Event e ) {
     buttonsPressed.push_back( e );
 }
-
-InputHandler::Direction InputHandler::classifyDirectionOfMovement(
-        float stickPositionX, float stickPositionY) {
-
-    // Handle the X=0 case.
-    if( stickPositionX == 0 ) {
-        if( stickPositionY > 0 ) {
-            return South;
-        } else return North;
-    }
-
-    float tan = stickPositionY/stickPositionX;
-    // Take absolute value.
-    tan = (tan >= 0) ? tan : (0 - tan);
-    if( stickPositionX > 0 ) {
-        if( stickPositionY >= 0 ) {
-            // South-east quadrant.
-            if( tan < TAN30 ) return Eastsoutheast;
-            else if( tan > TAN60 ) return Southsoutheast;
-            else return Southeast;
-        } else {
-            // North-east quadrant.
-            if( tan < TAN30 ) return Eastnortheast;
-            else if( tan > TAN60 ) return Northnortheast;
-            else return Northeast;
-        }
-    } else {
-        if( stickPositionY >= 0 ) {
-            // South-west quadrant.
-            if( tan < TAN30 ) return Westsouthwest;
-            else if( tan > TAN60 ) return Southsouthwest;
-            else return Southwest;
-        } else {
-            // North-west quadrant.
-            if( tan < TAN30 ) return Westnorthwest;
-            else if( tan > TAN60 ) return Northnorthwest;
-            else return Northwest;
-        }
-    }
-}
-
-InputHandler::Direction InputHandler::directionOfMovement = North;
 
 // Initialise the list of button events to an empty vector.
 std::vector<sf::Event> InputHandler::buttonsPressed = std::vector<sf::Event>();

@@ -4,6 +4,8 @@
 #include "WorldData.h"
 #include "InputHandler.h"
 
+#define TAN30 0.57735
+#define TAN60 1.73205
 
 Player& Player::getPlayer() {
     return singleton;
@@ -19,6 +21,8 @@ void Player::move( float x, float y ) {
     if( position.x + x > 150 || position.x + x < -150 
         || position.y + y > 150 || position.y + y < -150 ) 
         return;
+    // Classify movement direction.
+    Direction directionOfMovement = classifyDirectionOfMovement(x, y);
     // Check for collisions.
     float oldX = position.x;
     float oldY = position.y;
@@ -90,4 +94,44 @@ Player::Player(void) {
 }
 
 Player::~Player(void) {
+}
+
+Player::Direction Player::classifyDirectionOfMovement(
+        float deltaX, float deltaY ) {
+
+    // Handle the X=0 case.
+    if( deltaX == 0 ) {
+        if( deltaY < 0 ) {
+            return South;
+        } else return North;
+    }
+
+    float tan = deltaY/deltaX;
+    // Take absolute value.
+    tan = (tan >= 0) ? tan : (0 - tan);
+    if( deltaX > 0 ) {
+        if( deltaY <= 0 ) {
+            // South-east quadrant.
+            if( tan < TAN30 ) return Eastsoutheast;
+            else if( tan > TAN60 ) return Southsoutheast;
+            else return Southeast;
+        } else {
+            // North-east quadrant.
+            if( tan < TAN30 ) return Eastnortheast;
+            else if( tan > TAN60 ) return Northnortheast;
+            else return Northeast;
+        }
+    } else {
+        if( deltaY <= 0 ) {
+            // South-west quadrant.
+            if( tan < TAN30 ) return Westsouthwest;
+            else if( tan > TAN60 ) return Southsouthwest;
+            else return Southwest;
+        } else {
+            // North-west quadrant.
+            if( tan < TAN30 ) return Westnorthwest;
+            else if( tan > TAN60 ) return Northnorthwest;
+            else return Northwest;
+        }
+    }
 }
