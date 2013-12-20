@@ -6,6 +6,7 @@
 
 sf::Vector2f InputHandler::processInputs() {
     bool skipKeyboard = false;
+    sf::Vector2f movement = sf::Vector2f(0, 0);
 
     // Controller movement.
     float stickPositionX = 
@@ -17,7 +18,7 @@ sf::Vector2f InputHandler::processInputs() {
         stickPositionX < -CONTROLLER_DEADZONE || 
         stickPositionY > CONTROLLER_DEADZONE ||
         stickPositionY < -CONTROLLER_DEADZONE ) {
-        return sf::Vector2f( 
+        movement = sf::Vector2f( 
             ( stickPositionX / 100 ) * PLAYER_SPEED, 
             ( stickPositionY / 100 ) * -PLAYER_SPEED );
         // Don't take keyboard input too.
@@ -35,28 +36,28 @@ sf::Vector2f InputHandler::processInputs() {
         bool right = sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) ||
                 sf::Keyboard::isKeyPressed( sf::Keyboard::D );
 		if( up && left ) {
-			return sf::Vector2f( -DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
+			movement = sf::Vector2f( -DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
         }
 		else if( up && right ) {
-			return sf::Vector2f( DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
+			movement = sf::Vector2f( DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
         }
 		else if( down && left ) {
-			return sf::Vector2f( -DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
+			movement = sf::Vector2f( -DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
         }
 		else if( down && right ) {
-			return sf::Vector2f( DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
+			movement = sf::Vector2f( DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
         }
 		else if( up ) {
-            return sf::Vector2f( 0, PLAYER_SPEED );
+            movement = sf::Vector2f( 0, PLAYER_SPEED );
         }
 		else if( down ) {
-            return sf::Vector2f( 0, -PLAYER_SPEED );
+            movement = sf::Vector2f( 0, -PLAYER_SPEED );
         }
 		else if( left) {
-            return sf::Vector2f( -PLAYER_SPEED, 0 );
+            movement = sf::Vector2f( -PLAYER_SPEED, 0 );
         }
 		else if( right ) {
-			return sf::Vector2f( PLAYER_SPEED, 0 );
+			movement = sf::Vector2f( PLAYER_SPEED, 0 );
         }
     }
 
@@ -80,6 +81,8 @@ sf::Vector2f InputHandler::processInputs() {
 
     // Clear all the events.
     buttonsPressed.clear();
+
+    return movement;
 }
 
 void InputHandler::addEvent( sf::Event e ) {
