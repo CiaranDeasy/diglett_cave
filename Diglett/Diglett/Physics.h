@@ -11,6 +11,5 @@ private:
     float speed;
     sf::Vector2f velocity;
     sf::Vector2f previousLocation;
-    float mass;
     sf::Vector2f acceleration;
 };

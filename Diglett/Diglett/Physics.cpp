@@ -3,7 +3,6 @@
 #include "Constants.h"
 
 sf::Vector2f force;
-float mass;
 sf::Vector2f acceleration;
 sf::Vector2f velocity;
 sf::Vector2f previousLocation;
@@ -70,5 +69,4 @@ Physics Physics::singleton = Physics();
 
 Physics::Physics(void){
     previousLocation = sf::Vector2f(1.0f,1.0f);
-    mass = 1;
 }
