@@ -27,7 +27,7 @@ void GameWindow::createSprites() {
     tileSprites[Tile::Air]->setOrigin( 0, PIXELS_PER_TILE );
     playerSprite = makeCircleSprite( sf::Color::Magenta );
     playerSprite->setOrigin( 32, 32 );
-
+    debugOverlayBackground = makeDebugOverlayBackground();
 }
 
 // Constructs a square tile sprite of the specified color, with black outline.
@@ -76,10 +76,21 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
-void GameWindow::drawDebugOverlay() {
+sf::Sprite *GameWindow::makeDebugOverlayBackground() {
     sf::RenderTexture renderer;
     renderer.create( 120, 100 );
     renderer.clear( sf::Color( 0, 0, 0, 207 ) );
+    renderer.display();
+    
+    sf::Texture texture = renderer.getTexture();
+    sf::Texture *texturePointer = new sf::Texture( texture );
+    sf::Sprite* debugOverlay = new sf::Sprite( *texturePointer );
+    debugOverlay->setPosition( -400, 200 );
+
+    return debugOverlay;
+}
+
+void GameWindow::drawDebugOverlay() {
 
     sf::Text text;
     text.setFont( debugFont );
@@ -90,16 +101,11 @@ void GameWindow::drawDebugOverlay() {
     text.setString( o.str() );
     text.setCharacterSize( 12 );
     text.setColor( sf::Color::White);
-    text.setPosition( 5, 5 );
-    renderer.draw( text );
-    renderer.display();
-    sf::Texture texture = renderer.getTexture();
-    sf::Texture debugOverlayTexture = sf::Texture( texture );
-    sf::Sprite debugOverlay( debugOverlayTexture );
-    debugOverlay.setPosition( -400, 200 );
+    text.setPosition( -395, 205 );
 
     window->setView( interfaceView );
-    window->draw( debugOverlay );
+    window->draw( *debugOverlayBackground );
+    window->draw( text );
 }
 
 GameWindow::GameWindow(void) {

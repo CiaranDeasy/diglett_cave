@@ -16,6 +16,7 @@ private:
     // Index into this array using the enum Tile::TileType.
     sf::Sprite *tileSprites[ TILE_SPRITES ];
     sf::Sprite *playerSprite;
+    sf::Sprite *debugOverlayBackground;
     sf::View worldView;
     sf::View interfaceView;
     sf::Font debugFont;
@@ -24,6 +25,7 @@ private:
     void createSprites();
     sf::Sprite *makeSquareSprite( sf::Color );
     sf::Sprite *makeCircleSprite( sf::Color );
+    sf::Sprite *makeDebugOverlayBackground();
     void drawDebugOverlay();
     GameWindow(void);
 };
