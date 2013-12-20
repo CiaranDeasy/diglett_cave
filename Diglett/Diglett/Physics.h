@@ -5,6 +5,9 @@ class Physics{
 public:
     static Physics& getPhysics();
     void updatePlayer(sf::Vector2f force);
+    // Methods to update velocity when a collision is detected.
+    void collideX();
+    void collideY();
 private:
     static Physics singleton;
     Physics(void);

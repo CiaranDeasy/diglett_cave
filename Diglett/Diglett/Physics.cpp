@@ -14,34 +14,24 @@ void Physics::updatePlayer(sf::Vector2f f){
 
     //Add gravitational force
     acceleration.y -= GRAVITY_STRENGTH;
-
-    //Calculate current velocity
-    velocity = (Player::getPlayer().getPosition() - previousLocation);
-
+    
     //Apply constant air resistance
     //TODO: Make air resistance a funciton of velocity
-    if ( velocity.x > 0 ) {
-        acceleration.x -= HORIZONTAL_AIR_RESISTANCE;
-    } else if ( velocity.x < 0 ) {
-        acceleration.x += HORIZONTAL_AIR_RESISTANCE;
+    if ( velocity.x != 0 ) {
+        acceleration.x -= (HORIZONTAL_AIR_RESISTANCE * velocity.x);
     }
-    if ( velocity.y > 0 ) {
+    /*if ( velocity.y > 0 ) {
         acceleration.y -= VERTICAL_AIR_RESISTANCE;
     } else if ( velocity.y < 0 ) {
         acceleration.y += VERTICAL_AIR_RESISTANCE;
-    }
+    }*/
 
 
     //set velocity to 0 if it is close enough that it should be
-    if ( velocity.x < MINIMUM_VELOCITY && velocity.x > -MINIMUM_VELOCITY ) {
+    if ( f.x == 0 && velocity.x < MINIMUM_VELOCITY && velocity.x > -MINIMUM_VELOCITY ) {
         velocity.x = 0.0f;
+        acceleration.x = 0.0f;
     }
-    if ( velocity.y < MINIMUM_VELOCITY && velocity.y > -MINIMUM_VELOCITY ) {
-        velocity.y = 0.0f;
-    }
-
-    //Update previous location
-    previousLocation = Player::getPlayer().getPosition();
 
     //Apply acceleration
     velocity += acceleration;
@@ -61,6 +51,14 @@ void Physics::updatePlayer(sf::Vector2f f){
     //Move player
     Player::getPlayer().move(velocity.x, velocity.y);
     
+}
+
+void Physics::collideX() {
+    velocity.x = 0;
+}
+
+void Physics::collideY() {
+    velocity.y = 0;
 }
 
 Physics& Physics::getPhysics(){ return singleton; }

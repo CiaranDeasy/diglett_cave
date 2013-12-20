@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "WorldData.h"
 #include "InputHandler.h"
+#include "Physics.h"
 
 #define TAN30 0.57735
 #define TAN60 1.73205
@@ -40,6 +41,7 @@ void Player::move( float x, float y ) {
             || ( bottomTile.getType() != Tile::Air && 
             bottomTile.getType() != Tile::Surface ) ) {
             newX = floor( oldX ) - leftClip;
+            Physics::getPhysics().collideX();
         }
     }
     // Check for clipping with tiles to the right.
@@ -54,6 +56,7 @@ void Player::move( float x, float y ) {
             || ( bottomTile.getType() != Tile::Air && 
             bottomTile.getType() != Tile::Surface ) ) {
             newX = floor( oldX + 1 ) - 0.001 - rightClip;
+            Physics::getPhysics().collideX();
         }
     }
     // Check for clipping with tiles above.
@@ -68,6 +71,7 @@ void Player::move( float x, float y ) {
             || ( rightTile.getType() != Tile::Air && 
             rightTile.getType() != Tile::Surface ) ) {
             newY = floor( oldY + 1 ) - 0.001 - topClip;
+            Physics::getPhysics().collideY();
         }
     }
     // Check for clipping with tiles below.
@@ -82,6 +86,7 @@ void Player::move( float x, float y ) {
             || ( rightTile.getType() != Tile::Air && 
             rightTile.getType() != Tile::Surface ) ) {
             newY = floor( oldY ) - bottomClip;
+            Physics::getPhysics().collideY();
         }
     }
     position = sf::Vector2f( newX, newY );

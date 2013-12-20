@@ -7,14 +7,13 @@
 
 const std::string WINDOW_TITLE = "Diglett";
 const int PIXELS_PER_TILE = 64;
-const float PLAYER_SPEED = 0.01;
+const float PLAYER_SPEED = 0.008;
 const float PLAYER_MAX_SPEED = 0.2;
 const float DIAG_PLAYER_SPEED = PLAYER_SPEED / 1.414; // sqrt(2)
-const float GRAVITY_STRENGTH = 0.004;
-const float HORIZONTAL_AIR_RESISTANCE = 0.005;
+const float GRAVITY_STRENGTH = 0.003;
+const float HORIZONTAL_AIR_RESISTANCE = 0.05;
 const float VERTICAL_AIR_RESISTANCE = 0.001;
-const float MINIMUM_VELOCITY = 1.25 * Utility::max( 
-        GRAVITY_STRENGTH, HORIZONTAL_AIR_RESISTANCE, VERTICAL_AIR_RESISTANCE );
+const float MINIMUM_VELOCITY = 0.01;
 const float CAMERA_ZOOM = 1.0;
 const float PLAYER_MASS = 1.0;
 
