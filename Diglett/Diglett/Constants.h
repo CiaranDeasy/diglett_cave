@@ -17,6 +17,9 @@ const float MINIMUM_VELOCITY = 0.01;
 const float CAMERA_ZOOM = 1.0;
 const float PLAYER_MASS = 1.0;
 
+// Number of ticks the player must spend on the ground before allowed to dig.
+const int DIG_DELAY = 15;
+
 // Number of chunks to store in RAM.
 const int HORIZONTAL_CHUNKS = 20;
 const int VERTICAL_CHUNKS = 20;

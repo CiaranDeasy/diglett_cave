@@ -82,13 +82,14 @@ void Player::move( float x, float y ) {
         Tile& rightTile = WorldData::getWorldData().getTile( 
             floor( newX + rightClip ), floor( newY + bottomClip ) );
         if( ( leftTile.getType() != Tile::Air && 
-            leftTile.getType() != Tile::Surface ) 
-            || ( rightTile.getType() != Tile::Air && 
-            rightTile.getType() != Tile::Surface ) ) {
+                leftTile.getType() != Tile::Surface ) 
+                || ( rightTile.getType() != Tile::Air && 
+                rightTile.getType() != Tile::Surface ) ) {
             newY = floor( oldY ) - bottomClip;
             Physics::getPhysics().collideY();
-        }
-    }
+            if( onGround < DIG_DELAY ) onGround++;
+        } else onGround = 0;
+    } else onGround = 0;
     position = sf::Vector2f( newX, newY );
 }
 

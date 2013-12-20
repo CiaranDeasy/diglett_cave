@@ -5,6 +5,8 @@ public:
     static Player& getPlayer();
     sf::Vector2f getPosition();
     void move( float x, float y );
+    // Number of ticks the player has spent on the ground.
+    int onGround;
     ~Player(void);
 private:
     enum Direction {
