@@ -29,7 +29,8 @@ void Player::move( float x, float y ) {
     float newX = oldX + x;
     float newY = oldY + y;
     // Check for clipping with tiles to the left.
-    if( floor( oldX + leftClip ) > floor( newX + leftClip ) ) {
+    if( directionOfMovement > 8 &&
+            floor( oldX + leftClip ) > floor( newX + leftClip ) ) {
         Tile topTile = WorldData::getWorldData().getTile( 
             floor( newX + leftClip ), floor( oldY + topClip ) );
         Tile bottomTile = WorldData::getWorldData().getTile( 
@@ -42,7 +43,8 @@ void Player::move( float x, float y ) {
         }
     }
     // Check for clipping with tiles to the right.
-    if( floor( oldX + rightClip ) < floor( newX + rightClip ) ) {
+    if( directionOfMovement > 0 && directionOfMovement < 8 &&
+            floor( oldX + rightClip ) < floor( newX + rightClip ) ) {
         Tile topTile = WorldData::getWorldData().getTile( 
             floor( newX + rightClip ), floor( oldY + topClip ) );
         Tile bottomTile = WorldData::getWorldData().getTile( 
@@ -55,7 +57,8 @@ void Player::move( float x, float y ) {
         }
     }
     // Check for clipping with tiles above.
-    if(  floor( oldY + topClip ) < floor( newY + topClip ) ) {
+    if( ( directionOfMovement < 4 || directionOfMovement > 12 ) &&
+            floor( oldY + topClip ) < floor( newY + topClip ) ) {
         Tile leftTile = WorldData::getWorldData().getTile( 
             floor( newX + leftClip ), floor( newY + topClip ) );
         Tile rightTile = WorldData::getWorldData().getTile( 
@@ -68,7 +71,8 @@ void Player::move( float x, float y ) {
         }
     }
     // Check for clipping with tiles below.
-    if( floor( oldY + bottomClip ) > floor( newY + bottomClip ) ) {
+    if( directionOfMovement > 4 && directionOfMovement < 12 &&
+            floor( oldY + bottomClip ) > floor( newY + bottomClip ) ) {
         Tile& leftTile = WorldData::getWorldData().getTile( 
             floor( newX + leftClip ), floor( newY + bottomClip ) );
         Tile& rightTile = WorldData::getWorldData().getTile( 
