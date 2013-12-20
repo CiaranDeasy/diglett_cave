@@ -5,7 +5,7 @@ class InputHandler {
 public:
     // Check key and button status and events, and update the game state 
     // appropriately.
-    static void processInputs();
+    static sf::Vector2f processInputs();
     
     // Adds a button event to the list of input events to handle on the next 
     // call to processInputs().

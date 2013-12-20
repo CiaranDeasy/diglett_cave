@@ -7,8 +7,10 @@
 const std::string WINDOW_TITLE = "Diglett";
 const int PIXELS_PER_TILE = 64;
 const float PLAYER_SPEED = 0.2;
+const float PLAYER_MAX_SPEED = 0.2;
 const float DIAG_PLAYER_SPEED = PLAYER_SPEED / 1.414; // sqrt(2)
 const float CAMERA_ZOOM = 1.0;
+const float PLAYER_MASS = 1.0;
 
 // Number of chunks to store in RAM.
 const int HORIZONTAL_CHUNKS = 20;

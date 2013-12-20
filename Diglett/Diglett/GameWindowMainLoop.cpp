@@ -2,6 +2,7 @@
 #include "Utility.h"
 #include "Constants.h"
 #include "Player.h"
+#include "Physics.h"
 #include "WorldData.h"
 #include <SFML/Graphics.hpp>
 #include "InputHandler.h"
@@ -21,8 +22,8 @@ void GameWindow::mainLoop() {
                 InputHandler::addEvent( event );
             }
         }
-        // Take player input.
-        InputHandler::processInputs();
+        // Take player input and pass it to Physics to move the player appropriately.
+        Physics::getPhysics().updatePlayer(InputHandler::processInputs());
         // Draw the world.
         worldView.setCenter( Utility::coordsGameToWindow( 
             Player::getPlayer().getPosition() ) );

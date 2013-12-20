@@ -7,7 +7,7 @@
 #define TAN30 0.57735
 #define TAN60 1.73205
 
-void InputHandler::processInputs() {
+sf::Vector2f InputHandler::processInputs() {
     bool skipKeyboard = false;
 
     // Controller movement.
@@ -25,7 +25,7 @@ void InputHandler::processInputs() {
         directionOfMovement = classifyDirectionOfMovement(
                 stickPositionX, stickPositionY );
 
-	    Player::getPlayer().move( 
+        return sf::Vector2f( 
             ( stickPositionX / 100 ) * PLAYER_SPEED, 
             ( stickPositionY / 100 ) * -PLAYER_SPEED );
         // Don't take keyboard input too.
@@ -40,35 +40,35 @@ void InputHandler::processInputs() {
         bool right = sf::Keyboard::isKeyPressed( sf::Keyboard::Right );
 		if( up && left ) {
             directionOfMovement = Northwest;
-			Player::getPlayer().move( -DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
+			return sf::Vector2f( -DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
         }
 		else if( up && right ) {
             directionOfMovement = Northeast;
-			Player::getPlayer().move( DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
+			return sf::Vector2f( DIAG_PLAYER_SPEED, DIAG_PLAYER_SPEED );
         }
 		else if( down && left ) {
             directionOfMovement = Southwest;
-			Player::getPlayer().move( -DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
+			return sf::Vector2f( -DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
         }
 		else if( down && right ) {
             directionOfMovement = Southeast;
-			Player::getPlayer().move( DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
+			return sf::Vector2f( DIAG_PLAYER_SPEED, -DIAG_PLAYER_SPEED );
         }
 		else if( up ) {
             directionOfMovement = North;
-			Player::getPlayer().move( 0, PLAYER_SPEED );
+            return sf::Vector2f( 0, PLAYER_SPEED );
         }
 		else if( down ) {
             directionOfMovement = South;
-			Player::getPlayer().move( 0, -PLAYER_SPEED );
+            return sf::Vector2f( 0, -PLAYER_SPEED );
         }
 		else if( left) {
             directionOfMovement = West;
-			Player::getPlayer().move( -PLAYER_SPEED, 0 );
+            return sf::Vector2f( -PLAYER_SPEED, 0 );
         }
 		else if( right ) {
             directionOfMovement = East;
-			Player::getPlayer().move( PLAYER_SPEED, 0 );
+			return sf::Vector2f( PLAYER_SPEED, 0 );
         }
     }
 
