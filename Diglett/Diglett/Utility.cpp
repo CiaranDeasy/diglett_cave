@@ -22,3 +22,13 @@ sf::Vector2f Utility::coordsGameToWindow( sf::Vector2f in ) {
 sf::Vector2f Utility::coordsTileToWindow( sf::Vector2i in ) {
     return coordsGameToWindow( sf::Vector2f( in.x, in.y ) );
 }
+
+float Utility::max( float x, float y, float z ) {
+    if( x > y ) {
+        if( x > z ) return x;
+        else return z;
+    } else {
+        if( y > z ) return y;
+        else return z;
+    }
+}
