@@ -48,15 +48,10 @@ void GameWindow::mainLoop() {
                     window->draw( *tileSprites[Tile::Dirt] );
                     tileSprites[Tile::Dirt]->setColor( sf::Color::White );
                 }
-                else if( nextTile.getType() == Tile::Dirt ) {
-                    tileSprites[Tile::Dirt]->setPosition( 
+                else {
+                    tileSprites[nextTile.getType()]->setPosition( 
                         Utility::coordsTileToWindow( tilePosition ) );
-                    window->draw( *tileSprites[Tile::Dirt] );
-                }
-                else if( nextTile.getType() == Tile::Surface ) {
-                    tileSprites[Tile::Surface]->setPosition( 
-                        Utility::coordsTileToWindow( tilePosition ) );
-                    window->draw( *tileSprites[Tile::Surface] );
+                    window->draw( *tileSprites[nextTile.getType()] );
                 }
               }
             }
