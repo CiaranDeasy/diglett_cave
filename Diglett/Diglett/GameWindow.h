@@ -1,8 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#define TILE_SPRITES 3
-
 class GameWindow {
 public:
     static GameWindow *getGameWindow();
@@ -14,7 +12,7 @@ private:
     static GameWindow *singleton;
     sf::RenderWindow *window;
     // Index into this array using the enum Tile::TileType.
-    sf::Sprite *tileSprites[ TILE_SPRITES ];
+    sf::Sprite *tileSprites[ Tile::Count ];
     sf::Sprite *playerSprite;
     sf::Sprite *debugOverlayBackground;
     sf::View worldView;

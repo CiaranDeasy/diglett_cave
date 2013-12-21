@@ -7,6 +7,7 @@ public:
         Dirt,
         Air,
         Surface,
+        Gold,
         // Newly added types must be added to the diggableByType array!
         Count // A fake type whose value is the no. of elements in the enum.
     };

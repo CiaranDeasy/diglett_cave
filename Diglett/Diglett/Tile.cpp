@@ -22,5 +22,6 @@ bool Tile::diggable(Tile t) {
 bool Tile::diggableByType[Count] = {
     true, // Dirt
     false, // Air
-    false // Surface
+    false, // Surface
+    true // Gold
 };
