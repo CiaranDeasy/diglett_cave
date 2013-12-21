@@ -4,11 +4,11 @@ sf::Vector2i Chunk::getPosition() {
     return position;
 }
 
-Tile Chunk::getRelativeTile( int x, int y ) {
+Tile& Chunk::getRelativeTile( int x, int y ) {
     return tiles[x][y];
 }
 
-Tile Chunk::getAbsoluteTile( int x, int y ) {
+Tile& Chunk::getAbsoluteTile( int x, int y ) {
     return tiles[x-position.x][y-position.y];
 }
 
