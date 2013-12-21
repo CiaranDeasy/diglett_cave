@@ -30,7 +30,7 @@ void Player::move( float x, float y ) {
     float newX = oldX + x;
     float newY = oldY + y;
     // Check for clipping with tiles to the left.
-    if( directionOfMovement > 8 &&
+    if( directionOfMovement > 8 && directionOfMovement < 16 &&
             floor( oldX + leftClip ) > floor( newX + leftClip ) ) {
         Tile topTile = WorldData::getWorldData().getTile( 
             floor( newX + leftClip ), floor( oldY + topClip ) );
@@ -81,6 +81,20 @@ void Player::move( float x, float y ) {
             floor( newX + leftClip ), floor( newY + bottomClip ) );
         Tile& rightTile = WorldData::getWorldData().getTile( 
             floor( newX + rightClip ), floor( newY + bottomClip ) );
+        // Test if the player is trying to dig.
+        if( InputHandler::getDirectionOfMovement() >= 7 && 
+                InputHandler::getDirectionOfMovement() <= 9 &&
+                onGround == DIG_DELAY ) {
+            float offSet = oldX - floor( oldX );
+            // Dig the tile that the player is more over, or neither if they 
+            // are too close to the middle.
+            if( offSet > 0.2 && offSet <= 0.5 && Tile::diggable(rightTile) ) {
+                rightTile.dig();
+            } else if( offSet > 0.5 && offSet <= 0.8 && Tile::diggable(leftTile) ) {
+                leftTile.dig();
+            }
+        }
+        // Do the actual clipping.
         if( ( leftTile.getType() != Tile::Air && 
                 leftTile.getType() != Tile::Surface ) 
                 || ( rightTile.getType() != Tile::Air && 
