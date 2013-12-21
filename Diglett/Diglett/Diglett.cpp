@@ -1,4 +1,6 @@
-//Depracated
+// Deprecated
+// This file contains some early experimentation with the SFML library, and 
+// is not part of the main project.
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
