@@ -40,7 +40,7 @@ void Player::move( float x, float y ) {
             topTile.getType() != Tile::Surface ) 
             || ( bottomTile.getType() != Tile::Air && 
             bottomTile.getType() != Tile::Surface ) ) {
-            newX = floor( oldX ) - leftClip;
+            newX = floor( oldX ) - leftClip + 0.001;
             Physics::getPhysics().collideX();
         }
     }
@@ -99,7 +99,7 @@ void Player::move( float x, float y ) {
                 leftTile.getType() != Tile::Surface ) 
                 || ( rightTile.getType() != Tile::Air && 
                 rightTile.getType() != Tile::Surface ) ) {
-            newY = floor( oldY ) - bottomClip;
+            newY = floor( oldY ) - bottomClip + 0.001;
             Physics::getPhysics().collideY();
             if( onGround < DIG_DELAY ) onGround++;
         } else onGround = 0;
