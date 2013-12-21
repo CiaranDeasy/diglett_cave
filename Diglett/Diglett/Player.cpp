@@ -37,10 +37,16 @@ void Player::move( float x, float y ) {
     // Check for clipping with tiles to the left.
     if( directionOfMovement > 8 && directionOfMovement < 16 &&
             floor( oldX + leftClip ) > floor( newX + leftClip ) ) {
-        Tile topTile = WorldData::getWorldData().getTile( 
+        Tile& topTile = WorldData::getWorldData().getTile( 
             floor( newX + leftClip ), floor( oldY + topClip ) );
-        Tile bottomTile = WorldData::getWorldData().getTile( 
+        Tile& bottomTile = WorldData::getWorldData().getTile( 
             floor( newX + leftClip ), floor( oldY + bottomClip ) );
+        // Test if the player is trying to dig.
+        if( InputHandler::getDirectionOfMovement() >= 11 && 
+                InputHandler::getDirectionOfMovement() <= 13 &&
+                onGround == DIG_DELAY  && Tile::diggable(topTile)) {
+            topTile.dig();
+        }
         if( ( topTile.getType() != Tile::Air && 
             topTile.getType() != Tile::Surface ) 
             || ( bottomTile.getType() != Tile::Air && 
@@ -52,10 +58,16 @@ void Player::move( float x, float y ) {
     // Check for clipping with tiles to the right.
     if( directionOfMovement > 0 && directionOfMovement < 8 &&
             floor( oldX + rightClip ) < floor( newX + rightClip ) ) {
-        Tile topTile = WorldData::getWorldData().getTile( 
+        Tile& topTile = WorldData::getWorldData().getTile( 
             floor( newX + rightClip ), floor( oldY + topClip ) );
-        Tile bottomTile = WorldData::getWorldData().getTile( 
+        Tile& bottomTile = WorldData::getWorldData().getTile( 
             floor( newX + rightClip ), floor( oldY + bottomClip ) );
+        // Test if the player is trying to dig.
+        if( InputHandler::getDirectionOfMovement() >= 3 && 
+                InputHandler::getDirectionOfMovement() <= 5 &&
+                onGround == DIG_DELAY && Tile::diggable(topTile)) {
+            topTile.dig();
+        }
         if( ( topTile.getType() != Tile::Air && 
             topTile.getType() != Tile::Surface ) 
             || ( bottomTile.getType() != Tile::Air && 
@@ -67,9 +79,9 @@ void Player::move( float x, float y ) {
     // Check for clipping with tiles above.
     if( ( directionOfMovement < 4 || directionOfMovement > 12 ) &&
             floor( oldY + topClip ) < floor( newY + topClip ) ) {
-        Tile leftTile = WorldData::getWorldData().getTile( 
+        Tile& leftTile = WorldData::getWorldData().getTile( 
             floor( newX + leftClip ), floor( newY + topClip ) );
-        Tile rightTile = WorldData::getWorldData().getTile( 
+        Tile& rightTile = WorldData::getWorldData().getTile( 
             floor( newX + rightClip ), floor( newY + topClip ) );
         if( ( leftTile.getType() != Tile::Air && 
             leftTile.getType() != Tile::Surface ) 
