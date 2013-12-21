@@ -19,9 +19,14 @@ sf::Vector2f Player::getPosition() {
 void Player::move( float x, float y ) {
     // The program will crash if attempting to load a chunk outside the world.
     // Constrain movement until infinite worlds are implemented.
-    if( position.x + x > 150 || position.x + x < -150 
-        || position.y + y > 150 || position.y + y < -150 ) 
+    if( position.x + x > 150 || position.x + x < -150 ) {
+        Physics::getPhysics().collideX();
         return;
+    }
+    if( position.y + y > 150 || position.y + y < -150 ) {
+        Physics::getPhysics().collideY();
+        return;
+    }
     // Classify movement direction.
     Direction directionOfMovement = classifyDirectionOfMovement(x, y);
     // Check for collisions.
