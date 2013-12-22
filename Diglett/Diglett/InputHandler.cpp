@@ -86,12 +86,16 @@ sf::Vector2f InputHandler::processInputs() {
         if( e.type == sf::Event::JoystickButtonPressed ) {
           if( e.joystickButton.button == 6 ) {
               GameWindow::getGameWindow()->toggleDebugOverlay();
+          } else if( e.joystickButton.button == 3 ) {
+              Player::getPlayer().printInventory();
           }
         }
         // Keyboard keys.
         else if( e.type == sf::Event::KeyPressed ) {
           if( e.key.code == sf::Keyboard::F3 ) {
               GameWindow::getGameWindow()->toggleDebugOverlay();
+          } else if( e.key.code == sf::Keyboard::I ) {
+              Player::getPlayer().printInventory();
           }
         }
     }
