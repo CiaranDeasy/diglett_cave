@@ -20,6 +20,9 @@ const float PLAYER_MASS = 1.0;
 // Number of ticks the player must spend on the ground before allowed to dig.
 const int DIG_DELAY = 15;
 
+// Number of ticks it takes the player to dig a block.
+const int DIG_STEPS = 60;
+
 // Number of chunks to store in RAM.
 const int HORIZONTAL_CHUNKS = 20;
 const int VERTICAL_CHUNKS = 20;
