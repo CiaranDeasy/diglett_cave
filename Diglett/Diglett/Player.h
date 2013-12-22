@@ -20,6 +20,8 @@ public:
     // Temporary method until GUI is added.
     void printInventory();
 
+    std::vector<Item *>& getInventory() { return inventory; }
+
     ~Player(void);
 private:
     enum Direction {
