@@ -37,6 +37,7 @@ private:
     sf::Font debugFont;
     bool showDebugOverlay;
     static bool inventoryVisible;
+    int expectedInventorySize;
 
     void createSprites();
     sf::Sprite *makeDebugOverlayBackground();

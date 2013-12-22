@@ -86,10 +86,14 @@ void GameWindow::triggerInventoryGUI() {
             makeInventoryBackground( windowSizeX, windowSizeY );
 
     inventoryVisible = true;
+    expectedInventorySize = inventory.size();
 }
 
 void GameWindow::drawInventoryGUI() {
     std::vector<Item *> inventory = Player::getPlayer().getInventory();
+    // Make a new background if items have been added.
+    if( inventory.size() != expectedInventorySize ) triggerInventoryGUI();
+    // Draw the inventory background.
     window->setView( interfaceView );
     window->draw( *inventoryBackground );
     for( int i = 0; i < inventory.size(); i++ ) {
