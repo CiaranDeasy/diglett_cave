@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "GameWindow.h"
+#include "Constants.h"
 
 Tile::Tile(void) {
     this->type = 0; //Air
@@ -29,19 +30,19 @@ sf::Sprite *Tile::getSprite() {
 void Tile::initialiseTypes() {
     types.push_back( TileType( "Air", 
             GameWindow::makeSquareSprite( 
-                sf::Color( 156, 94, 0, 255 ) ), 
+                sf::Color( 156, 94, 0, 255 ), PIXELS_PER_TILE ), 
             false, false ) );
     types.push_back( TileType( "Surface", 
             GameWindow::makeSquareSprite( 
-                sf::Color::Blue ), 
+                sf::Color::Blue, PIXELS_PER_TILE ), 
             false, false ) );
     types.push_back( TileType( "Dirt", 
             GameWindow::makeSquareSprite( 
-                sf::Color( 126, 64, 0, 255 ) ), 
+                sf::Color( 126, 64, 0, 255 ), PIXELS_PER_TILE ), 
             true, true ) );
     types.push_back( TileType( "Gold", 
             GameWindow::makeSquareSprite( 
-                sf::Color( 255, 215, 0, 255 ) ), 
+                sf::Color( 255, 215, 0, 255 ), PIXELS_PER_TILE ), 
             true, true ) );
 }
 

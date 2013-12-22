@@ -5,7 +5,11 @@
 class GameWindow {
 public:
     static GameWindow *getGameWindow();
-    static sf::Sprite *makeSquareSprite( sf::Color );
+
+    // Constructs a square sprite of the specified color, with sides of the 
+    // given size, and with a black outline.
+    static sf::Sprite *makeSquareSprite( sf::Color color, int size );
+
     static sf::Sprite *makeCircleSprite( sf::Color );
     void GameWindow::mainLoop();
     ~GameWindow(void);

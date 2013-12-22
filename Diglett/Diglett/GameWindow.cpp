@@ -24,20 +24,18 @@ void GameWindow::createSprites() {
     debugOverlayBackground = makeDebugOverlayBackground();
 }
 
-// Constructs a square tile sprite of the specified color, with black outline.
-sf::Sprite *GameWindow::makeSquareSprite( sf::Color color ) {
+sf::Sprite *GameWindow::makeSquareSprite( sf::Color color, int size ) {
     // Make the render area.
     sf::RenderTexture renderer;
-    renderer.create( PIXELS_PER_TILE, PIXELS_PER_TILE );
+    renderer.create( size, size );
     renderer.clear();
     // Draw the outline.
-    sf::RectangleShape outline( sf::Vector2f( PIXELS_PER_TILE, 
-            PIXELS_PER_TILE ) );
+    sf::RectangleShape outline( sf::Vector2f( size, size ) );
     outline.setFillColor( sf::Color::Black );
     renderer.draw( outline );
     // Draw the filling colour over it.
-    sf::RectangleShape fill( sf::Vector2f( PIXELS_PER_TILE - 2, 
-            PIXELS_PER_TILE - 2 ) );
+    sf::RectangleShape fill( sf::Vector2f( size - 2, 
+            size - 2 ) );
     fill.setFillColor( color );
     fill.move( 1.0f, 1.0f );
     renderer.draw( fill );
