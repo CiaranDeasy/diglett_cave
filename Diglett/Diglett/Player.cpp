@@ -159,6 +159,7 @@ void Player::processDiggingStep() {
     diggingStepsRemaining--;
     if (diggingStepsRemaining == 0) {
         digging = false;
+        Physics::getPhysics().reset();
         // Dig the tile.
         WorldData::getWorldData().getTile( diggingTowards ).dig();
     }
