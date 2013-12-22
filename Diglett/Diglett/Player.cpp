@@ -54,10 +54,7 @@ void Player::move( float x, float y ) {
                 onGround == DIG_DELAY  && topTile.isDiggable() ) {
             initiateDigging( topTileCoords );
         }
-        if( ( topTile.getType() != 0 && // Air
-            topTile.getType() != 1 ) // Surface
-            || ( bottomTile.getType() != 0 &&  // Air
-            bottomTile.getType() != 1 ) ) { // Surface
+        if( topTile.isSolid() || bottomTile.isSolid() ) {
             newX = floor( oldX ) - leftClip + 0.001;
             Physics::getPhysics().collideX();
         }
@@ -77,10 +74,7 @@ void Player::move( float x, float y ) {
                 onGround == DIG_DELAY && topTile.isDiggable()) {
             initiateDigging( topTileCoords );
         }
-        if( ( topTile.getType() != 0 && // Air
-            topTile.getType() != 1 ) // Surface
-            || ( bottomTile.getType() != 0 && // Air
-            bottomTile.getType() != 1 ) ) { // Surface
+        if( topTile.isSolid() || bottomTile.isSolid() ) {
             newX = floor( oldX + 1 ) - 0.001 - rightClip;
             Physics::getPhysics().collideX();
         }
@@ -94,10 +88,7 @@ void Player::move( float x, float y ) {
                 sf::Vector2f( newX + rightClip, newY + topClip ) );
         Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
         Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
-        if( ( leftTile.getType() != 0 && // Air
-            leftTile.getType() != 1 ) // Surface
-            || ( rightTile.getType() != 0 && // Air
-            rightTile.getType() != 1 ) ) { // Surface
+        if( leftTile.isSolid() || rightTile.isSolid() ) {
             newY = floor( oldY + 1 ) - 0.001 - topClip;
             Physics::getPhysics().collideY();
         }
@@ -125,10 +116,7 @@ void Player::move( float x, float y ) {
             }
         }
         // Do the actual clipping.
-        if( ( leftTile.getType() != 0 && // Air
-                leftTile.getType() != 1 ) // Surface
-                || ( rightTile.getType() != 0 && // Air
-                rightTile.getType() != 1 ) ) { // Surface
+        if( leftTile.isSolid() || rightTile.isSolid() ) {
             newY = floor( oldY ) - bottomClip + 0.001;
             Physics::getPhysics().collideY();
             if( onGround < DIG_DELAY ) onGround++;
