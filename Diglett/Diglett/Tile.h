@@ -15,7 +15,10 @@ public:
     Tile(void);
     Tile(int type);
     ~Tile(void);
+
+    // Changes the tile to air, and adds an item to the player's inventory.
     void dig();
+
     bool isDiggable();
     bool isSolid();
     sf::Sprite *getSprite();

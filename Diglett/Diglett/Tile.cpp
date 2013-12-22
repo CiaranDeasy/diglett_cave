@@ -1,6 +1,7 @@
 #include "Tile.h"
 #include "GameWindow.h"
 #include "Constants.h"
+#include "Player.h"
 
 Tile::Tile(void) {
     this->type = 0; //Air
@@ -13,7 +14,12 @@ Tile::Tile(int type) {
 Tile::~Tile(void) {
 }
 
-void Tile::dig() { type = 0; } //Air
+void Tile::dig() {
+    // Add the item to the player's inventory.
+    Player::getPlayer().addItem( this->lookupType( type ).createItem() );
+    // And change this block to air.
+    type = 0; //Air
+}
 
 bool Tile::isDiggable() {
    return lookupType( this->type ).isDiggable();
