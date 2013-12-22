@@ -3,10 +3,10 @@
 #include "Constants.h"
 
 void Item::initialiseTypes() {
-    /*types.push_back( TileType( "Gold", 
+    types.push_back( ItemType( "NULL", NULL ) ); // Indicates no item.
+    types.push_back( ItemType( "Gold", 
             GameWindow::makeSquareSprite( 
-                sf::Color( 255, 215, 0, 255 ), PIXELS_PER_ITEM_SPRITE ), 
-            true, true ) );*/
+                sf::Color( 255, 215, 0, 255 ), PIXELS_PER_ITEM_SPRITE ) ) );
 }
 
 Item::Item( int type ) {

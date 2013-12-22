@@ -1,6 +1,9 @@
 #include "ItemType.h"
 
-ItemType::ItemType(void) {}
+ItemType::ItemType( std::string name, sf::Sprite *sprite ) {
+    this->name = name;
+    this->sprite = sprite;
+}
 
 ItemType::~ItemType(void) {}
 

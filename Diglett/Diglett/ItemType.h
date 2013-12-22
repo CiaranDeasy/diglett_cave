@@ -5,7 +5,6 @@
 class ItemType
 {
 public:
-    ItemType(void);
     ItemType( std::string name, sf::Sprite *sprite );
     ~ItemType(void);
     std::string getName();

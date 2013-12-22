@@ -7,6 +7,7 @@
 
 const std::string WINDOW_TITLE = "Diglett";
 const int PIXELS_PER_TILE = 64;
+const int PIXELS_PER_ITEM_SPRITE = 16;
 const float PLAYER_SPEED = 0.008;
 const float PLAYER_MAX_SPEED = 0.2;
 const float DIAG_PLAYER_SPEED = PLAYER_SPEED / 1.414; // sqrt(2)
