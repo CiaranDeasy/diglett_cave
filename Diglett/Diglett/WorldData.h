@@ -7,6 +7,7 @@ class WorldData {
 public:
     // Inputs to "get" are in absolute world co-ordinates.
     Tile& getTile( int x, int y );
+    Tile& getTile( sf::Vector2i in );
     Chunk& getChunk( int x, int y );
     static WorldData& getWorldData();
     ~WorldData(void);

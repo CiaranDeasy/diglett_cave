@@ -12,6 +12,10 @@ Tile& WorldData::getTile( int x, int y ) {
     return chunk.getAbsoluteTile(x, y);
 }
 
+Tile& WorldData::getTile( sf::Vector2i in ) {
+    return getTile( in.x, in.y );
+}
+
 WorldData& WorldData::getWorldData() {
     return singleton;
 }
