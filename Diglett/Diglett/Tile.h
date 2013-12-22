@@ -19,6 +19,7 @@ public:
     int getType();
     void dig();
     bool isDiggable();
+    bool isSolid();
 
 private:
     static std::vector<TileType> types;
