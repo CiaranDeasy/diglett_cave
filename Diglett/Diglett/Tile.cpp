@@ -28,6 +28,10 @@ bool Tile::isSolid() {
    return lookupType( this->type ).isSolid();
 }
 
+sf::Sprite *Tile::getSprite() {
+    return lookupType( this->type ).getSprite();
+}
+
 void Tile::initialiseTypes() {
     types.push_back( TileType( "Air", 
             GameWindow::makeSquareSprite( 

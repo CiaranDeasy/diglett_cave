@@ -20,6 +20,7 @@ public:
     void dig();
     bool isDiggable();
     bool isSolid();
+    sf::Sprite *getSprite();
 
 private:
     static std::vector<TileType> types;
