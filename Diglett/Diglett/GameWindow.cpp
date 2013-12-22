@@ -19,14 +19,6 @@ void GameWindow::toggleDebugOverlay() {
 }
 
 void GameWindow::createSprites() {
-    tileSprites[Tile::Surface] = makeSquareSprite( sf::Color::Blue );
-    tileSprites[Tile::Dirt] = makeSquareSprite( sf::Color( 126, 64, 0, 255 ) );
-    tileSprites[Tile::Air] = makeSquareSprite( sf::Color( 156, 94, 0, 255 ) );
-    tileSprites[Tile::Gold] = makeSquareSprite( sf::Color( 255, 215, 0, 255 ) );
-    tileSprites[Tile::Surface]->setOrigin( 0, PIXELS_PER_TILE );
-    tileSprites[Tile::Dirt]->setOrigin( 0, PIXELS_PER_TILE );
-    tileSprites[Tile::Air]->setOrigin( 0, PIXELS_PER_TILE );
-    tileSprites[Tile::Gold]->setOrigin( 0, PIXELS_PER_TILE );
     playerSprite = makeCircleSprite( sf::Color::Magenta );
     playerSprite->setOrigin( 32, 32 );
     debugOverlayBackground = makeDebugOverlayBackground();
@@ -127,6 +119,7 @@ GameWindow::GameWindow(void) {
     interfaceView.zoom( 1.0 );
 
     createSprites();
+    Tile::initialiseTypes();
 
     if ( !debugFont.loadFromFile( DEBUG_FONT ) ) {
         std::cerr << "Failed to load font: " << DEBUG_FONT << "\n";

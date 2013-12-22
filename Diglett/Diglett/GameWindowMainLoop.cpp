@@ -40,19 +40,10 @@ void GameWindow::mainLoop() {
                 sf::Vector2i tilePosition = sf::Vector2i( 
                         nextChunk.getPosition().x + i,
                         nextChunk.getPosition().y + j );
-                // Colour the origin red, for reference.
-                if( tilePosition.x == 0 && tilePosition.y == 0 ) {
-                    tileSprites[Tile::Dirt]->setColor( sf::Color::Red );
-                    tileSprites[Tile::Dirt]->setPosition( 
-                        Utility::coordsTileToWindow( tilePosition ) );
-                    window->draw( *tileSprites[Tile::Dirt] );
-                    tileSprites[Tile::Dirt]->setColor( sf::Color::White );
-                }
-                else {
-                    tileSprites[nextTile.getType()]->setPosition( 
-                        Utility::coordsTileToWindow( tilePosition ) );
-                    window->draw( *tileSprites[nextTile.getType()] );
-                }
+                Tile::lookupType(nextTile.getType()).getSprite()->setPosition( 
+                    Utility::coordsTileToWindow( tilePosition ) );
+                window->draw( 
+                        *Tile::lookupType(nextTile.getType()).getSprite() );
               }
             }
           }

@@ -29,12 +29,10 @@ WorldData::WorldData(void) {
         for( int j = 0; j < 10; j++ ) {
             chunks[i][j] = Chunk::Chunk( 
                     sf::Vector2i( ( i - xOffset ) * CHUNK_SIDE, 
-                    ( j - yOffset ) * CHUNK_SIDE ),
-                    Tile::Type::Dirt );
+                    ( j - yOffset ) * CHUNK_SIDE ), 2 ); // Dirt
             chunks[i][j+10] = Chunk::Chunk( 
                     sf::Vector2i( ( i - xOffset ) * CHUNK_SIDE, 
-                    ( j + 10 - yOffset ) * CHUNK_SIDE ),
-                    Tile::Type::Surface );
+                    ( j + 10 - yOffset ) * CHUNK_SIDE ), 1 ); // Surface
         }
     }
 }

@@ -51,13 +51,13 @@ void Player::move( float x, float y ) {
         // Test if the player is trying to dig.
         if( InputHandler::getDirectionOfMovement() >= 11 && 
                 InputHandler::getDirectionOfMovement() <= 13 &&
-                onGround == DIG_DELAY  && Tile::diggable(topTile)) {
+                onGround == DIG_DELAY  && topTile.isDiggable() ) {
             initiateDigging( topTileCoords );
         }
-        if( ( topTile.getType() != Tile::Air && 
-            topTile.getType() != Tile::Surface ) 
-            || ( bottomTile.getType() != Tile::Air && 
-            bottomTile.getType() != Tile::Surface ) ) {
+        if( ( topTile.getType() != 0 && // Air
+            topTile.getType() != 1 ) // Surface
+            || ( bottomTile.getType() != 0 &&  // Air
+            bottomTile.getType() != 1 ) ) { // Surface
             newX = floor( oldX ) - leftClip + 0.001;
             Physics::getPhysics().collideX();
         }
@@ -74,13 +74,13 @@ void Player::move( float x, float y ) {
         // Test if the player is trying to dig.
         if( InputHandler::getDirectionOfMovement() >= 3 && 
                 InputHandler::getDirectionOfMovement() <= 5 &&
-                onGround == DIG_DELAY && Tile::diggable(topTile)) {
+                onGround == DIG_DELAY && topTile.isDiggable()) {
             initiateDigging( topTileCoords );
         }
-        if( ( topTile.getType() != Tile::Air && 
-            topTile.getType() != Tile::Surface ) 
-            || ( bottomTile.getType() != Tile::Air && 
-            bottomTile.getType() != Tile::Surface ) ) {
+        if( ( topTile.getType() != 0 && // Air
+            topTile.getType() != 1 ) // Surface
+            || ( bottomTile.getType() != 0 && // Air
+            bottomTile.getType() != 1 ) ) { // Surface
             newX = floor( oldX + 1 ) - 0.001 - rightClip;
             Physics::getPhysics().collideX();
         }
@@ -94,10 +94,10 @@ void Player::move( float x, float y ) {
                 sf::Vector2f( newX + rightClip, newY + topClip ) );
         Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
         Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
-        if( ( leftTile.getType() != Tile::Air && 
-            leftTile.getType() != Tile::Surface ) 
-            || ( rightTile.getType() != Tile::Air && 
-            rightTile.getType() != Tile::Surface ) ) {
+        if( ( leftTile.getType() != 0 && // Air
+            leftTile.getType() != 1 ) // Surface
+            || ( rightTile.getType() != 0 && // Air
+            rightTile.getType() != 1 ) ) { // Surface
             newY = floor( oldY + 1 ) - 0.001 - topClip;
             Physics::getPhysics().collideY();
         }
@@ -118,17 +118,17 @@ void Player::move( float x, float y ) {
             float offSet = oldX - floor( oldX );
             // Dig the tile that the player is more over, or neither if they 
             // are too close to the middle.
-            if( offSet > 0.2 && offSet <= 0.5 && Tile::diggable(rightTile) ) {
+            if( offSet > 0.2 && offSet <= 0.5 && rightTile.isDiggable() ) {
                 initiateDigging(rightTileCoords);
-            } else if( offSet > 0.5 && offSet <= 0.8 && Tile::diggable(leftTile) ) {
+            } else if( offSet > 0.5 && offSet <= 0.8 && leftTile.isDiggable() ) {
                 initiateDigging(leftTileCoords);
             }
         }
         // Do the actual clipping.
-        if( ( leftTile.getType() != Tile::Air && 
-                leftTile.getType() != Tile::Surface ) 
-                || ( rightTile.getType() != Tile::Air && 
-                rightTile.getType() != Tile::Surface ) ) {
+        if( ( leftTile.getType() != 0 && // Air
+                leftTile.getType() != 1 ) // Surface
+                || ( rightTile.getType() != 0 && // Air
+                rightTile.getType() != 1 ) ) { // Surface
             newY = floor( oldY ) - bottomClip + 0.001;
             Physics::getPhysics().collideY();
             if( onGround < DIG_DELAY ) onGround++;

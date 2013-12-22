@@ -1,24 +1,26 @@
 #pragma once
+#include "TileType.h"
+#include <vector>
 
 class Tile {
 
 public:
-    enum Type {
-        Dirt,
-        Air,
-        Surface,
-        Gold,
-        // Newly added types must be added to the diggableByType array!
-        Count // A fake type whose value is the no. of elements in the enum.
-    };
+
+    // Initialises types vector. Cannot be done at static initialisation due to a 
+    // limitation in the SFML library. Must be called afterwards.
+    static void initialiseTypes();
+
+    // Takes a numerical ID of a tile type and returns the appropriate TileType
+    // object.
+    static TileType& lookupType( int id );
     Tile(void);
-    Tile(Type type);
+    Tile(int type);
     ~Tile(void);
-    Type getType();
+    int getType();
     void dig();
-    static bool diggable(Tile t);
+    bool isDiggable();
 
 private:
-    Type type;
-    static bool diggableByType[Count];
+    static std::vector<TileType> types;
+    int type;
 };

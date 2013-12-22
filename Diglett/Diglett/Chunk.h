@@ -13,7 +13,7 @@ public:
 
     // Constructor which takes a type of tile and makes a chunk consisting 
     // entirely of tiles of that type.
-    Chunk( sf::Vector2i, Tile::Type );
+    Chunk( sf::Vector2i pos, int type );
     ~Chunk( void );
 
     // Default constructor not supported.
