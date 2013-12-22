@@ -53,6 +53,9 @@ void GameWindow::mainLoop() {
         if( showDebugOverlay ) {
             drawDebugOverlay();
         }
+        if( inventoryVisible ) {
+            drawInventoryGUI();
+        }
         window->display();
 	}
 }

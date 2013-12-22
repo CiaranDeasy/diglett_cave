@@ -88,6 +88,7 @@ sf::Vector2f InputHandler::processInputs() {
               GameWindow::getGameWindow()->toggleDebugOverlay();
           } else if( e.joystickButton.button == 3 ) {
               Player::getPlayer().printInventory();
+              GameWindow::getGameWindow()->toggleInventoryGUI();
           }
         }
         // Keyboard keys.
@@ -96,6 +97,7 @@ sf::Vector2f InputHandler::processInputs() {
               GameWindow::getGameWindow()->toggleDebugOverlay();
           } else if( e.key.code == sf::Keyboard::I ) {
               Player::getPlayer().printInventory();
+              GameWindow::getGameWindow()->toggleInventoryGUI();
           }
         }
     }
