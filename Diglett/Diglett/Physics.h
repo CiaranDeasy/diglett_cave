@@ -8,6 +8,7 @@ public:
     // Methods to update velocity when a collision is detected.
     void collideX();
     void collideY();
+    void reset();
 private:
     static Physics singleton;
     Physics(void);

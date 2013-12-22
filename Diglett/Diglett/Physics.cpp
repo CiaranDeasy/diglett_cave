@@ -61,6 +61,11 @@ void Physics::collideY() {
     velocity.y = 0;
 }
 
+void Physics::reset() {
+    velocity.x = 0;
+    velocity.y = 0;
+}
+
 Physics& Physics::getPhysics(){ return singleton; }
 
 Physics Physics::singleton = Physics();
