@@ -126,6 +126,13 @@ void Player::move( float x, float y ) {
     else position = sf::Vector2f( newX, newY );
 }
 
+bool Player::addItem( Item *item ) {
+    if( inventory.size() == MAX_INVENTORY ) return false;
+    if( item->getName() == "NULL" ) return true;
+    inventory.push_back( item );
+    return true;
+}
+
 Player Player::singleton = Player();
 
 void Player::initiateDigging( sf::Vector2i target ) {

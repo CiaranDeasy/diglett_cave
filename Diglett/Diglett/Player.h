@@ -1,5 +1,9 @@
 #pragma once
 #include <SFML/System.hpp>
+#include <vector>
+#include "Constants.h"
+#include "Item.h"
+
 class Player {
 public:
     static Player& getPlayer();
@@ -7,6 +11,11 @@ public:
     void move( float x, float y );
     // Number of ticks the player has spent on the ground.
     int onGround;
+
+    // Adds the given Item to the player's inventory. Returns false if
+    // the Item is not added due to full inventory.
+    bool addItem( Item *item );
+
     ~Player(void);
 private:
     enum Direction {
@@ -41,6 +50,7 @@ private:
     float bottomClip;
     float leftClip;
     float rightClip;
+    std::vector<Item *> inventory;
     Direction classifyDirectionOfMovement(
             float stickPositionX, float stickPositionY);
     void initiateDigging( sf::Vector2i target );

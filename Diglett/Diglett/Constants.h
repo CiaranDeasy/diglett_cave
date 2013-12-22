@@ -17,6 +17,7 @@ const float VERTICAL_AIR_RESISTANCE = 0.001;
 const float MINIMUM_VELOCITY = 0.01;
 const float CAMERA_ZOOM = 1.0;
 const float PLAYER_MASS = 1.0;
+const int MAX_INVENTORY = 32;
 
 // Number of ticks the player must spend on the ground before allowed to dig.
 const int DIG_DELAY = 15;
