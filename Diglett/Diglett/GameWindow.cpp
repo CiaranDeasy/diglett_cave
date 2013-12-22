@@ -118,6 +118,7 @@ GameWindow::GameWindow(void) {
 
     createSprites();
     Tile::initialiseTypes();
+    Item::initialiseTypes();
 
     if ( !debugFont.loadFromFile( DEBUG_FONT ) ) {
         std::cerr << "Failed to load font: " << DEBUG_FONT << "\n";
