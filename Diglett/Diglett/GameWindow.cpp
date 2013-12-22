@@ -68,6 +68,51 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
+void GameWindow::triggerInventoryGUI() {
+    std::vector<Item *> inventory = Player::getPlayer().getInventory();
+    int windowSizeX = ((( (inventory.size() - 1)/ 8 ) + 1 ) *128 ) + 20;
+    int windowSizeY;
+
+    if( inventory.size() <= 8 )
+            windowSizeY = ( inventory.size() * 19 ) + 17;
+    else windowSizeY = ( 8 * 19 ) + 17;
+
+    inventoryBackground = 
+            makeInventoryBackground( windowSizeX, windowSizeY );
+
+    inventoryVisible = true;
+}
+
+void GameWindow::drawInventoryGUI() {
+    std::vector<Item *> inventory = Player::getPlayer().getInventory();
+    window->setView( interfaceView );
+    window->draw( *inventoryBackground );
+    for( int i = 0; i < inventory.size(); i++ ) {
+        inventory[i]->getSprite()->setPosition(
+            -375 + 10 + ( i / 8 ) * 128, -275 + 10 + ( i % 8 ) * 19 );
+        window->draw( *inventory[i]->getSprite() );
+        sf::Text text;
+        text.setFont( debugFont );
+        text.setCharacterSize( 12 );
+        text.setColor( sf::Color:: White );
+        text.setString( inventory[i]->getName() );
+        text.setPosition(
+            -375 + 32 + ( i / 8 ) * 128, -275 + 12 + ( i % 8 ) * 19 );
+        window->draw( text );
+    }
+}
+
+void GameWindow::clearInventoryGUI() {
+    inventoryVisible = false;
+    delete inventoryBackground;
+    inventoryBackground = NULL;
+}
+
+void GameWindow::toggleInventoryGUI() {
+    if( inventoryVisible ) clearInventoryGUI();
+    else triggerInventoryGUI();
+}
+
 sf::Sprite *GameWindow::makeDebugOverlayBackground() {
     sf::RenderTexture renderer;
     renderer.create( 120, 100 );
@@ -80,6 +125,20 @@ sf::Sprite *GameWindow::makeDebugOverlayBackground() {
     debugOverlay->setPosition( -400, 200 );
 
     return debugOverlay;
+}
+
+sf::Sprite *GameWindow::makeInventoryBackground( int x, int y) {
+    sf::RenderTexture renderer;
+    renderer.create( x, y );
+    renderer.clear( sf::Color( 0, 0, 0, 207 ) );
+    renderer.display();
+    
+    sf::Texture texture = renderer.getTexture();
+    sf::Texture *texturePointer = new sf::Texture( texture );
+    sf::Sprite* background = new sf::Sprite( *texturePointer );
+    background->setPosition( -375, -275 );
+
+    return background;
 }
 
 void GameWindow::drawDebugOverlay() {
@@ -126,6 +185,8 @@ GameWindow::GameWindow(void) {
     }
     showDebugOverlay = false;
 }
+
+bool GameWindow::inventoryVisible = false;
 
 GameWindow::~GameWindow(void) {
 }

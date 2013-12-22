@@ -11,6 +11,17 @@ public:
     static sf::Sprite *makeSquareSprite( sf::Color color, int size );
 
     static sf::Sprite *makeCircleSprite( sf::Color );
+
+    void triggerInventoryGUI();
+
+    void drawInventoryGUI();
+
+    void clearInventoryGUI();
+
+    void toggleInventoryGUI();
+
+    static sf::Sprite *makeInventoryBackground( int x, int y );
+    
     void GameWindow::mainLoop();
     ~GameWindow(void);
     void toggleDebugOverlay();
@@ -20,10 +31,12 @@ private:
     sf::RenderWindow *window;
     sf::Sprite *playerSprite;
     sf::Sprite *debugOverlayBackground;
+    sf::Sprite *inventoryBackground;
     sf::View worldView;
     sf::View interfaceView;
     sf::Font debugFont;
     bool showDebugOverlay;
+    static bool inventoryVisible;
 
     void createSprites();
     sf::Sprite *makeDebugOverlayBackground();
