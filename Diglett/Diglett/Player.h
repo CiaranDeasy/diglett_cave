@@ -28,6 +28,11 @@ private:
         Northnorthwest = 15
     };
     static Player singleton;
+    // Values used to track the digging state.
+    bool digging;
+    sf::Vector2f diggingStepSize;
+    int diggingStepsRemaining;
+    sf::Vector2i diggingTowards;
     // The player's position is their centre. Adding a "Clip" to the 
     // appropriate component of the position gives a line of the player's 
     // bounding box.
@@ -38,5 +43,7 @@ private:
     float rightClip;
     Direction classifyDirectionOfMovement(
             float stickPositionX, float stickPositionY);
+    void initiateDigging( sf::Vector2i target );
+    void processDiggingStep();
     Player(void);
 };

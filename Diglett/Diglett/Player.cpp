@@ -27,6 +27,11 @@ void Player::move( float x, float y ) {
         Physics::getPhysics().collideY();
         return;
     }
+    // If player is currently digging, disregard input and process dig step.
+    if( digging ) {
+        processDiggingStep();
+        return;
+    }
     // Classify movement direction.
     Direction directionOfMovement = classifyDirectionOfMovement(x, y);
     // Check for collisions.
@@ -37,15 +42,17 @@ void Player::move( float x, float y ) {
     // Check for clipping with tiles to the left.
     if( directionOfMovement > 8 && directionOfMovement < 16 &&
             floor( oldX + leftClip ) > floor( newX + leftClip ) ) {
-        Tile& topTile = WorldData::getWorldData().getTile( 
-            floor( newX + leftClip ), floor( oldY + topClip ) );
-        Tile& bottomTile = WorldData::getWorldData().getTile( 
-            floor( newX + leftClip ), floor( oldY + bottomClip ) );
+        sf::Vector2i topTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + leftClip, oldY + topClip ) );
+        sf::Vector2i bottomTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + leftClip, oldY + bottomClip ) );
+        Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
+        Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
         // Test if the player is trying to dig.
         if( InputHandler::getDirectionOfMovement() >= 11 && 
                 InputHandler::getDirectionOfMovement() <= 13 &&
                 onGround == DIG_DELAY  && Tile::diggable(topTile)) {
-            topTile.dig();
+            initiateDigging( topTileCoords );
         }
         if( ( topTile.getType() != Tile::Air && 
             topTile.getType() != Tile::Surface ) 
@@ -58,15 +65,17 @@ void Player::move( float x, float y ) {
     // Check for clipping with tiles to the right.
     if( directionOfMovement > 0 && directionOfMovement < 8 &&
             floor( oldX + rightClip ) < floor( newX + rightClip ) ) {
-        Tile& topTile = WorldData::getWorldData().getTile( 
-            floor( newX + rightClip ), floor( oldY + topClip ) );
-        Tile& bottomTile = WorldData::getWorldData().getTile( 
-            floor( newX + rightClip ), floor( oldY + bottomClip ) );
+        sf::Vector2i topTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + rightClip, oldY + topClip ) );
+        sf::Vector2i bottomTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + rightClip, oldY + bottomClip ) );
+        Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
+        Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
         // Test if the player is trying to dig.
         if( InputHandler::getDirectionOfMovement() >= 3 && 
                 InputHandler::getDirectionOfMovement() <= 5 &&
                 onGround == DIG_DELAY && Tile::diggable(topTile)) {
-            topTile.dig();
+            initiateDigging( topTileCoords );
         }
         if( ( topTile.getType() != Tile::Air && 
             topTile.getType() != Tile::Surface ) 
@@ -79,10 +88,12 @@ void Player::move( float x, float y ) {
     // Check for clipping with tiles above.
     if( ( directionOfMovement < 4 || directionOfMovement > 12 ) &&
             floor( oldY + topClip ) < floor( newY + topClip ) ) {
-        Tile& leftTile = WorldData::getWorldData().getTile( 
-            floor( newX + leftClip ), floor( newY + topClip ) );
-        Tile& rightTile = WorldData::getWorldData().getTile( 
-            floor( newX + rightClip ), floor( newY + topClip ) );
+        sf::Vector2i leftTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + leftClip, newY + topClip ) );
+        sf::Vector2i rightTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + rightClip, newY + topClip ) );
+        Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
+        Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
         if( ( leftTile.getType() != Tile::Air && 
             leftTile.getType() != Tile::Surface ) 
             || ( rightTile.getType() != Tile::Air && 
@@ -94,10 +105,12 @@ void Player::move( float x, float y ) {
     // Check for clipping with tiles below.
     if( directionOfMovement > 4 && directionOfMovement < 12 &&
             floor( oldY + bottomClip ) > floor( newY + bottomClip ) ) {
-        Tile& leftTile = WorldData::getWorldData().getTile( 
-            floor( newX + leftClip ), floor( newY + bottomClip ) );
-        Tile& rightTile = WorldData::getWorldData().getTile( 
-            floor( newX + rightClip ), floor( newY + bottomClip ) );
+        sf::Vector2i leftTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + leftClip, newY + bottomClip ) );
+        sf::Vector2i rightTileCoords = Utility::coordsGameToTile(
+                sf::Vector2f( newX + rightClip, newY + bottomClip ) );
+        Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
+        Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
         // Test if the player is trying to dig.
         if( InputHandler::getDirectionOfMovement() >= 7 && 
                 InputHandler::getDirectionOfMovement() <= 9 &&
@@ -106,9 +119,9 @@ void Player::move( float x, float y ) {
             // Dig the tile that the player is more over, or neither if they 
             // are too close to the middle.
             if( offSet > 0.2 && offSet <= 0.5 && Tile::diggable(rightTile) ) {
-                rightTile.dig();
+                initiateDigging(rightTileCoords);
             } else if( offSet > 0.5 && offSet <= 0.8 && Tile::diggable(leftTile) ) {
-                leftTile.dig();
+                initiateDigging(leftTileCoords);
             }
         }
         // Do the actual clipping.
@@ -121,10 +134,35 @@ void Player::move( float x, float y ) {
             if( onGround < DIG_DELAY ) onGround++;
         } else onGround = 0;
     } else onGround = 0;
-    position = sf::Vector2f( newX, newY );
+    if( digging ) processDiggingStep();
+    else position = sf::Vector2f( newX, newY );
 }
 
 Player Player::singleton = Player();
+
+void Player::initiateDigging( sf::Vector2i target ) {
+    digging = true;
+    // Calculate the step size in the X direction.
+    float distanceToTravelX = ( target.x + 0.5 ) - position.x;
+    float diggingStepSizeX = distanceToTravelX / DIG_STEPS;
+    // Calculate the step size in the Y direction.
+    float distanceToTravelY = ( target.y + 0.5 ) - position.y;
+    float diggingStepSizeY = distanceToTravelY / DIG_STEPS;
+    // Combine them.
+    diggingStepSize = sf::Vector2f(diggingStepSizeX, diggingStepSizeY);
+    diggingStepsRemaining = DIG_STEPS;
+    diggingTowards = target;
+}
+
+void Player::processDiggingStep() {
+    position += diggingStepSize;
+    diggingStepsRemaining--;
+    if (diggingStepsRemaining == 0) {
+        digging = false;
+        // Dig the tile.
+        WorldData::getWorldData().getTile( diggingTowards ).dig();
+    }
+}
 
 Player::Player(void) {
     position = sf::Vector2f( 1.0f, 1.0f );
