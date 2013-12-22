@@ -12,17 +12,16 @@ public:
 
     // Takes a numerical ID of a tile type and returns the appropriate TileType
     // object.
-    static TileType& lookupType( int id );
     Tile(void);
     Tile(int type);
     ~Tile(void);
-    int getType();
     void dig();
     bool isDiggable();
     bool isSolid();
     sf::Sprite *getSprite();
 
 private:
+    static TileType& lookupType( int id );
     static std::vector<TileType> types;
     int type;
 };

@@ -1,10 +1,6 @@
 #include "Tile.h"
 #include "GameWindow.h"
 
-TileType& Tile::lookupType( int id ) {
-    return types[id];
-}
-
 Tile::Tile(void) {
     this->type = 0; //Air
 }
@@ -15,8 +11,6 @@ Tile::Tile(int type) {
 
 Tile::~Tile(void) {
 }
-
-int Tile::getType() { return type; }
 
 void Tile::dig() { type = 0; } //Air
 
@@ -49,6 +43,10 @@ void Tile::initialiseTypes() {
             GameWindow::makeSquareSprite( 
                 sf::Color( 255, 215, 0, 255 ) ), 
             true, true ) );
+}
+
+TileType& Tile::lookupType( int id ) {
+    return types[id];
 }
 
 std::vector<TileType> Tile::types = std::vector<TileType>();
