@@ -40,10 +40,9 @@ void GameWindow::mainLoop() {
                 sf::Vector2i tilePosition = sf::Vector2i( 
                         nextChunk.getPosition().x + i,
                         nextChunk.getPosition().y + j );
-                Tile::lookupType(nextTile.getType()).getSprite()->setPosition( 
+                nextTile.getSprite()->setPosition( 
                     Utility::coordsTileToWindow( tilePosition ) );
-                window->draw( 
-                        *Tile::lookupType(nextTile.getType()).getSprite() );
+                window->draw( *nextTile.getSprite() );
               }
             }
           }
