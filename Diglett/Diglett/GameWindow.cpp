@@ -70,12 +70,17 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
 
 void GameWindow::triggerInventoryGUI() {
     std::vector<Item *> inventory = Player::getPlayer().getInventory();
-    int windowSizeX = ((( (inventory.size() - 1)/ 8 ) + 1 ) *128 ) + 20;
+    int windowSizeX = ((( (inventory.size() - 1)/ INVENTORY_ITEMS_PER_COL )
+            + 1 ) * INVENTORY_ENTRY_SIZE.x ) + 2 * INVENTORY_BORDER;
     int windowSizeY;
 
-    if( inventory.size() <= 8 )
-            windowSizeY = ( inventory.size() * 19 ) + 17;
-    else windowSizeY = ( 8 * 19 ) + 17;
+    if( inventory.size() <= INVENTORY_ITEMS_PER_COL ) {
+        windowSizeY = ( inventory.size() * INVENTORY_ENTRY_SIZE.y ) + 
+                2 * INVENTORY_BORDER;
+    } else {
+        windowSizeY = ( INVENTORY_ITEMS_PER_COL * INVENTORY_ENTRY_SIZE.y ) + 
+                2 * INVENTORY_BORDER;
+    }
 
     inventoryBackground = 
             makeInventoryBackground( windowSizeX, windowSizeY );
@@ -88,16 +93,30 @@ void GameWindow::drawInventoryGUI() {
     window->setView( interfaceView );
     window->draw( *inventoryBackground );
     for( int i = 0; i < inventory.size(); i++ ) {
-        inventory[i]->getSprite()->setPosition(
-            -375 + 10 + ( i / 8 ) * 128, -275 + 10 + ( i % 8 ) * 19 );
+        // Calculate the position of the sprite.
+        int spritePositionX = 
+            -(WINDOW_RESOLUTION.x /2) + INVENTORY_POSITION.x + INVENTORY_BORDER
+                + ( i / INVENTORY_ITEMS_PER_COL ) * INVENTORY_ENTRY_SIZE.x;
+        int spritePositionY =
+            -(WINDOW_RESOLUTION.y /2) + INVENTORY_POSITION.y + INVENTORY_BORDER
+                + ( i % INVENTORY_ITEMS_PER_COL ) * INVENTORY_ENTRY_SIZE.y;
+        // Draw the sprite.
+        inventory[i]->getSprite()->setPosition( 
+                spritePositionX, spritePositionY );
         window->draw( *inventory[i]->getSprite() );
+        // Make the text.
         sf::Text text;
         text.setFont( debugFont );
-        text.setCharacterSize( 12 );
+        text.setCharacterSize( INVENTORY_TEXT_SIZE );
         text.setColor( sf::Color:: White );
         text.setString( inventory[i]->getName() );
+        // Position the text.
         text.setPosition(
-            -375 + 32 + ( i / 8 ) * 128, -275 + 12 + ( i % 8 ) * 19 );
+          spritePositionX + PIXELS_PER_ITEM_SPRITE + 
+            INVENTORY_SPRITE_SEPARATION, 
+          spritePositionY + (PIXELS_PER_ITEM_SPRITE / 2) - 
+            (INVENTORY_TEXT_SIZE / 2) );
+        // Draw the text.
         window->draw( text );
     }
 }

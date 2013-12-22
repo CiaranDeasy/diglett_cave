@@ -39,6 +39,24 @@ const float CONTROLLER_DEADZONE = 20;
 // Width and height of the window.
 const sf::Vector2i WINDOW_RESOLUTION( 800, 600 );
 
+// Position in window of inventory GUI.
+const sf::Vector2i INVENTORY_POSITION = sf::Vector2i( 25, 25 );
+
+// Number of pixels between edges of inventory GUI and its contents.
+const int INVENTORY_BORDER = 10;
+
+// Number of items that should be displayed vertically in the inventory GUI.
+const int INVENTORY_ITEMS_PER_COL = 8;
+
+// Size in pixels of a single entry in the inventory.
+const sf::Vector2i INVENTORY_ENTRY_SIZE = sf::Vector2i( 128, 19 );
+
+// Number of pixels separating an item sprite and its name.
+const int INVENTORY_SPRITE_SEPARATION = 6;
+
+// Size of text in inventory.
+const int INVENTORY_TEXT_SIZE = 12;
+
 // Path to font file for debug overlay.
 const std::string DEBUG_FONT = "Fonts/segoeui.ttf";
 
