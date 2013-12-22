@@ -6,12 +6,13 @@ TileType::TileType(void) {
 }
 
 TileType::TileType( std::string name, sf::Sprite *sprite, bool diggable, 
-                   bool solid ) {
+                   bool solid, int item ) {
      this->name = name;
      this->sprite = sprite;
      sprite->setOrigin( 0, PIXELS_PER_TILE );
      this->diggable = diggable;
      this->solid = solid;
+     this->item = item;
 }
 
 
@@ -23,3 +24,5 @@ sf::Sprite *TileType::getSprite() { return sprite; }
 bool TileType::isDiggable() { return diggable; }
 
 bool TileType::isSolid() { return solid; }
+
+Item *TileType::createItem() { return new Item( item ); }
