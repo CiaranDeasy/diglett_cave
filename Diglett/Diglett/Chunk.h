@@ -25,5 +25,9 @@ private:
 
     // Tile index of tiles[0][0]
     sf::Vector2i position;
+
+    Tile randomTileType( int depth );
+
+    int saceledDepth( int depth );
 };
 
