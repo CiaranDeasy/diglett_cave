@@ -12,20 +12,13 @@ void Physics::updatePlayer(sf::Vector2f f){
     acceleration.x = f.x / PLAYER_MASS;
     acceleration.y = f.y / PLAYER_MASS;
 
-    //Add gravitational force
+    // Add gravitational force
     acceleration.y -= GRAVITY_STRENGTH;
     
-    //Apply constant air resistance
-    //TODO: Make air resistance a funciton of velocity
+    // Apply constant air resistance
     if ( velocity.x != 0 ) {
         acceleration.x -= (HORIZONTAL_AIR_RESISTANCE * velocity.x);
     }
-    /*if ( velocity.y > 0 ) {
-        acceleration.y -= VERTICAL_AIR_RESISTANCE;
-    } else if ( velocity.y < 0 ) {
-        acceleration.y += VERTICAL_AIR_RESISTANCE;
-    }*/
-
 
     //set velocity to 0 if it is close enough that it should be
     if ( f.x == 0 && velocity.x < MINIMUM_VELOCITY && velocity.x > -MINIMUM_VELOCITY ) {
