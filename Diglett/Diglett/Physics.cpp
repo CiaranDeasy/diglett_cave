@@ -12,6 +12,9 @@ void Physics::updatePlayer(sf::Vector2f f){
     acceleration.x = f.x / PLAYER_MASS;
     acceleration.y = f.y / PLAYER_MASS;
 
+    // Disable downward acceleration by player input.
+    if( acceleration.y < 0 ) acceleration.y = 0;
+
     // Add gravitational force
     acceleration.y -= GRAVITY_STRENGTH;
     
