@@ -133,14 +133,6 @@ bool Player::addItem( Item *item ) {
     return true;
 }
 
-void Player::printInventory() {
-    std::cout << "Inventory:\n";
-    for( int i = 0; i < inventory.size(); i++ ) {
-        std::cout << inventory[i]->getName() << "\n";
-    }
-    std::cout << "==========\n";
-}
-
 Player Player::singleton = Player();
 
 void Player::initiateDigging( sf::Vector2i target ) {

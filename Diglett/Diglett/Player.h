@@ -16,10 +16,6 @@ public:
     // the Item is not added due to full inventory.
     bool addItem( Item *item );
 
-    // Prints the contents of the inventory to standard output.
-    // Temporary method until GUI is added.
-    void printInventory();
-
     std::vector<Item *>& getInventory() { return inventory; }
 
     ~Player(void);
