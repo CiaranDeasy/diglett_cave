@@ -15,6 +15,7 @@ const float GRAVITY_STRENGTH = 0.003;
 const float HORIZONTAL_AIR_RESISTANCE = 0.05;
 const float VERTICAL_AIR_RESISTANCE = 0.001;
 const float MINIMUM_VELOCITY = 0.01;
+const float BOUNCE_FACTOR = 0.2;
 const float CAMERA_ZOOM = 1.0;
 const float PLAYER_MASS = 1.0;
 const int MAX_INVENTORY = 32;

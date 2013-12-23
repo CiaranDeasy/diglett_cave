@@ -54,11 +54,11 @@ void Physics::updatePlayer(sf::Vector2f f){
 }
 
 void Physics::collideX() {
-    velocity.x = 0;
+    velocity.x = -BOUNCE_FACTOR * velocity.x;
 }
 
 void Physics::collideY() {
-    velocity.y = 0;
+    velocity.y = -BOUNCE_FACTOR * velocity.y;
 }
 
 void Physics::reset() {
