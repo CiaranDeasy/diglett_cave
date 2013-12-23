@@ -149,7 +149,7 @@ void Player::initiateDigging( sf::Vector2i target ) {
     float distanceToTravelX = ( target.x + 0.5 ) - position.x;
     float diggingStepSizeX = distanceToTravelX / DIG_STEPS;
     // Calculate the step size in the Y direction.
-    float distanceToTravelY = ( target.y - bottomClip + 0.0001 ) - position.y;
+    float distanceToTravelY = ( target.y - bottomClip + 0.001 ) - position.y;
     float diggingStepSizeY = distanceToTravelY / DIG_STEPS;
     // Combine them.
     diggingStepSize = sf::Vector2f(diggingStepSizeX, diggingStepSizeY);
