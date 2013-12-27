@@ -3,32 +3,14 @@
 #include "GameWindow.h"
 
 void InventoryGUI::triggerInventoryGUI() {
-    std::vector<Item *> inventory = Player::getPlayer().getInventory();
-    int windowSizeX = ((( (inventory.size() - 1)/ INVENTORY_ITEMS_PER_COL )
-            + 1 ) * INVENTORY_ENTRY_SIZE.x ) + 2 * INVENTORY_BORDER;
-    int windowSizeY;
-
-    if( inventory.size() <= INVENTORY_ITEMS_PER_COL ) {
-        windowSizeY = ( inventory.size() * INVENTORY_ENTRY_SIZE.y ) + 
-                2 * INVENTORY_BORDER;
-    } else {
-        windowSizeY = ( INVENTORY_ITEMS_PER_COL * INVENTORY_ENTRY_SIZE.y ) + 
-                2 * INVENTORY_BORDER;
-    }
-
-    inventoryBackground = 
-            makeInventoryBackground( windowSizeX, windowSizeY );
-
     visible = true;
-    expectedInventorySize = inventory.size();
+    expectedInventorySize = Player::getPlayer().getInventory().size();
 }
 
 void InventoryGUI::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
     std::vector<Item *> inventory = Player::getPlayer().getInventory();
-    // Make a new background if items have been added.
-    if( inventory.size() != expectedInventorySize ) triggerInventoryGUI();
     // Set up the view.
     // TODO: make the view dependent on the states input.
     sf::View view = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
@@ -36,7 +18,10 @@ void InventoryGUI::draw(
     view.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
     view.zoom( 1.0 );
     target.setView( view );
+    // Draw the inventory background.
+    sf::RectangleShape *inventoryBackground = makeInventoryBackground();
     target.draw( *inventoryBackground );
+    delete inventoryBackground;
     for( int i = 0; i < inventory.size(); i++ ) {
         // Calculate the position of the sprite.
         int spritePositionX = 
@@ -69,8 +54,6 @@ void InventoryGUI::draw(
 
 void InventoryGUI::clearInventoryGUI() {
     visible = false;
-    delete inventoryBackground;
-    inventoryBackground = NULL;
 }
 
 void InventoryGUI::toggleInventoryGUI() {
@@ -78,24 +61,33 @@ void InventoryGUI::toggleInventoryGUI() {
     else triggerInventoryGUI();
 }
 
-sf::Sprite *InventoryGUI::makeInventoryBackground( int x, int y) {
-    sf::RenderTexture renderer;
-    renderer.create( x, y );
-    renderer.clear( sf::Color( 0, 0, 0, 207 ) );
-    renderer.display();
-    
-    sf::Texture texture = renderer.getTexture();
-    sf::Texture *texturePointer = new sf::Texture( texture );
-    sf::Sprite* background = new sf::Sprite( *texturePointer );
+sf::RectangleShape *InventoryGUI::makeInventoryBackground() {
+    std::vector<Item *> inventory = Player::getPlayer().getInventory();
+    int sizeX = ((( (inventory.size() - 1)/ INVENTORY_ITEMS_PER_COL )
+            + 1 ) * INVENTORY_ENTRY_SIZE.x ) + 2 * INVENTORY_BORDER;
+    int sizeY;
+
+    if( inventory.size() <= INVENTORY_ITEMS_PER_COL ) {
+        sizeY = ( inventory.size() * INVENTORY_ENTRY_SIZE.y ) + 
+                2 * INVENTORY_BORDER;
+    } else {
+        sizeY = ( INVENTORY_ITEMS_PER_COL * INVENTORY_ENTRY_SIZE.y ) + 
+                2 * INVENTORY_BORDER;
+    }
+
+    sf::RectangleShape *background = 
+        new sf::RectangleShape( sf::Vector2f( sizeX, sizeY ) );
+    background->setFillColor( sf::Color( 0, 0, 0, 207 ) );
     background->setPosition( -375, -275 );
 
     return background;
 }
+
+bool InventoryGUI::isVisible() { return visible; }
 
 InventoryGUI::InventoryGUI(void) {
     visible = false;
 }
 
 InventoryGUI::~InventoryGUI(void) {
-    if( inventoryBackground != NULL ) delete inventoryBackground;
 }

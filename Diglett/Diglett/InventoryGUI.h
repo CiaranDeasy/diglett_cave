@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class InventoryGUI : sf::Drawable {
+class InventoryGUI : public sf::Drawable {
 public:
 
     // 
@@ -16,11 +16,12 @@ public:
     InventoryGUI(void);
     ~InventoryGUI(void);
     
-    static sf::Sprite *makeInventoryBackground( int x, int y );
+    static sf::RectangleShape *makeInventoryBackground();
+
+    bool isVisible();
 
 private: 
 
-    sf::Sprite *inventoryBackground;
     bool visible;
     int expectedInventorySize;
 
