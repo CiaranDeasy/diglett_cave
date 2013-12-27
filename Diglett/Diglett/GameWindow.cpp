@@ -68,6 +68,8 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
+sf::Font GameWindow::getFont() { return debugFont; }
+
 void GameWindow::triggerInventoryGUI() {
     std::vector<Item *> inventory = Player::getPlayer().getInventory();
     int windowSizeX = ((( (inventory.size() - 1)/ INVENTORY_ITEMS_PER_COL )
