@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Tile.h"
+#include "InventoryGUI.h"
 
 class GameWindow {
 public:
@@ -12,19 +13,11 @@ public:
 
     static sf::Sprite *makeCircleSprite( sf::Color );
 
-    sf::Font getFont();
-    
-    void triggerInventoryGUI();
-
-    void drawInventoryGUI();
-
-    void clearInventoryGUI();
-
     void toggleInventoryGUI();
 
-    static sf::Sprite *makeInventoryBackground( int x, int y );
+    sf::Font& getFont();
     
-     void GameWindow::mainLoop();
+    void GameWindow::mainLoop();
     ~GameWindow(void);
     void toggleDebugOverlay();
 private: 
@@ -33,13 +26,11 @@ private:
     sf::RenderWindow *window;
     sf::Sprite *playerSprite;
     sf::Sprite *debugOverlayBackground;
-    sf::Sprite *inventoryBackground;
     sf::View worldView;
     sf::View interfaceView;
     sf::Font debugFont;
     bool showDebugOverlay;
-    static bool inventoryVisible;
-    int expectedInventorySize;
+    InventoryGUI inventoryGUI;
 
     void createSprites();
     sf::Sprite *makeDebugOverlayBackground();

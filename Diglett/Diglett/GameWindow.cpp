@@ -68,75 +68,11 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
-sf::Font GameWindow::getFont() { return debugFont; }
-
-void GameWindow::triggerInventoryGUI() {
-    std::vector<Item *> inventory = Player::getPlayer().getInventory();
-    int windowSizeX = ((( (inventory.size() - 1)/ INVENTORY_ITEMS_PER_COL )
-            + 1 ) * INVENTORY_ENTRY_SIZE.x ) + 2 * INVENTORY_BORDER;
-    int windowSizeY;
-
-    if( inventory.size() <= INVENTORY_ITEMS_PER_COL ) {
-        windowSizeY = ( inventory.size() * INVENTORY_ENTRY_SIZE.y ) + 
-                2 * INVENTORY_BORDER;
-    } else {
-        windowSizeY = ( INVENTORY_ITEMS_PER_COL * INVENTORY_ENTRY_SIZE.y ) + 
-                2 * INVENTORY_BORDER;
-    }
-
-    inventoryBackground = 
-            makeInventoryBackground( windowSizeX, windowSizeY );
-
-    inventoryVisible = true;
-    expectedInventorySize = inventory.size();
-}
-
-void GameWindow::drawInventoryGUI() {
-    std::vector<Item *> inventory = Player::getPlayer().getInventory();
-    // Make a new background if items have been added.
-    if( inventory.size() != expectedInventorySize ) triggerInventoryGUI();
-    // Draw the inventory background.
-    window->setView( interfaceView );
-    window->draw( *inventoryBackground );
-    for( int i = 0; i < inventory.size(); i++ ) {
-        // Calculate the position of the sprite.
-        int spritePositionX = 
-            -(WINDOW_RESOLUTION.x /2) + INVENTORY_POSITION.x + INVENTORY_BORDER
-                + ( i / INVENTORY_ITEMS_PER_COL ) * INVENTORY_ENTRY_SIZE.x;
-        int spritePositionY =
-            -(WINDOW_RESOLUTION.y /2) + INVENTORY_POSITION.y + INVENTORY_BORDER
-                + ( i % INVENTORY_ITEMS_PER_COL ) * INVENTORY_ENTRY_SIZE.y;
-        // Draw the sprite.
-        inventory[i]->getSprite()->setPosition( 
-                spritePositionX, spritePositionY );
-        window->draw( *inventory[i]->getSprite() );
-        // Make the text.
-        sf::Text text;
-        text.setFont( debugFont );
-        text.setCharacterSize( INVENTORY_TEXT_SIZE );
-        text.setColor( sf::Color:: White );
-        text.setString( inventory[i]->getName() );
-        // Position the text.
-        text.setPosition(
-          spritePositionX + PIXELS_PER_ITEM_SPRITE + 
-            INVENTORY_SPRITE_SEPARATION, 
-          spritePositionY + (PIXELS_PER_ITEM_SPRITE / 2) - 
-            (INVENTORY_TEXT_SIZE / 2) );
-        // Draw the text.
-        window->draw( text );
-    }
-}
-
-void GameWindow::clearInventoryGUI() {
-    inventoryVisible = false;
-    delete inventoryBackground;
-    inventoryBackground = NULL;
-}
-
 void GameWindow::toggleInventoryGUI() {
-    if( inventoryVisible ) clearInventoryGUI();
-    else triggerInventoryGUI();
+    inventoryGUI.toggleInventoryGUI();
 }
+
+sf::Font& GameWindow::getFont() { return debugFont; }
 
 sf::Sprite *GameWindow::makeDebugOverlayBackground() {
     sf::RenderTexture renderer;
@@ -150,20 +86,6 @@ sf::Sprite *GameWindow::makeDebugOverlayBackground() {
     debugOverlay->setPosition( -400, 200 );
 
     return debugOverlay;
-}
-
-sf::Sprite *GameWindow::makeInventoryBackground( int x, int y) {
-    sf::RenderTexture renderer;
-    renderer.create( x, y );
-    renderer.clear( sf::Color( 0, 0, 0, 207 ) );
-    renderer.display();
-    
-    sf::Texture texture = renderer.getTexture();
-    sf::Texture *texturePointer = new sf::Texture( texture );
-    sf::Sprite* background = new sf::Sprite( *texturePointer );
-    background->setPosition( -375, -275 );
-
-    return background;
 }
 
 void GameWindow::drawDebugOverlay() {
@@ -209,9 +131,9 @@ GameWindow::GameWindow(void) {
         exit(1);
     }
     showDebugOverlay = false;
-}
 
-bool GameWindow::inventoryVisible = false;
+    inventoryGUI = InventoryGUI();
+}
 
 GameWindow::~GameWindow(void) {
 }
