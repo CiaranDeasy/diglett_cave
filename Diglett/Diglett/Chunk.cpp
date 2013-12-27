@@ -31,13 +31,13 @@ Tile Chunk::randomTileType(int depth){
     int i = rand() % 20;
     if ( i <= 1 )
         return Tile( 0 ); //Air
-    else if ( i > 1 && i < Chunk::saceledDepth(depth) )
+    else if ( i > 1 && i < Chunk::scaledDepth(depth) )
         return Tile( 2 ); //dirt
     else
         return Tile( 3 ); //gold
 }
 
-int Chunk::saceledDepth( int depth ){
+int Chunk::scaledDepth( int depth ){
     if(depth >= -20)
         return 20;
     else if(depth > -80)

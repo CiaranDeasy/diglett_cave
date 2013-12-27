@@ -28,6 +28,6 @@ private:
 
     Tile randomTileType( int depth );
 
-    int saceledDepth( int depth );
+    int scaledDepth( int depth );
 };
 
