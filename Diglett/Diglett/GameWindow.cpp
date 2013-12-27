@@ -69,7 +69,7 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
 }
 
 void GameWindow::toggleInventoryGUI() {
-    inventoryGUI.toggleInventoryGUI();
+    inventoryGUI.toggle();
 }
 
 sf::Font& GameWindow::getFont() { return debugFont; }
