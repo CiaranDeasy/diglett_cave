@@ -24,6 +24,8 @@ private:
     static const sf::Vector2i DEFAULT_ENTRY_SIZE;
     static const int DEFAULT_SPRITE_SEPARATION;
     static const int DEFAULT_TEXT_SIZE;
+    static const sf::Color DEFAULT_BACKGROUND_COLOR;
+    static const sf::Color DEFAULT_TEXT_COLOR;
 
     // Number of pixels between edges of inventory GUI and its contents.
     int border;
@@ -38,8 +40,9 @@ private:
     // Number of pixels separating an item sprite and its name.
     int spriteSeparation;
 
-    // Size of text in inventory.
     int textSize;
+    sf::Color backgroundColor;
+    sf::Color textColor;
 
     bool visible;
     int expectedInventorySize;

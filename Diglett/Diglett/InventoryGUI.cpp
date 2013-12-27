@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "GameWindow.h"
 
-
 InventoryGUI::InventoryGUI(void) {
     visible = false;
     border = DEFAULT_BORDER;
@@ -10,6 +9,8 @@ InventoryGUI::InventoryGUI(void) {
     entrySize = DEFAULT_ENTRY_SIZE;
     spriteSeparation = DEFAULT_SPRITE_SEPARATION;
     textSize = DEFAULT_TEXT_SIZE;
+    backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    textColor = DEFAULT_TEXT_COLOR;
 }
 
 InventoryGUI::~InventoryGUI(void) {
@@ -56,7 +57,7 @@ void InventoryGUI::draw(
         // TODO: make the font internal to InventoryGUI.
         text.setFont( GameWindow::getGameWindow()->getFont() );
         text.setCharacterSize( textSize );
-        text.setColor( sf::Color:: White );
+        text.setColor( textColor );
         text.setString( inventory[i]->getName() );
         // Position the text.
         text.setPosition(
@@ -75,6 +76,9 @@ const sf::Vector2i InventoryGUI::DEFAULT_ENTRY_SIZE =
         sf::Vector2i( 128, 19 );
 const int InventoryGUI::DEFAULT_SPRITE_SEPARATION = 6;
 const int InventoryGUI::DEFAULT_TEXT_SIZE = 12;
+const sf::Color InventoryGUI::DEFAULT_BACKGROUND_COLOR = 
+        sf::Color( 0, 0, 0, 207 );
+const sf::Color InventoryGUI::DEFAULT_TEXT_COLOR = sf::Color::White;
 
 sf::RectangleShape *InventoryGUI::makeInventoryBackground() const {
     std::vector<Item *> inventory = Player::getPlayer().getInventory();
@@ -90,7 +94,7 @@ sf::RectangleShape *InventoryGUI::makeInventoryBackground() const {
 
     sf::RectangleShape *background = 
         new sf::RectangleShape( sf::Vector2f( sizeX, sizeY ) );
-    background->setFillColor( sf::Color( 0, 0, 0, 207 ) );
+    background->setFillColor( backgroundColor );
     background->setPosition( -375, -275 );
 
     return background;
