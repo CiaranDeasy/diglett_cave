@@ -133,6 +133,12 @@ bool Player::addItem( Item *item ) {
     return true;
 }
 
+bool Player::addMoney( int amount ) {
+    if( -amount > money ) return false;
+    money += amount;
+    return true;
+}
+
 Player Player::singleton = Player();
 
 void Player::initiateDigging( sf::Vector2i target ) {
@@ -166,6 +172,7 @@ Player::Player(void) {
     bottomClip = -0.45;
     leftClip = -0.45;
     rightClip = 0.45;
+    money = DEFAULT_MONEY;
 }
 
 Player::~Player(void) {

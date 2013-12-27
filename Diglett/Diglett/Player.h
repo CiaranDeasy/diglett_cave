@@ -18,6 +18,12 @@ public:
 
     std::vector<Item *>& getInventory() { return inventory; }
 
+    // Increases the player's money by the specified amount. Negative input
+    // decreases money. If money is decreased by an amount that would make it 
+    // negative, no change is made, and the return value is false, otherwise 
+    // returns true.
+    bool addMoney( int amount );
+
     ~Player(void);
 private:
     enum Direction {
@@ -53,6 +59,7 @@ private:
     float leftClip;
     float rightClip;
     std::vector<Item *> inventory;
+    int money;
     Direction classifyDirectionOfMovement(
             float stickPositionX, float stickPositionY);
     void initiateDigging( sf::Vector2i target );
