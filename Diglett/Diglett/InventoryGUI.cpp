@@ -2,6 +2,13 @@
 #include "Player.h"
 #include "GameWindow.h"
 
+const int InventoryGUI::DEFAULT_INVENTORY_BORDER = 10;
+const int InventoryGUI::DEFAULT_INVENTORY_ITEMS_PER_COL = 8;
+const sf::Vector2i InventoryGUI::DEFAULT_INVENTORY_ENTRY_SIZE = 
+        sf::Vector2i( 128, 19 );
+const int InventoryGUI::DEFAULT_INVENTORY_SPRITE_SEPARATION = 6;
+const int InventoryGUI::DEFAULT_INVENTORY_TEXT_SIZE = 12;
+
 void InventoryGUI::triggerInventoryGUI() {
     visible = true;
     expectedInventorySize = Player::getPlayer().getInventory().size();
@@ -25,11 +32,11 @@ void InventoryGUI::draw(
     for( int i = 0; i < inventory.size(); i++ ) {
         // Calculate the position of the sprite.
         int spritePositionX = 
-            -(WINDOW_RESOLUTION.x /2) + INVENTORY_POSITION.x + INVENTORY_BORDER
-                + ( i / INVENTORY_ITEMS_PER_COL ) * INVENTORY_ENTRY_SIZE.x;
+            -(WINDOW_RESOLUTION.x /2) + INVENTORY_POSITION.x + inventoryBorder
+                + ( i / inventoryItemsPerCol ) * inventoryEntrySize.x;
         int spritePositionY =
-            -(WINDOW_RESOLUTION.y /2) + INVENTORY_POSITION.y + INVENTORY_BORDER
-                + ( i % INVENTORY_ITEMS_PER_COL ) * INVENTORY_ENTRY_SIZE.y;
+            -(WINDOW_RESOLUTION.y /2) + INVENTORY_POSITION.y + inventoryBorder
+                + ( i % inventoryItemsPerCol ) * inventoryEntrySize.y;
         // Draw the sprite.
         inventory[i]->getSprite()->setPosition( 
                 spritePositionX, spritePositionY );
@@ -38,15 +45,15 @@ void InventoryGUI::draw(
         sf::Text text;
         // TODO: make the font internal to InventoryGUI.
         text.setFont( GameWindow::getGameWindow()->getFont() );
-        text.setCharacterSize( INVENTORY_TEXT_SIZE );
+        text.setCharacterSize( inventoryTextSize );
         text.setColor( sf::Color:: White );
         text.setString( inventory[i]->getName() );
         // Position the text.
         text.setPosition(
           spritePositionX + PIXELS_PER_ITEM_SPRITE + 
-            INVENTORY_SPRITE_SEPARATION, 
+            inventorySpriteSeparation, 
           spritePositionY + (PIXELS_PER_ITEM_SPRITE / 2) - 
-            (INVENTORY_TEXT_SIZE / 2) );
+            (inventoryTextSize / 2) );
         // Draw the text.
         target.draw( text );
     }
@@ -61,18 +68,18 @@ void InventoryGUI::toggleInventoryGUI() {
     else triggerInventoryGUI();
 }
 
-sf::RectangleShape *InventoryGUI::makeInventoryBackground() {
+sf::RectangleShape *InventoryGUI::makeInventoryBackground() const {
     std::vector<Item *> inventory = Player::getPlayer().getInventory();
-    int sizeX = ((( (inventory.size() - 1)/ INVENTORY_ITEMS_PER_COL )
-            + 1 ) * INVENTORY_ENTRY_SIZE.x ) + 2 * INVENTORY_BORDER;
+    int sizeX = ((( (inventory.size() - 1)/ inventoryItemsPerCol )
+            + 1 ) * inventoryEntrySize.x ) + 2 * inventoryBorder;
     int sizeY;
 
-    if( inventory.size() <= INVENTORY_ITEMS_PER_COL ) {
-        sizeY = ( inventory.size() * INVENTORY_ENTRY_SIZE.y ) + 
-                2 * INVENTORY_BORDER;
+    if( inventory.size() <= inventoryItemsPerCol ) {
+        sizeY = ( inventory.size() * inventoryEntrySize.y ) + 
+                2 * inventoryBorder;
     } else {
-        sizeY = ( INVENTORY_ITEMS_PER_COL * INVENTORY_ENTRY_SIZE.y ) + 
-                2 * INVENTORY_BORDER;
+        sizeY = ( inventoryItemsPerCol * inventoryEntrySize.y ) + 
+                2 * inventoryBorder;
     }
 
     sf::RectangleShape *background = 
@@ -87,6 +94,11 @@ bool InventoryGUI::isVisible() { return visible; }
 
 InventoryGUI::InventoryGUI(void) {
     visible = false;
+    inventoryBorder = DEFAULT_INVENTORY_BORDER;
+    inventoryItemsPerCol = DEFAULT_INVENTORY_ITEMS_PER_COL;
+    inventoryEntrySize = DEFAULT_INVENTORY_ENTRY_SIZE;
+    inventorySpriteSeparation = DEFAULT_INVENTORY_SPRITE_SEPARATION;
+    inventoryTextSize = DEFAULT_INVENTORY_TEXT_SIZE;
 }
 
 InventoryGUI::~InventoryGUI(void) {
