@@ -78,7 +78,8 @@ const int InventoryGUI::DEFAULT_SPRITE_SEPARATION = 6;
 const int InventoryGUI::DEFAULT_TEXT_SIZE = 12;
 const sf::Color InventoryGUI::DEFAULT_BACKGROUND_COLOR = 
         sf::Color( 0, 0, 0, 207 );
-const sf::Color InventoryGUI::DEFAULT_TEXT_COLOR = sf::Color::White;
+const sf::Color InventoryGUI::DEFAULT_TEXT_COLOR = 
+        sf::Color( 255, 255, 255, 255 );
 
 sf::RectangleShape *InventoryGUI::makeInventoryBackground() const {
     std::vector<Item *> inventory = Player::getPlayer().getInventory();
