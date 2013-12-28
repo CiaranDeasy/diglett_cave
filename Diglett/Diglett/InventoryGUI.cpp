@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "GameWindow.h"
 
-InventoryGUI::InventoryGUI(void) {
+InventoryGUI::InventoryGUI( sf::Font& font ) {
     visible = false;
     border = DEFAULT_BORDER;
     itemsPerCol = DEFAULT_ITEMS_PER_COL;
@@ -11,6 +11,7 @@ InventoryGUI::InventoryGUI(void) {
     textSize = DEFAULT_TEXT_SIZE;
     backgroundColor = DEFAULT_BACKGROUND_COLOR;
     textColor = DEFAULT_TEXT_COLOR;
+    this->font = font;
 }
 
 InventoryGUI::~InventoryGUI(void) {
@@ -54,8 +55,7 @@ void InventoryGUI::draw(
         target.draw( *inventory[i]->getSprite() );
         // Make the text.
         sf::Text text;
-        // TODO: make the font internal to InventoryGUI.
-        text.setFont( GameWindow::getGameWindow()->getFont() );
+        text.setFont( font );
         text.setCharacterSize( textSize );
         text.setColor( textColor );
         text.setString( inventory[i]->getName() );

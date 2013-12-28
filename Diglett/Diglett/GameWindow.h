@@ -14,8 +14,6 @@ public:
     static sf::Sprite *makeCircleSprite( sf::Color );
 
     void toggleInventoryGUI();
-
-    sf::Font& getFont();
     
     void GameWindow::mainLoop();
     ~GameWindow(void);
@@ -28,7 +26,7 @@ private:
     sf::Sprite *debugOverlayBackground;
     sf::View worldView;
     sf::View interfaceView;
-    sf::Font debugFont;
+    sf::Font font;
     bool showDebugOverlay;
     InventoryGUI inventoryGUI;
 

@@ -72,8 +72,6 @@ void GameWindow::toggleInventoryGUI() {
     inventoryGUI.toggle();
 }
 
-sf::Font& GameWindow::getFont() { return debugFont; }
-
 sf::Sprite *GameWindow::makeDebugOverlayBackground() {
     sf::RenderTexture renderer;
     renderer.create( 120, 100 );
@@ -91,7 +89,7 @@ sf::Sprite *GameWindow::makeDebugOverlayBackground() {
 void GameWindow::drawDebugOverlay() {
 
     sf::Text text;
-    text.setFont( debugFont );
+    text.setFont( font );
     float xPos = Player::getPlayer().getPosition().x;
     std::ostringstream o;
     o << "Player Position = \n(" << Player::getPlayer().getPosition().x 
@@ -106,7 +104,7 @@ void GameWindow::drawDebugOverlay() {
     window->draw( text );
 }
 
-GameWindow::GameWindow(void) {
+GameWindow::GameWindow(void) : inventoryGUI( font ) {
     window = new sf::RenderWindow( 
             sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), 
             WINDOW_TITLE );
@@ -126,13 +124,15 @@ GameWindow::GameWindow(void) {
     Tile::initialiseTypes();
     Item::initialiseTypes();
 
-    if ( !debugFont.loadFromFile( DEBUG_FONT ) ) {
+    // Load a font to use for GUI text.
+    if ( !font.loadFromFile( DEBUG_FONT ) ) {
         std::cerr << "Failed to load font: " << DEBUG_FONT << "\n";
         exit(1);
     }
+
     showDebugOverlay = false;
 
-    inventoryGUI = InventoryGUI();
+    inventoryGUI = InventoryGUI( font );
 }
 
 GameWindow::~GameWindow(void) {
