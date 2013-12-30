@@ -22,14 +22,16 @@ void InventoryGUI::toggle() {
         visible = false;
     } else {
         visible = true;
-        expectedInventorySize = Player::getPlayer().getInventory().size();
+        expectedInventorySize = 
+                Player::getPlayer().getInventory().getCurrentSize();
     }
 }
 
 void InventoryGUI::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
-    std::vector<Item *> inventory = Player::getPlayer().getInventory();
+    std::vector<Item *> inventory = 
+            Player::getPlayer().getInventory().getContents();
     // Set up the view.
     // TODO: make the view dependent on the states input.
     sf::View view = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
@@ -82,7 +84,8 @@ const sf::Color InventoryGUI::DEFAULT_TEXT_COLOR =
         sf::Color( 255, 255, 255, 255 );
 
 sf::RectangleShape *InventoryGUI::makeInventoryBackground() const {
-    std::vector<Item *> inventory = Player::getPlayer().getInventory();
+    std::vector<Item *> inventory = 
+            Player::getPlayer().getInventory().getContents();
     int sizeX = ((( (inventory.size() - 1)/ itemsPerCol )
             + 1 ) * entrySize.x ) + 2 * border;
     int sizeY;

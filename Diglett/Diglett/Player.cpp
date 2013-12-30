@@ -126,13 +126,6 @@ void Player::move( float x, float y ) {
     else position = sf::Vector2f( newX, newY );
 }
 
-bool Player::addItem( Item *item ) {
-    if( inventory.size() == MAX_INVENTORY ) return false;
-    if( item->getName() == "NULL" ) return true;
-    inventory.push_back( item );
-    return true;
-}
-
 bool Player::addMoney( int amount ) {
     if( -amount > money ) return false;
     money += amount;

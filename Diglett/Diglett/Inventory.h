@@ -13,6 +13,9 @@ public:
     // added due to full inventory.
     bool addItem( T item );
 
+    std::vector<T> getContents();
+    int getCurrentSize();
+
 private: 
     static const unsigned int DEFAULT_MAX_INVENTORY;
     
@@ -23,3 +26,26 @@ private:
 
 };
 
+template <class T> Inventory<T>::Inventory( int maxInventory ) {
+    this->maxInventory = maxInventory;
+}
+
+template <class T> Inventory<T>::~Inventory(void) {
+}
+
+template <class T> bool Inventory<T>::addItem( T item ) {
+    if( contents.size() == maxInventory ) return false;
+    if( item->getName() == "NULL" ) return true;
+    contents.push_back( item );
+    return true;
+}
+
+template <class T> std::vector<T> Inventory<T>::getContents() {
+    return contents;
+}
+
+template <class T> int Inventory<T>::getCurrentSize() {
+    return contents.size();
+}
+
+template <class T> const unsigned int Inventory<T>::DEFAULT_MAX_INVENTORY = 32;

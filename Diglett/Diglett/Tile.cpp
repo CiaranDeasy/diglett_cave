@@ -16,7 +16,8 @@ Tile::~Tile(void) {
 
 void Tile::dig() {
     // Add the item to the player's inventory.
-    Player::getPlayer().addItem( this->lookupType( type ).createItem() );
+    Player::getPlayer().getInventory().
+            addItem( this->lookupType( type ).createItem() );
     // And change this block to air.
     type = 0; //Air
 }

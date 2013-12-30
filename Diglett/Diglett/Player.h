@@ -3,6 +3,7 @@
 #include <vector>
 #include "Constants.h"
 #include "Item.h"
+#include "Inventory.h"
 
 class Player {
 public:
@@ -12,11 +13,7 @@ public:
     // Number of ticks the player has spent on the ground.
     int onGround;
 
-    // Adds the given Item to the player's inventory. Returns false if
-    // the Item is not added due to full inventory.
-    bool addItem( Item *item );
-
-    std::vector<Item *>& getInventory() { return inventory; }
+    Inventory<Item *>& getInventory() { return inventory; }
 
     // Increases the player's money by the specified amount. Negative input
     // decreases money. If money is decreased by an amount that would make it 
@@ -58,7 +55,7 @@ private:
     float bottomClip;
     float leftClip;
     float rightClip;
-    std::vector<Item *> inventory;
+    Inventory<Item *> inventory;
     int money;
     Direction classifyDirectionOfMovement(
             float stickPositionX, float stickPositionY);
