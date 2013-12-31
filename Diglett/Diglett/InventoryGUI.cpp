@@ -18,11 +18,7 @@ InventoryGUI::~InventoryGUI(void) {
 }
 
 void InventoryGUI::toggle() {
-    if( visible ) {
-        visible = false;
-    } else {
-        visible = true;
-    }
+    visible = !visible;
 }
 
 void InventoryGUI::draw( 
