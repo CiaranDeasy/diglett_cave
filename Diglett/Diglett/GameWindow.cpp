@@ -104,7 +104,8 @@ void GameWindow::drawDebugOverlay() {
     window->draw( text );
 }
 
-GameWindow::GameWindow(void) : inventoryGUI( font ) {
+GameWindow::GameWindow(void) : 
+            inventoryGUI( font, Player::getPlayer().getInventory() ) {
     window = new sf::RenderWindow( 
             sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), 
             WINDOW_TITLE );
@@ -131,8 +132,6 @@ GameWindow::GameWindow(void) : inventoryGUI( font ) {
     }
 
     showDebugOverlay = false;
-
-    inventoryGUI = InventoryGUI( font );
 }
 
 GameWindow::~GameWindow(void) {

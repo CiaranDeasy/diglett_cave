@@ -13,8 +13,8 @@ public:
     // added due to full inventory.
     bool addItem( T item );
 
-    std::vector<T> getContents();
-    int getCurrentSize();
+    std::vector<T> getContents() const;
+    int getCurrentSize() const;
 
 private: 
     static const unsigned int DEFAULT_MAX_INVENTORY;
@@ -40,11 +40,11 @@ template <class T> bool Inventory<T>::addItem( T item ) {
     return true;
 }
 
-template <class T> std::vector<T> Inventory<T>::getContents() {
+template <class T> std::vector<T> Inventory<T>::getContents() const {
     return contents;
 }
 
-template <class T> int Inventory<T>::getCurrentSize() {
+template <class T> int Inventory<T>::getCurrentSize() const {
     return contents.size();
 }
 

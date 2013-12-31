@@ -2,7 +2,8 @@
 #include "Player.h"
 #include "GameWindow.h"
 
-InventoryGUI::InventoryGUI( sf::Font& font ) {
+InventoryGUI::InventoryGUI( sf::Font& font, Inventory<Item *>& inventory ) : 
+        inventory(inventory), font(font) {
     visible = false;
     border = DEFAULT_BORDER;
     itemsPerCol = DEFAULT_ITEMS_PER_COL;
@@ -11,7 +12,6 @@ InventoryGUI::InventoryGUI( sf::Font& font ) {
     textSize = DEFAULT_TEXT_SIZE;
     backgroundColor = DEFAULT_BACKGROUND_COLOR;
     textColor = DEFAULT_TEXT_COLOR;
-    this->font = font;
 }
 
 InventoryGUI::~InventoryGUI(void) {
@@ -22,16 +22,13 @@ void InventoryGUI::toggle() {
         visible = false;
     } else {
         visible = true;
-        expectedInventorySize = 
-                Player::getPlayer().getInventory().getCurrentSize();
     }
 }
 
 void InventoryGUI::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
-    std::vector<Item *> inventory = 
-            Player::getPlayer().getInventory().getContents();
+    std::vector<Item *> contents = inventory.getContents();
     // Set up the view.
     // TODO: make the view dependent on the states input.
     sf::View view = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
@@ -40,10 +37,11 @@ void InventoryGUI::draw(
     view.zoom( 1.0 );
     target.setView( view );
     // Draw the inventory background.
-    sf::RectangleShape *inventoryBackground = makeInventoryBackground();
+    sf::RectangleShape *inventoryBackground = 
+            makeInventoryBackground( contents );
     target.draw( *inventoryBackground );
     delete inventoryBackground;
-    for( int i = 0; i < inventory.size(); i++ ) {
+    for( int i = 0; i < inventory.getCurrentSize(); i++ ) {
         // Calculate the position of the sprite.
         int spritePositionX = 
             -(WINDOW_RESOLUTION.x /2) + INVENTORY_POSITION.x + border
@@ -52,15 +50,15 @@ void InventoryGUI::draw(
             -(WINDOW_RESOLUTION.y /2) + INVENTORY_POSITION.y + border
                 + ( i % itemsPerCol ) * entrySize.y;
         // Draw the sprite.
-        inventory[i]->getSprite()->setPosition( 
+        contents[i]->getSprite()->setPosition( 
                 spritePositionX, spritePositionY );
-        target.draw( *inventory[i]->getSprite() );
+        target.draw( *contents[i]->getSprite() );
         // Make the text.
         sf::Text text;
         text.setFont( font );
         text.setCharacterSize( textSize );
         text.setColor( textColor );
-        text.setString( inventory[i]->getName() );
+        text.setString( contents[i]->getName() );
         // Position the text.
         text.setPosition(
           spritePositionX + PIXELS_PER_ITEM_SPRITE + spriteSeparation, 
@@ -83,15 +81,14 @@ const sf::Color InventoryGUI::DEFAULT_BACKGROUND_COLOR =
 const sf::Color InventoryGUI::DEFAULT_TEXT_COLOR = 
         sf::Color( 255, 255, 255, 255 );
 
-sf::RectangleShape *InventoryGUI::makeInventoryBackground() const {
-    std::vector<Item *> inventory = 
-            Player::getPlayer().getInventory().getContents();
-    int sizeX = ((( (inventory.size() - 1)/ itemsPerCol )
+sf::RectangleShape *InventoryGUI::makeInventoryBackground( 
+            std::vector<Item *>& contents ) const {
+    int sizeX = ((( (contents.size() - 1)/ itemsPerCol )
             + 1 ) * entrySize.x ) + 2 * border;
     int sizeY;
 
-    if( inventory.size() <= itemsPerCol ) {
-        sizeY = ( inventory.size() * entrySize.y ) + 2 * border;
+    if( contents.size() <= itemsPerCol ) {
+        sizeY = ( contents.size() * entrySize.y ) + 2 * border;
     } else {
         sizeY = ( itemsPerCol * entrySize.y ) + 2 * border;
     }

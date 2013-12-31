@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Player.h"
 
 class InventoryGUI : public sf::Drawable {
 public:
 
-    InventoryGUI( sf::Font& font );
-    ~InventoryGUI(void);
-    
+    InventoryGUI( sf::Font& font, Inventory<Item *>& inventory );
+    ~InventoryGUI();
+
     // Toggles whether the inventory is visible in the game window.
     void toggle();
 
@@ -27,6 +28,9 @@ private:
     static const sf::Color DEFAULT_BACKGROUND_COLOR;
     static const sf::Color DEFAULT_TEXT_COLOR;
 
+    // The player inventory to be displayed.
+    Inventory<Item *>& inventory;
+
     // Number of pixels between edges of inventory GUI and its contents.
     int border;
 
@@ -43,13 +47,13 @@ private:
     int textSize;
     sf::Color backgroundColor;
     sf::Color textColor;
-    sf::Font font;
+    sf::Font& font;
 
     bool visible;
-    int expectedInventorySize;
     
     // Creates a rectangular background for the GUI.
-    sf::RectangleShape *makeInventoryBackground() const;
+    sf::RectangleShape *makeInventoryBackground( 
+            std::vector<Item *>& contents ) const;
 
 };
 
