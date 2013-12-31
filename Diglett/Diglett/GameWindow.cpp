@@ -18,6 +18,10 @@ void GameWindow::toggleDebugOverlay() {
     showDebugOverlay = !showDebugOverlay;
 }
 
+void GameWindow::triggerNewItemVisual( Item *item ) {
+    newItemVisuals.push_back( new NewItemVisual( font, item ) );
+}
+
 void GameWindow::createSprites() {
     playerSprite = makeCircleSprite( sf::Color::Magenta );
     playerSprite->setOrigin( 32, 32 );

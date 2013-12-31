@@ -15,10 +15,14 @@ Tile::~Tile(void) {
 }
 
 void Tile::dig() {
-    // Add the item to the player's inventory.
-    Player::getPlayer().getInventory().
-            addItem( this->lookupType( type ).createItem() );
-    // And change this block to air.
+    Item *item = this->lookupType( type ).createItem();
+    if( item->getName() != "NULL" ) {
+        // Add the item to the player's inventory.
+        Player::getPlayer().getInventory().addItem( item );
+        // Trigger the new item visual.
+        GameWindow::getGameWindow()->triggerNewItemVisual( item );
+    }
+    // Change this block to air.
     type = 0; //Air
 }
 

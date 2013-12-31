@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include "Tile.h"
 #include "InventoryGUI.h"
+#include "Item.h"
+#include "NewItemVisual.h"
+#include <vector>
 
 class GameWindow {
 public:
@@ -18,6 +21,8 @@ public:
     void GameWindow::mainLoop();
     ~GameWindow(void);
     void toggleDebugOverlay();
+
+    void triggerNewItemVisual( Item *item );
 private: 
 
     static GameWindow *singleton;
@@ -29,6 +34,7 @@ private:
     sf::Font font;
     bool showDebugOverlay;
     InventoryGUI inventoryGUI;
+    std::vector<NewItemVisual *> newItemVisuals;
 
     void createSprites();
     sf::Sprite *makeDebugOverlayBackground();
