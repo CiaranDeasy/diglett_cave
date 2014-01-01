@@ -1,6 +1,7 @@
 #include "InventoryGUI.h"
 #include "Player.h"
 #include "GameWindow.h"
+#include "Constants.h"
 
 InventoryGUI::InventoryGUI( sf::Font& font, Inventory<Item *>& inventory ) : 
         inventory(inventory), font(font) {

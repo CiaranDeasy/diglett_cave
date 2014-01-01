@@ -1,19 +1,19 @@
 #pragma once
 #include <SFML/System.hpp>
 #include <vector>
-#include "Constants.h"
 #include "Item.h"
 #include "Inventory.h"
 
 class Player {
 public:
     static Player& getPlayer();
+
+    ~Player(void);
+
     sf::Vector2f getPosition();
     void move( float x, float y );
-    // Number of ticks the player has spent on the ground.
-    int onGround;
 
-    Inventory<Item *>& getInventory() { return inventory; }
+    Inventory<Item *>& getInventory();
 
     // Increases the player's money by the specified amount. Negative input
     // decreases money. If money is decreased by an amount that would make it 
@@ -21,7 +21,6 @@ public:
     // returns true.
     bool addMoney( int amount );
 
-    ~Player(void);
 private:
     enum Direction {
         North = 0,
@@ -42,11 +41,16 @@ private:
         Northnorthwest = 15
     };
     static Player singleton;
+
     // Values used to track the digging state.
     bool digging;
     sf::Vector2f diggingStepSize;
     int diggingStepsRemaining;
     sf::Vector2i diggingTowards;
+
+    // Number of ticks the player has spent on the ground.
+    int onGround;
+
     // The player's position is their centre. Adding a "Clip" to the 
     // appropriate component of the position gives a line of the player's 
     // bounding box.
@@ -55,11 +59,20 @@ private:
     float bottomClip;
     float leftClip;
     float rightClip;
+
     Inventory<Item *> inventory;
     int money;
-    Direction classifyDirectionOfMovement(
-            float stickPositionX, float stickPositionY);
-    void initiateDigging( sf::Vector2i target );
-    void processDiggingStep();
+
     Player(void);
+
+    // Classifies the direction in which the player is moving as one of the 16
+    // cardinal directions.
+    Direction classifyDirectionOfMovement( float deltaX, float deltaY);
+
+    // Sets the digging state and initialises the digging-related variables.
+    void initiateDigging( sf::Vector2i target );
+
+    // Moves the player towards the tile that they are digging. On the final 
+    // step, unsets the digging state and updates variables appropriately.
+    void processDiggingStep();
 };

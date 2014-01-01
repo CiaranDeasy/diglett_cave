@@ -1,15 +1,18 @@
 #include "Player.h"
 #include <iostream>
-#include "Tile.h"
 #include "WorldData.h"
 #include "InputHandler.h"
 #include "Physics.h"
+#include "Constants.h"
 
 #define TAN30 0.57735
 #define TAN60 1.73205
 
 Player& Player::getPlayer() {
     return singleton;
+}
+
+Player::~Player(void) {
 }
 
 sf::Vector2f Player::getPosition() {
@@ -126,6 +129,8 @@ void Player::move( float x, float y ) {
     else position = sf::Vector2f( newX, newY );
 }
 
+Inventory<Item *>& Player::getInventory() { return inventory; }
+
 bool Player::addMoney( int amount ) {
     if( -amount > money ) return false;
     money += amount;
@@ -134,31 +139,6 @@ bool Player::addMoney( int amount ) {
 
 Player Player::singleton = Player();
 
-void Player::initiateDigging( sf::Vector2i target ) {
-    digging = true;
-    // Calculate the step size in the X direction.
-    float distanceToTravelX = ( target.x + 0.5 ) - position.x;
-    float diggingStepSizeX = distanceToTravelX / DIG_STEPS;
-    // Calculate the step size in the Y direction.
-    float distanceToTravelY = ( target.y - bottomClip + 0.001 ) - position.y;
-    float diggingStepSizeY = distanceToTravelY / DIG_STEPS;
-    // Combine them.
-    diggingStepSize = sf::Vector2f(diggingStepSizeX, diggingStepSizeY);
-    diggingStepsRemaining = DIG_STEPS;
-    diggingTowards = target;
-}
-
-void Player::processDiggingStep() {
-    position += diggingStepSize;
-    diggingStepsRemaining--;
-    if (diggingStepsRemaining == 0) {
-        digging = false;
-        Physics::getPhysics().reset();
-        // Dig the tile.
-        WorldData::getWorldData().getTile( diggingTowards ).dig();
-    }
-}
-
 Player::Player(void) {
     position = sf::Vector2f( 1.0f, 1.0f );
     topClip = 0.45;
@@ -166,9 +146,6 @@ Player::Player(void) {
     leftClip = -0.45;
     rightClip = 0.45;
     money = DEFAULT_MONEY;
-}
-
-Player::~Player(void) {
 }
 
 Player::Direction Player::classifyDirectionOfMovement(
@@ -208,5 +185,30 @@ Player::Direction Player::classifyDirectionOfMovement(
             else if( tan > TAN60 ) return Northnorthwest;
             else return Northwest;
         }
+    }
+}
+
+void Player::initiateDigging( sf::Vector2i target ) {
+    digging = true;
+    // Calculate the step size in the X direction.
+    float distanceToTravelX = ( target.x + 0.5 ) - position.x;
+    float diggingStepSizeX = distanceToTravelX / DIG_STEPS;
+    // Calculate the step size in the Y direction.
+    float distanceToTravelY = ( target.y - bottomClip + 0.001 ) - position.y;
+    float diggingStepSizeY = distanceToTravelY / DIG_STEPS;
+    // Combine them.
+    diggingStepSize = sf::Vector2f(diggingStepSizeX, diggingStepSizeY);
+    diggingStepsRemaining = DIG_STEPS;
+    diggingTowards = target;
+}
+
+void Player::processDiggingStep() {
+    position += diggingStepSize;
+    diggingStepsRemaining--;
+    if (diggingStepsRemaining == 0) {
+        digging = false;
+        Physics::getPhysics().reset();
+        // Dig the tile.
+        WorldData::getWorldData().getTile( diggingTowards ).dig();
     }
 }
