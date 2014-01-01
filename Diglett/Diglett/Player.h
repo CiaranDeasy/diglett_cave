@@ -22,24 +22,6 @@ public:
     bool addMoney( int amount );
 
 private:
-    enum Direction {
-        North = 0,
-        Northnortheast = 1,
-        Northeast = 2,
-        Eastnortheast = 3,
-        East = 4,
-        Eastsoutheast = 5,
-        Southeast = 6,
-        Southsoutheast = 7,
-        South = 8,
-        Southsouthwest = 9,
-        Southwest = 10,
-        Westsouthwest= 11,
-        West = 12,
-        Westnorthwest = 13,
-        Northwest = 14,
-        Northnorthwest = 15
-    };
     static Player singleton;
 
     // Values used to track the digging state.
@@ -65,14 +47,18 @@ private:
 
     Player(void);
 
-    // Classifies the direction in which the player is moving as one of the 16
-    // cardinal directions.
-    Direction classifyDirectionOfMovement( float deltaX, float deltaY);
-
     // Sets the digging state and initialises the digging-related variables.
     void initiateDigging( sf::Vector2i target );
 
     // Moves the player towards the tile that they are digging. On the final 
     // step, unsets the digging state and updates variables appropriately.
     void processDiggingStep();
+    
+    // Tests whether the player is clipping with a tile in a given direction,
+    // and tests for and triggers digging.
+    bool clipLeft( float oldX, float oldY, float newX, float newY );
+    bool clipRight( float oldX, float oldY, float newX, float newY );
+    bool clipAbove( float oldX, float oldY, float newX, float newY );
+    bool clipBelow( float oldX, float oldY, float newX, float newY );
+
 };
