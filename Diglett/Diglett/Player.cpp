@@ -71,6 +71,14 @@ bool Player::addMoney( int amount ) {
     return true;
 }
 
+int Player::getMaxHull() { return maxHull; }
+int Player::getCurrentHull() { return currentHull; }
+
+void Player::damageHull( int damage ) {
+    currentHull -= damage;
+    if( currentHull < 0 ) currentHull = 0;
+}
+
 Player Player::singleton = Player();
 
 Player::Player(void) {
@@ -80,6 +88,8 @@ Player::Player(void) {
     leftClip = -0.45;
     rightClip = 0.45;
     money = DEFAULT_MONEY;
+    maxHull = DEFAULT_HULL;
+    currentHull = DEFAULT_HULL;
 }
 
 void Player::initiateDigging( sf::Vector2i target ) {

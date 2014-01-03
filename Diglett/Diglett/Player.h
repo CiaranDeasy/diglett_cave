@@ -21,8 +21,15 @@ public:
     // returns true.
     bool addMoney( int amount );
 
+    int getMaxHull();
+    int getCurrentHull();
+
+    // Decreases hull strength by the specified amount, stopping at zero.
+    void damageHull( int damage );
+
 private:
     static Player singleton;
+    static const int DEFAULT_HULL = 150;
 
     // Values used to track the digging state.
     bool digging;
@@ -44,6 +51,8 @@ private:
 
     Inventory<Item *> inventory;
     int money;
+    int maxHull;
+    int currentHull;
 
     Player(void);
 
