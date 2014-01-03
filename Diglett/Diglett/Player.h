@@ -27,6 +27,9 @@ public:
     // Decreases hull strength by the specified amount, stopping at zero.
     void damageHull( int damage );
 
+    // Returns true if the player's hull is zero.
+    bool isDead();
+
 private:
     static Player singleton;
     static const int DEFAULT_HULL = 150;

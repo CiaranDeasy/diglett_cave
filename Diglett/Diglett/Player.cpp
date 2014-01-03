@@ -79,6 +79,10 @@ void Player::damageHull( int damage ) {
     if( currentHull < 0 ) currentHull = 0;
 }
 
+bool Player::isDead() {
+    return currentHull == 0;
+}
+
 Player Player::singleton = Player();
 
 Player::Player(void) {

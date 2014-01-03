@@ -20,6 +20,11 @@ public:
     void toggleInventoryGUI();
     
     void GameWindow::mainLoop();
+    void handleWindowEvents();
+    void drawWorld();
+    void drawPlayer();
+    void drawGUI();
+
     ~GameWindow(void);
     void toggleDebugOverlay();
 
@@ -29,6 +34,7 @@ private:
     static GameWindow *singleton;
     sf::RenderWindow *window;
     sf::Sprite *playerSprite;
+    sf::Sprite *playerDeadSprite;
     sf::Sprite *debugOverlayBackground;
     sf::View worldView;
     sf::View interfaceView;

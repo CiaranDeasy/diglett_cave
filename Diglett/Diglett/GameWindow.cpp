@@ -25,6 +25,8 @@ void GameWindow::triggerNewItemVisual( Item *item ) {
 void GameWindow::createSprites() {
     playerSprite = makeCircleSprite( sf::Color::Magenta );
     playerSprite->setOrigin( 32, 32 );
+    playerDeadSprite = makeCircleSprite( sf::Color::Red );
+    playerDeadSprite->setOrigin( 32, 32 );
     debugOverlayBackground = makeDebugOverlayBackground();
 }
 

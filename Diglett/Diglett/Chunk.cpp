@@ -11,13 +11,14 @@ Tile& Chunk::getRelativeTile( int x, int y ) {
 
 Tile& Chunk::getAbsoluteTile( int x, int y ) {
     return tiles[x-position.x][y-position.y];
-}
+}//
 
 Chunk::Chunk( sf::Vector2i pos, int type ) {
     position = pos;
     for( int i = 0; i < CHUNK_SIDE; i++ ) {
         for( int j = 0; j < CHUNK_SIDE; j++ ) {
-            if(type == 1)
+            if( j == CHUNK_SIDE-1 ) tiles[i][j] = Tile( 3 );
+            else if(type == 1)
                 tiles[i][j] = Tile( type );
             else {
                 tiles[i][j] = Chunk::randomTileType(position.y);
