@@ -56,15 +56,18 @@ void GameWindow::mainLoop() {
         if( inventoryGUI.isVisible() ) {
             window->draw( inventoryGUI );
         }
-        for( int i = 0; i < newItemVisuals.size(); i++ ) {
-            if( newItemVisuals[i]->isAlive() ) {
-                window->draw( *newItemVisuals[i] );
-                newItemVisuals[i]->tick();
-            } //else { // TODO: Clean memory leak!
-                //NewItemVisual *toKill = newItemVisuals[i];
-                //newItemVisuals.erase( i );
-
-            //}
+        // Display the NewItemVisuals.
+        std::vector<NewItemVisual *>::iterator next = newItemVisuals.begin();
+        while( next != newItemVisuals.end() ) {
+            if( (*next)->isAlive() ) {
+                window->draw(**next);
+                (*next)->tick();
+                next++;
+            } else {
+                // Cleanup dead NewItemVisuals.
+                delete *next;
+                next = newItemVisuals.erase( next );
+            }
         }
         window->display();
 	}
