@@ -11,7 +11,12 @@ public:
     void reset();
 private:
     static Physics singleton;
+    static const float HULL_DAMAGE_THRESHOLD;
+    static const float HULL_DAMAGE_SCALER;
     Physics(void);
+
+    void damagePlayerHull( float velocity );
+
     float speed;
     sf::Vector2f velocity;
     sf::Vector2f previousLocation;

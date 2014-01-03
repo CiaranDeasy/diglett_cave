@@ -51,10 +51,20 @@ void Physics::updatePlayer(sf::Vector2f f){
 
 void Physics::collideX() {
     velocity.x = -BOUNCE_FACTOR * velocity.x;
+    damagePlayerHull( velocity.x );
 }
 
 void Physics::collideY() {
     velocity.y = -BOUNCE_FACTOR * velocity.y;
+    damagePlayerHull( velocity.y );
+}
+
+void Physics::damagePlayerHull( float velocity ) {
+    if( velocity >= HULL_DAMAGE_THRESHOLD ) {
+        Player::getPlayer().damageHull( velocity * HULL_DAMAGE_SCALER );
+    } else if( velocity <= -HULL_DAMAGE_THRESHOLD ) {
+        Player::getPlayer().damageHull( -velocity * HULL_DAMAGE_SCALER );
+    }
 }
 
 void Physics::reset() {
@@ -65,6 +75,9 @@ void Physics::reset() {
 Physics& Physics::getPhysics(){ return singleton; }
 
 Physics Physics::singleton = Physics();
+
+const float Physics::HULL_DAMAGE_THRESHOLD = 0.028;
+const float Physics::HULL_DAMAGE_SCALER = 1000;
 
 Physics::Physics(void){
     previousLocation = sf::Vector2f(1.0f,1.0f);
