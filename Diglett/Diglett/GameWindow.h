@@ -5,6 +5,7 @@
 #include "Item.h"
 #include "NewItemVisual.h"
 #include <vector>
+#include "HullGUI.h"
 
 class GameWindow {
 public:
@@ -35,6 +36,7 @@ private:
     bool showDebugOverlay;
     InventoryGUI inventoryGUI;
     std::vector<NewItemVisual *> newItemVisuals;
+    HullGUI hullGUI;
 
     void createSprites();
     sf::Sprite *makeDebugOverlayBackground();

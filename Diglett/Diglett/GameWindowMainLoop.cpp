@@ -69,6 +69,8 @@ void GameWindow::mainLoop() {
                 next = newItemVisuals.erase( next );
             }
         }
+        // Display the hull strength GUI.
+        window->draw( hullGUI );
         window->display();
 	}
 }
