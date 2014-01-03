@@ -24,8 +24,8 @@ void HullGUI::draw(
             POSITION.x, POSITION.y );
     target.draw( background );
     // Fill according to current hull strength.
-    float currentHullFraction = Player::getPlayer().getCurrentHull() / 
-            Player::getPlayer().getMaxHull();
+    float currentHullFraction = (float) Player::getPlayer().getCurrentHull() / 
+            (float) Player::getPlayer().getMaxHull();
     sf::RectangleShape fill = sf::RectangleShape( 
             sf::Vector2f( 
                 currentHullFraction * ( GUI_SIZE.x - 2*BORDER_THICKNESS ), 
