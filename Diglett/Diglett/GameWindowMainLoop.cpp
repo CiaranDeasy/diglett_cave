@@ -64,9 +64,15 @@ void GameWindow::drawWorld() {
 }
 
 void GameWindow::drawPlayer() {
-    playerSprite->setPosition( Utility::coordsGameToWindow( 
-        Player::getPlayer().getPosition() ) );
-    window->draw( *playerSprite );
+    if( Player::getPlayer().isDead() ) {
+       playerDeadSprite->setPosition( Utility::coordsGameToWindow( 
+              Player::getPlayer().getPosition() ) );
+       window->draw( *playerDeadSprite );
+    } else {
+       playerSprite->setPosition( Utility::coordsGameToWindow( 
+              Player::getPlayer().getPosition() ) );
+       window->draw( *playerSprite );
+    }
 }
 
 void GameWindow::drawGUI() {
