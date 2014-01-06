@@ -110,7 +110,7 @@ void InputHandler::addEvent( sf::Event e ) {
     buttonsPressed.push_back( e );
 }
 
-InputHandler::Direction InputHandler::classifyDirectionOfMovement(
+Direction InputHandler::classifyDirectionOfMovement(
         float stickPositionX, float stickPositionY) {
 
     // Handle the X=0 case.
@@ -150,7 +150,7 @@ InputHandler::Direction InputHandler::classifyDirectionOfMovement(
     }
 }
 
-InputHandler::Direction InputHandler::directionOfMovement = North;
+Direction InputHandler::directionOfMovement = North;
 
 // Initialise the list of button events to an empty vector.
 std::vector<sf::Event> InputHandler::buttonsPressed = std::vector<sf::Event>();
