@@ -58,7 +58,7 @@ void InventoryGUI::draw(
     }
 }
 
-bool InventoryGUI::isVisible() { return visible; }
+bool InventoryGUI::isVisible() const { return visible; }
 
 const sf::Vector2i InventoryGUI::DEFAULT_POSITION = sf::Vector2i( 25, 25 );
 const int InventoryGUI::DEFAULT_BORDER = 10;

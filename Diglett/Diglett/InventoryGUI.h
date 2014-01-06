@@ -16,7 +16,7 @@ public:
     virtual void draw( sf::RenderTarget& target, sf::RenderStates states ) const;
     
     // Returns true if the inventory should be visible in the game window.
-    bool isVisible();
+    bool isVisible() const;
 
 private: 
 

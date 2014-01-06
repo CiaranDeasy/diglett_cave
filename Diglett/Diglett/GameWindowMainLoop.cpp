@@ -8,93 +8,10 @@
 #include "InputHandler.h"
 
 void GameWindow::mainLoop() {
-
     while( this->isOpen() ) {
-        // Pass window events to the InputHandler.
-        handleWindowEvents();
-        // Update the game based on the player's input.
-        InputHandler::processInputs();
-        // Create NewItemVisuals.
-        triggerNewItemVisuals();
-        // Draw things!
-        drawWorld();
-        drawPlayer();
-        drawGUI();
+        gameStates.top()->gameTick();
+        drawStateStack();
         this->display();
     }
 }
 
-void GameWindow::handleWindowEvents() {
-    sf::Event event;
-    while( this->pollEvent( event ) ) {
-        if( event.type == sf::Event::Closed ) {
-            this->close();
-            exit(0);
-        }
-        if( event.type == sf::Event::JoystickButtonPressed ||
-            event.type == sf::Event::KeyPressed ) {
-            InputHandler::addEvent( event );
-        }
-    }
-}
-
-void GameWindow::drawWorld() {
-    setWorldView( *this );
-    this->clear();
-    sf::Vector2i playerChunk = Utility::coordsGameToChunk( 
-        Player::getPlayer().getPosition() );
-    for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
-      for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
-        Chunk nextChunk = WorldData::getWorldData().getChunk( x, y );
-        for( int i = 0; i < CHUNK_SIDE; i++ ) {
-          for( int j = 0; j < CHUNK_SIDE; j++ ) {
-            Tile nextTile = nextChunk.getRelativeTile( i, j );
-            sf::Vector2i tilePosition = sf::Vector2i( 
-                    nextChunk.getPosition().x + i,
-                    nextChunk.getPosition().y + j );
-            nextTile.getSprite()->setPosition( 
-                Utility::coordsTileToWindow( tilePosition ) );
-            this->draw( *nextTile.getSprite() );
-          }
-        }
-      }
-    }
-}
-
-void GameWindow::drawPlayer() {
-    setWorldView( *this );
-    if( Player::getPlayer().isDead() ) {
-       playerDeadSprite->setPosition( Utility::coordsGameToWindow( 
-              Player::getPlayer().getPosition() ) );
-       this->draw( *playerDeadSprite );
-    } else {
-       playerSprite->setPosition( Utility::coordsGameToWindow( 
-              Player::getPlayer().getPosition() ) );
-       this->draw( *playerSprite );
-    }
-}
-
-void GameWindow::drawGUI() {
-    setInterfaceView( *this );
-    if( showDebugOverlay ) {
-        drawDebugOverlay();
-    }
-    if( inventoryGUI.isVisible() ) {
-        this->draw( inventoryGUI );
-    }
-    // Display the NewItemVisuals.
-    std::vector<NewItemVisual *>::iterator next = newItemVisuals.begin();
-    while( next != newItemVisuals.end() ) {
-        if( (*next)->isAlive() ) {
-            this->draw(**next);
-            (*next)->tick();
-            next++;
-        } else {
-            // Cleanup dead NewItemVisuals.
-            delete *next;
-            next = newItemVisuals.erase( next );
-        }
-    }
-    // Display the hull strength GUI.
-    this->draw( hullGUI );
-}
