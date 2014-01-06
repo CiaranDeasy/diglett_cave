@@ -19,7 +19,7 @@ public:
     // Returns true if the visual should be displayed.
     bool isAlive();
 
-    // Decrements the remaining ticks to live by one.
+    // Advances the object by one game tick.
     void tick();
 
 private: 

@@ -46,15 +46,18 @@ NewItemVisual::~NewItemVisual(void) {
 void NewItemVisual::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
-    // Move the sprite.
-    sprite->move( stepSize );
     // Draw the sprite.
     target.draw( *sprite );
 }
 
 bool NewItemVisual::isAlive() { return ticksRemaining != 0; }
 
-void NewItemVisual::tick() { ticksRemaining--; }
+void NewItemVisual::tick() { 
+    if( ticksRemaining > 0 ) {
+        ticksRemaining--;
+        sprite->move( stepSize );
+    }
+}
 
 const int NewItemVisual::TICKS_TO_LIVE = 60;
 const sf::Vector2f NewItemVisual::INITIAL_POSITION = 
