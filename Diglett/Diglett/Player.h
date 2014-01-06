@@ -3,6 +3,7 @@
 #include <vector>
 #include "Item.h"
 #include "Inventory.h"
+#include "Direction.h"
 
 class Player {
 public:
@@ -11,7 +12,7 @@ public:
     ~Player(void);
 
     sf::Vector2f getPosition();
-    void move( float x, float y );
+    void move( float x, float y, Direction directionOfInput );
 
     Inventory<Item *>& getInventory();
 
@@ -68,9 +69,13 @@ private:
     
     // Tests whether the player is clipping with a tile in a given direction,
     // and tests for and triggers digging.
-    bool clipLeft( float oldX, float oldY, float newX, float newY );
-    bool clipRight( float oldX, float oldY, float newX, float newY );
-    bool clipAbove( float oldX, float oldY, float newX, float newY );
-    bool clipBelow( float oldX, float oldY, float newX, float newY );
+    bool clipLeft( float oldX, float oldY, float newX, float newY,
+            Direction directionOfInput );
+    bool clipRight( float oldX, float oldY, float newX, float newY,
+            Direction directionOfInput );
+    bool clipAbove( float oldX, float oldY, float newX, float newY,
+            Direction directionOfInput );
+    bool clipBelow( float oldX, float oldY, float newX, float newY,
+            Direction directionOfInput );
 
 };

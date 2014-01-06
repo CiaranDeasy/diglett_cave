@@ -12,10 +12,8 @@ void GameWindow::mainLoop() {
     while( this->isOpen() ) {
         // Pass window events to the InputHandler.
         handleWindowEvents();
-        // Take player input and pass movement to Physics to move the player 
-        // appropriately.
-        sf::Vector2f input = InputHandler::processInputs();
-        Physics::getPhysics().updatePlayer( input );
+        // Update the game based on the player's input.
+        InputHandler::processInputs();
         // Create NewItemVisuals.
         triggerNewItemVisuals();
         // Draw things!

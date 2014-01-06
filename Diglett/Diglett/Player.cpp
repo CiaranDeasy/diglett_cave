@@ -1,7 +1,6 @@
 #include "Player.h"
 #include <iostream>
 #include "WorldData.h"
-#include "InputHandler.h"
 #include "Physics.h"
 #include "Constants.h"
 
@@ -19,7 +18,7 @@ sf::Vector2f Player::getPosition() {
     return position;
 }
 
-void Player::move( float x, float y ) {
+void Player::move( float x, float y, Direction directionOfInput ) {
     // The program will crash if attempting to load a chunk outside the world.
     // Constrain movement until infinite worlds are implemented.
     if( position.x + x > 150 || position.x + x < -150 ) {
@@ -43,17 +42,17 @@ void Player::move( float x, float y ) {
     float newX = oldX + x;
     float newY = oldY + y;
 
-    if( clipLeft( oldX, oldY, newX, newY ) ) {
+    if( clipLeft( oldX, oldY, newX, newY, directionOfInput ) ) {
             newX = floor( oldX ) - leftClip + 0.001;
             Physics::getPhysics().collideX();
-    } else if( clipRight( oldX, oldY, newX, newY ) ) {
+    } else if( clipRight( oldX, oldY, newX, newY, directionOfInput ) ) {
         newX = floor( oldX + 1 ) - 0.001 - rightClip;
         Physics::getPhysics().collideX();
     }
-    if( clipAbove( oldX, oldY, newX, newY ) ) {
+    if( clipAbove( oldX, oldY, newX, newY, directionOfInput ) ) {
         newY = floor( oldY + 1 ) - 0.001 - topClip;
         Physics::getPhysics().collideY();
-    } else if( clipBelow( oldX, oldY, newX, newY ) ) {
+    } else if( clipBelow( oldX, oldY, newX, newY, directionOfInput ) ) {
         newY = floor( oldY ) - bottomClip + 0.001;
         Physics::getPhysics().collideY();
         if( onGround < DIG_DELAY ) onGround++;
@@ -121,7 +120,8 @@ void Player::processDiggingStep() {
     }
 }
 
-bool Player::clipLeft( float oldX, float oldY, float newX, float newY ) {
+bool Player::clipLeft( float oldX, float oldY, float newX, float newY,
+        Direction directionOfInput ) {
     if( floor( oldX + leftClip ) > floor( newX + leftClip ) ) {
         sf::Vector2i topTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + leftClip, oldY + topClip ) );
@@ -130,9 +130,8 @@ bool Player::clipLeft( float oldX, float oldY, float newX, float newY ) {
         Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
         Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
         // Test if the player is trying to dig.
-        if( InputHandler::getDirectionOfMovement() >= 11 && 
-                InputHandler::getDirectionOfMovement() <= 13 &&
-                onGround == DIG_DELAY  && topTile.isDiggable() ) {
+        if( directionOfInput >= 11 && directionOfInput <= 13 && 
+                onGround == DIG_DELAY && topTile.isDiggable() ) {
             initiateDigging( topTileCoords );
         }
         if( topTile.isSolid() || bottomTile.isSolid() ) {
@@ -142,7 +141,8 @@ bool Player::clipLeft( float oldX, float oldY, float newX, float newY ) {
     return false;
 }
 
-bool Player::clipRight( float oldX, float oldY, float newX, float newY ) {
+bool Player::clipRight( float oldX, float oldY, float newX, float newY,
+        Direction directionOfInput ) {
     if( floor( oldX + rightClip ) < floor( newX + rightClip ) ) {
         sf::Vector2i topTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + rightClip, oldY + topClip ) );
@@ -151,8 +151,7 @@ bool Player::clipRight( float oldX, float oldY, float newX, float newY ) {
         Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
         Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
         // Test if the player is trying to dig.
-        if( InputHandler::getDirectionOfMovement() >= 3 && 
-                InputHandler::getDirectionOfMovement() <= 5 &&
+        if( directionOfInput >= 3 && directionOfInput <= 5 &&
                 onGround == DIG_DELAY && topTile.isDiggable()) {
             initiateDigging( topTileCoords );
         }
@@ -163,7 +162,8 @@ bool Player::clipRight( float oldX, float oldY, float newX, float newY ) {
     return false;
 }
 
-bool Player::clipAbove( float oldX, float oldY, float newX, float newY ) {
+bool Player::clipAbove( float oldX, float oldY, float newX, float newY,
+        Direction directionOfInput ) {
     if( floor( oldY + topClip ) < floor( newY + topClip ) ) {
         sf::Vector2i leftTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + leftClip, newY + topClip ) );
@@ -178,7 +178,8 @@ bool Player::clipAbove( float oldX, float oldY, float newX, float newY ) {
     return false;
 }
 
-bool Player::clipBelow( float oldX, float oldY, float newX, float newY ) {
+bool Player::clipBelow( float oldX, float oldY, float newX, float newY,
+        Direction directionOfInput ) {
     if( floor( oldY + bottomClip ) > floor( newY + bottomClip ) ) {
         sf::Vector2i leftTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + leftClip, newY + bottomClip ) );
@@ -187,8 +188,7 @@ bool Player::clipBelow( float oldX, float oldY, float newX, float newY ) {
         Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
         Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
         // Test if the player is trying to dig.
-        if( InputHandler::getDirectionOfMovement() >= 7 && 
-                InputHandler::getDirectionOfMovement() <= 9 &&
+        if( directionOfInput >= 7 && directionOfInput <= 9 &&
                 onGround == DIG_DELAY ) {
             float offSet = oldX - floor( oldX );
             // Dig the tile that the player is more over, or neither if they 

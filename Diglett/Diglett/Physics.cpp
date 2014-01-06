@@ -7,10 +7,9 @@ sf::Vector2f acceleration;
 sf::Vector2f velocity;
 sf::Vector2f previousLocation;
 
-void Physics::updatePlayer(sf::Vector2f f){
-    force = f;
-    acceleration.x = f.x / PLAYER_MASS;
-    acceleration.y = f.y / PLAYER_MASS;
+void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput ) {
+    acceleration.x = input.x / PLAYER_MASS;
+    acceleration.y = input.y / PLAYER_MASS;
 
     // Disable downward acceleration by player input.
     if( acceleration.y < 0 ) acceleration.y = 0;
@@ -24,7 +23,8 @@ void Physics::updatePlayer(sf::Vector2f f){
     }
 
     //set velocity to 0 if it is close enough that it should be
-    if ( f.x == 0 && velocity.x < MINIMUM_VELOCITY && velocity.x > -MINIMUM_VELOCITY ) {
+    if ( input.x == 0 && velocity.x < MINIMUM_VELOCITY && 
+            velocity.x > -MINIMUM_VELOCITY ) {
         velocity.x = 0.0f;
         acceleration.x = 0.0f;
     }
@@ -45,7 +45,7 @@ void Physics::updatePlayer(sf::Vector2f f){
     }
 
     //Move player
-    Player::getPlayer().move(velocity.x, velocity.y);
+    Player::getPlayer().move( velocity.x, velocity.y, directionOfInput );
     
 }
 

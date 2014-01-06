@@ -3,14 +3,15 @@
 #include <SFML/Window.hpp>
 #include "Player.h"
 #include "GameWindow.h"
+#include "Physics.h"
 
 #define TAN30 0.57735
 #define TAN60 1.73205
 
-sf::Vector2f InputHandler::processInputs() {
+void InputHandler::processInputs() {
     bool skipKeyboard = false;
     sf::Vector2f movement = sf::Vector2f(0, 0);
-    directionOfMovement = Null;
+    Direction directionOfMovement = Null;
 
     // Controller movement.
     float stickPositionX = 
@@ -103,7 +104,7 @@ sf::Vector2f InputHandler::processInputs() {
     // Clear all the events.
     buttonsPressed.clear();
 
-    return movement;
+    Physics::getPhysics().updatePlayer( movement, directionOfMovement );
 }
 
 void InputHandler::addEvent( sf::Event e ) {
@@ -149,8 +150,6 @@ Direction InputHandler::classifyDirectionOfMovement(
         }
     }
 }
-
-Direction InputHandler::directionOfMovement = North;
 
 // Initialise the list of button events to an empty vector.
 std::vector<sf::Event> InputHandler::buttonsPressed = std::vector<sf::Event>();

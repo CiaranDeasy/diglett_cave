@@ -1,3 +1,5 @@
+#pragma once
+
 enum Direction {
     North = 0,
     Northnortheast = 1,
