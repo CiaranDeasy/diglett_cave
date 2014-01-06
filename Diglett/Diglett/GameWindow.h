@@ -27,8 +27,8 @@ public:
 
     ~GameWindow(void);
     void toggleDebugOverlay();
+    void triggerNewItemVisuals();
 
-    void triggerNewItemVisual( Item *item );
 private: 
 
     static GameWindow *singleton;
@@ -43,6 +43,7 @@ private:
     InventoryGUI inventoryGUI;
     std::vector<NewItemVisual *> newItemVisuals;
     HullGUI hullGUI;
+    int expectedInventorySize;
 
     void createSprites();
     sf::Sprite *makeDebugOverlayBackground();

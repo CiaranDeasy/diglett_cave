@@ -16,6 +16,8 @@ void GameWindow::mainLoop() {
         // appropriately.
         sf::Vector2f input = InputHandler::processInputs();
         Physics::getPhysics().updatePlayer( input );
+        // Create NewItemVisuals.
+        triggerNewItemVisuals();
         // Draw things!
         drawWorld();
         drawPlayer();

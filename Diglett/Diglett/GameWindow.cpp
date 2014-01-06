@@ -18,8 +18,16 @@ void GameWindow::toggleDebugOverlay() {
     showDebugOverlay = !showDebugOverlay;
 }
 
-void GameWindow::triggerNewItemVisual( Item *item ) {
-    newItemVisuals.push_back( new NewItemVisual( font, item ) );
+void GameWindow::triggerNewItemVisuals() {
+    // Check if the player's inventory grew.
+    int currentInventorySize = 
+            Player::getPlayer().getInventory().getCurrentSize();
+    if( currentInventorySize > expectedInventorySize ) {
+        Item *item = Player::getPlayer().getInventory().getContents()
+                [currentInventorySize - 1];
+        newItemVisuals.push_back( new NewItemVisual( font, item ) );
+    }
+    expectedInventorySize = currentInventorySize;
 }
 
 void GameWindow::createSprites() {
@@ -139,6 +147,8 @@ GameWindow::GameWindow(void) :
     }
 
     showDebugOverlay = false;
+    expectedInventorySize = 
+            Player::getPlayer().getInventory().getCurrentSize();
 }
 
 GameWindow::~GameWindow(void) {

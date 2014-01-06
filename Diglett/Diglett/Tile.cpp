@@ -19,8 +19,6 @@ void Tile::dig() {
     if( item->getName() != "NULL" ) {
         // Add the item to the player's inventory.
         Player::getPlayer().getInventory().addItem( item );
-        // Trigger the new item visual.
-        GameWindow::getGameWindow()->triggerNewItemVisual( item );
     }
     // Change this block to air.
     type = 0; //Air
