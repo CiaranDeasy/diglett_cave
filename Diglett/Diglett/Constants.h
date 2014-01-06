@@ -41,9 +41,6 @@ const float CONTROLLER_DEADZONE = 20;
 // Width and height of the window.
 const sf::Vector2i WINDOW_RESOLUTION( 800, 600 );
 
-// Position in window of inventory GUI.
-const sf::Vector2i INVENTORY_POSITION = sf::Vector2i( 25, 25 );
-
 // Path to font file for debug overlay.
 const std::string DEBUG_FONT = "Fonts/segoeui.ttf";
 

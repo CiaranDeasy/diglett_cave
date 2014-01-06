@@ -19,7 +19,8 @@ public:
     bool isVisible();
 
 private: 
-    
+
+    static const sf::Vector2i InventoryGUI::DEFAULT_POSITION;
     static const int DEFAULT_BORDER;
     static const int DEFAULT_ITEMS_PER_COL;
     static const sf::Vector2i DEFAULT_ENTRY_SIZE;
@@ -30,6 +31,9 @@ private:
 
     // The player inventory to be displayed.
     Inventory<Item *>& inventory;
+
+    // The position in the window of the inventory GUI.
+    sf::Vector2i position;
 
     // Number of pixels between edges of inventory GUI and its contents.
     int border;

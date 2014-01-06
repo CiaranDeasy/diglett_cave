@@ -6,6 +6,7 @@
 InventoryGUI::InventoryGUI( sf::Font& font, Inventory<Item *>& inventory ) : 
         inventory(inventory), font(font) {
     visible = false;
+    position = DEFAULT_POSITION;
     border = DEFAULT_BORDER;
     itemsPerCol = DEFAULT_ITEMS_PER_COL;
     entrySize = DEFAULT_ENTRY_SIZE;
@@ -26,26 +27,18 @@ void InventoryGUI::draw(
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
     std::vector<Item *> contents = inventory.getContents();
-    // Set up the view.
-    // TODO: make the view dependent on the states input.
-    sf::View view = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
-            sf::Vector2f( target.getSize().x, target.getSize().y ) );
-    view.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
-    view.zoom( 1.0 );
-    target.setView( view );
     // Draw the inventory background.
     sf::RectangleShape *inventoryBackground = 
             makeInventoryBackground( contents );
+    inventoryBackground->setPosition( sf::Vector2f( position ) );
     target.draw( *inventoryBackground );
     delete inventoryBackground;
     for( int i = 0; i < inventory.getCurrentSize(); i++ ) {
         // Calculate the position of the sprite.
         int spritePositionX = 
-            -(WINDOW_RESOLUTION.x /2) + INVENTORY_POSITION.x + border
-                + ( i / itemsPerCol ) * entrySize.x;
+            position.x + border + ( i / itemsPerCol ) * entrySize.x;
         int spritePositionY =
-            -(WINDOW_RESOLUTION.y /2) + INVENTORY_POSITION.y + border
-                + ( i % itemsPerCol ) * entrySize.y;
+            position.y + border + ( i % itemsPerCol ) * entrySize.y;
         // Draw the sprite.
         contents[i]->getSprite()->setPosition( 
                 spritePositionX, spritePositionY );
@@ -67,6 +60,7 @@ void InventoryGUI::draw(
 
 bool InventoryGUI::isVisible() { return visible; }
 
+const sf::Vector2i InventoryGUI::DEFAULT_POSITION = sf::Vector2i( 25, 25 );
 const int InventoryGUI::DEFAULT_BORDER = 10;
 const int InventoryGUI::DEFAULT_ITEMS_PER_COL = 8;
 const sf::Vector2i InventoryGUI::DEFAULT_ENTRY_SIZE = 
@@ -93,7 +87,6 @@ sf::RectangleShape *InventoryGUI::makeInventoryBackground(
     sf::RectangleShape *background = 
         new sf::RectangleShape( sf::Vector2f( sizeX, sizeY ) );
     background->setFillColor( backgroundColor );
-    background->setPosition( -375, -275 );
 
     return background;
 }

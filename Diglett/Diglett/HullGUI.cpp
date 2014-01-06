@@ -1,4 +1,5 @@
 #include "HullGUI.h"
+#include "Constants.h"
 
 HullGUI::HullGUI( sf::Font& font ) : font(font) {
 }
@@ -9,19 +10,11 @@ HullGUI::~HullGUI(void) {
 void HullGUI::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
-    // Set up the view.
-    // TODO: make the view dependent on the states input.
-    sf::View view = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
-            sf::Vector2f( target.getSize().x, target.getSize().y ) );
-    view.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
-    view.zoom( 1.0 );
-    target.setView( view );
     // Draw the background.
     sf::RectangleShape background = sf::RectangleShape( 
             sf::Vector2f( GUI_SIZE.x, GUI_SIZE.y ) );
     background.setFillColor( BACKGROUND_COLOR );
-    background.setPosition( 
-            POSITION.x, POSITION.y );
+    background.setPosition( POSITION.x, POSITION.y );
     target.draw( background );
     // Fill according to current hull strength.
     float currentHullFraction = (float) Player::getPlayer().getCurrentHull() / 
@@ -47,7 +40,8 @@ void HullGUI::draw(
     target.draw( text );
 }
 
-const sf::Vector2i HullGUI::POSITION = sf::Vector2i( 290, -290 );
+const sf::Vector2i HullGUI::POSITION = 
+        sf::Vector2i( WINDOW_RESOLUTION.x -110, 10 );
 const sf::Vector2i HullGUI::GUI_SIZE = sf::Vector2i( 100, 20 );
 const int HullGUI::TEXT_SIZE = 12;
 const sf::Color HullGUI::BACKGROUND_COLOR = sf::Color( 0, 0, 0, 255 );

@@ -17,6 +17,9 @@ public:
 
     static sf::Sprite *makeCircleSprite( sf::Color );
 
+    static void setInterfaceView( sf::RenderTarget& target );
+    static void setWorldView( sf::RenderTarget& target );
+
     void toggleInventoryGUI();
     
     void GameWindow::mainLoop();
@@ -35,8 +38,6 @@ private:
     sf::Sprite *playerSprite;
     sf::Sprite *playerDeadSprite;
     sf::Sprite *debugOverlayBackground;
-    sf::View worldView;
-    sf::View interfaceView;
     sf::Font font;
     bool showDebugOverlay;
     InventoryGUI inventoryGUI;

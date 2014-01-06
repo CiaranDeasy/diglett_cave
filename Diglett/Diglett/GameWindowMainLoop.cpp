@@ -41,9 +41,7 @@ void GameWindow::handleWindowEvents() {
 }
 
 void GameWindow::drawWorld() {
-    worldView.setCenter( Utility::coordsGameToWindow( 
-        Player::getPlayer().getPosition() ) );
-    this->setView( worldView );
+    setWorldView( *this );
     this->clear();
     sf::Vector2i playerChunk = Utility::coordsGameToChunk( 
         Player::getPlayer().getPosition() );
@@ -66,6 +64,7 @@ void GameWindow::drawWorld() {
 }
 
 void GameWindow::drawPlayer() {
+    setWorldView( *this );
     if( Player::getPlayer().isDead() ) {
        playerDeadSprite->setPosition( Utility::coordsGameToWindow( 
               Player::getPlayer().getPosition() ) );
@@ -78,6 +77,7 @@ void GameWindow::drawPlayer() {
 }
 
 void GameWindow::drawGUI() {
+    setInterfaceView( *this );
     if( showDebugOverlay ) {
         drawDebugOverlay();
     }

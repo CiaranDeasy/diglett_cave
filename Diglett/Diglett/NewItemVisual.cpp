@@ -46,13 +46,6 @@ NewItemVisual::~NewItemVisual(void) {
 void NewItemVisual::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
-    // Set up the view.
-    // TODO: make the view dependent on the states input.
-    sf::View view = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
-            sf::Vector2f( target.getSize().x, target.getSize().y ) );
-    view.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
-    view.zoom( 1.0 );
-    target.setView( view );
     // Move the sprite.
     sprite->move( stepSize );
     // Draw the sprite.
@@ -65,7 +58,7 @@ void NewItemVisual::tick() { ticksRemaining--; }
 
 const int NewItemVisual::TICKS_TO_LIVE = 60;
 const sf::Vector2f NewItemVisual::INITIAL_POSITION = 
-        sf::Vector2f( 0, 0 );
+        sf::Vector2f( WINDOW_RESOLUTION.x /2, WINDOW_RESOLUTION.y /2 );
 const sf::Vector2f NewItemVisual::FINAL_POSITION = 
         INITIAL_POSITION + sf::Vector2f( 0, -50 );
 const int NewItemVisual::TEXT_SIZE = 12;

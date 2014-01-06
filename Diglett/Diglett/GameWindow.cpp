@@ -84,6 +84,21 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
+void GameWindow::setInterfaceView( sf::RenderTarget& target ) {
+    sf::View interfaceView = sf::View( sf::FloatRect( 
+            0, 0, target.getSize().x, target.getSize().y ) );
+    target.setView( interfaceView );
+}
+
+void GameWindow::setWorldView( sf::RenderTarget& target ) {
+    sf::Vector2f centerPoint = 
+        ( Utility::coordsGameToWindow( Player::getPlayer().getPosition() ) );
+    sf::View worldView = sf::View( centerPoint, 
+            sf::Vector2f( target.getSize().x, target.getSize().y ) );
+    worldView.zoom( CAMERA_ZOOM );
+    target.setView( worldView );
+}
+
 void GameWindow::toggleInventoryGUI() {
     inventoryGUI.toggle();
 }
@@ -97,7 +112,6 @@ sf::Sprite *GameWindow::makeDebugOverlayBackground() {
     sf::Texture texture = renderer.getTexture();
     sf::Texture *texturePointer = new sf::Texture( texture );
     sf::Sprite* debugOverlay = new sf::Sprite( *texturePointer );
-    debugOverlay->setPosition( -400, 200 );
 
     return debugOverlay;
 }
@@ -113,9 +127,9 @@ void GameWindow::drawDebugOverlay() {
     text.setString( o.str() );
     text.setCharacterSize( 12 );
     text.setColor( sf::Color::White);
-    text.setPosition( -395, 205 );
+    text.setPosition( 5, WINDOW_RESOLUTION.y - 95 );
 
-    this->setView( interfaceView );
+    debugOverlayBackground->setPosition( 0, WINDOW_RESOLUTION.y - 100 );
     this->draw( *debugOverlayBackground );
     this->draw( text );
 }
@@ -126,16 +140,6 @@ GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
             hullGUI( font ) {
 
 	this->setFramerateLimit(60);
-    
-    worldView = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
-            sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
-    worldView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
-    worldView.zoom( CAMERA_ZOOM );
-    
-    interfaceView = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
-            sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );
-    interfaceView.setViewport( sf::FloatRect( 0.0f, 0.0f, 1.0f, 1.0f ) );
-    interfaceView.zoom( 1.0 );
 
     createSprites();
     Tile::initialiseTypes();
