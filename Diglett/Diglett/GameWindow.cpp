@@ -9,7 +9,9 @@ GameWindow *GameWindow::singleton = NULL;
 
 GameWindow *GameWindow::getGameWindow() {
     if( singleton == NULL ) {
-        singleton = new GameWindow();
+        singleton = new GameWindow( 
+            sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), 
+            WINDOW_TITLE );
     }
     return singleton;
 }
@@ -113,18 +115,17 @@ void GameWindow::drawDebugOverlay() {
     text.setColor( sf::Color::White);
     text.setPosition( -395, 205 );
 
-    window->setView( interfaceView );
-    window->draw( *debugOverlayBackground );
-    window->draw( text );
+    this->setView( interfaceView );
+    this->draw( *debugOverlayBackground );
+    this->draw( text );
 }
 
-GameWindow::GameWindow(void) : 
+GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
+            sf::RenderWindow( videoMode, title ),
             inventoryGUI( font, Player::getPlayer().getInventory() ), 
             hullGUI( font ) {
-    window = new sf::RenderWindow( 
-            sf::VideoMode( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ), 
-            WINDOW_TITLE );
-	window->setFramerateLimit(60);
+
+	this->setFramerateLimit(60);
     
     worldView = sf::View( sf::Vector2f( 0.0f, 0.0f ), 
             sf::Vector2f( WINDOW_RESOLUTION.x, WINDOW_RESOLUTION.y ) );

@@ -7,7 +7,7 @@
 #include <vector>
 #include "HullGUI.h"
 
-class GameWindow {
+class GameWindow : public sf::RenderWindow {
 public:
     static GameWindow *getGameWindow();
 
@@ -32,7 +32,6 @@ public:
 private: 
 
     static GameWindow *singleton;
-    sf::RenderWindow *window;
     sf::Sprite *playerSprite;
     sf::Sprite *playerDeadSprite;
     sf::Sprite *debugOverlayBackground;
@@ -48,6 +47,6 @@ private:
     void createSprites();
     sf::Sprite *makeDebugOverlayBackground();
     void drawDebugOverlay();
-    GameWindow(void);
+    GameWindow( sf::VideoMode videoMode, std::string title );
 };
 

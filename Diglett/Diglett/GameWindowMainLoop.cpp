@@ -9,7 +9,7 @@
 
 void GameWindow::mainLoop() {
 
-    while( window->isOpen() ) {
+    while( this->isOpen() ) {
         // Pass window events to the InputHandler.
         handleWindowEvents();
         // Take player input and pass movement to Physics to move the player 
@@ -22,15 +22,15 @@ void GameWindow::mainLoop() {
         drawWorld();
         drawPlayer();
         drawGUI();
-        window->display();
+        this->display();
     }
 }
 
 void GameWindow::handleWindowEvents() {
     sf::Event event;
-    while( window->pollEvent( event ) ) {
+    while( this->pollEvent( event ) ) {
         if( event.type == sf::Event::Closed ) {
-            window->close();
+            this->close();
             exit(0);
         }
         if( event.type == sf::Event::JoystickButtonPressed ||
@@ -43,8 +43,8 @@ void GameWindow::handleWindowEvents() {
 void GameWindow::drawWorld() {
     worldView.setCenter( Utility::coordsGameToWindow( 
         Player::getPlayer().getPosition() ) );
-    window->setView( worldView );
-    window->clear();
+    this->setView( worldView );
+    this->clear();
     sf::Vector2i playerChunk = Utility::coordsGameToChunk( 
         Player::getPlayer().getPosition() );
     for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
@@ -58,7 +58,7 @@ void GameWindow::drawWorld() {
                     nextChunk.getPosition().y + j );
             nextTile.getSprite()->setPosition( 
                 Utility::coordsTileToWindow( tilePosition ) );
-            window->draw( *nextTile.getSprite() );
+            this->draw( *nextTile.getSprite() );
           }
         }
       }
@@ -69,11 +69,11 @@ void GameWindow::drawPlayer() {
     if( Player::getPlayer().isDead() ) {
        playerDeadSprite->setPosition( Utility::coordsGameToWindow( 
               Player::getPlayer().getPosition() ) );
-       window->draw( *playerDeadSprite );
+       this->draw( *playerDeadSprite );
     } else {
        playerSprite->setPosition( Utility::coordsGameToWindow( 
               Player::getPlayer().getPosition() ) );
-       window->draw( *playerSprite );
+       this->draw( *playerSprite );
     }
 }
 
@@ -82,13 +82,13 @@ void GameWindow::drawGUI() {
         drawDebugOverlay();
     }
     if( inventoryGUI.isVisible() ) {
-        window->draw( inventoryGUI );
+        this->draw( inventoryGUI );
     }
     // Display the NewItemVisuals.
     std::vector<NewItemVisual *>::iterator next = newItemVisuals.begin();
     while( next != newItemVisuals.end() ) {
         if( (*next)->isAlive() ) {
-            window->draw(**next);
+            this->draw(**next);
             (*next)->tick();
             next++;
         } else {
@@ -98,5 +98,5 @@ void GameWindow::drawGUI() {
         }
     }
     // Display the hull strength GUI.
-    window->draw( hullGUI );
+    this->draw( hullGUI );
 }
