@@ -4,6 +4,7 @@
 #include "Utility.h"
 #include "WorldData.h"
 #include <sstream>
+#include "DeadGameState.h"
 
 MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) : 
         GameState(),
@@ -55,6 +56,10 @@ void MainGameState::gameTick() {
             delete *next;
             next = newItemVisuals.erase( next );
         }
+    }
+    if( Player::getPlayer().isDead() ) {
+        GameState *deadGameState = new DeadGameState( gameWindow );
+        gameWindow->pushNewState( deadGameState );
     }
 }
     
