@@ -62,6 +62,10 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
+void GameWindow::pushNewState( GameState *state ) {
+    gameStates.push( state );
+}
+
 GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
             sf::RenderWindow( videoMode, title ),
             gameStates() {

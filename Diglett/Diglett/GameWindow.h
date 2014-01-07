@@ -18,6 +18,9 @@ public:
     
     void mainLoop();
 
+    // Adds a new GameState to the stack.
+    void pushNewState( GameState *state );
+
 private: 
     GameWindow( sf::VideoMode videoMode, std::string title );
 
