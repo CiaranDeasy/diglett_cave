@@ -11,6 +11,7 @@ void GameWindow::mainLoop() {
     while( this->isOpen() ) {
         // Cleanup dead game states.
         while( gameStates.top()->isDead() ) {
+            delete gameStates.top();
             gameStates.pop();
         }
         gameStates.top()->gameTick();
