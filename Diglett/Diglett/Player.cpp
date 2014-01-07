@@ -85,9 +85,10 @@ bool Player::isDead() {
 void Player::respawn() {
     currentHull = maxHull;
     std::vector<Item *> contents = inventory.getContents();
-    std::vector<Item *>::iterator next = contents.begin;
-    while( next != contents.end ) {
+    std::vector<Item *>::iterator next = contents.begin();
+    while( next != contents.end() ) {
         delete *next;
+        next++;
     }
     inventory.clear();
 }
