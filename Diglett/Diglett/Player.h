@@ -31,6 +31,9 @@ public:
     // Returns true if the player's hull is zero.
     bool isDead();
 
+    // Restores the player's hull and empties their inventory.
+    void respawn();
+
 private:
     static Player singleton;
     static const int DEFAULT_HULL = 150;
