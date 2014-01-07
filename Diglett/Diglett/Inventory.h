@@ -16,6 +16,9 @@ public:
     std::vector<T> getContents() const;
     int getCurrentSize() const;
 
+    // Removes all items from the Inventory.
+    void clear();
+
 private: 
     static const unsigned int DEFAULT_MAX_INVENTORY;
     
@@ -46,6 +49,10 @@ template <class T> std::vector<T> Inventory<T>::getContents() const {
 
 template <class T> int Inventory<T>::getCurrentSize() const {
     return contents.size();
+}
+
+template <class T> void Inventory<T>::clear() const {
+    contents.clear();
 }
 
 template <class T> const unsigned int Inventory<T>::DEFAULT_MAX_INVENTORY = 32;
