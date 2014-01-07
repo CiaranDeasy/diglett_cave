@@ -51,7 +51,7 @@ template <class T> int Inventory<T>::getCurrentSize() const {
     return contents.size();
 }
 
-template <class T> void Inventory<T>::clear() const {
+template <class T> void Inventory<T>::clear() {
     contents.clear();
 }
 
