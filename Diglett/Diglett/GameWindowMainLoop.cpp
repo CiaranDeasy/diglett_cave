@@ -9,6 +9,10 @@
 
 void GameWindow::mainLoop() {
     while( this->isOpen() ) {
+        // Cleanup dead game states.
+        while( gameStates.top()->isDead() ) {
+            gameStates.pop();
+        }
         gameStates.top()->gameTick();
         drawStateStack();
         this->display();

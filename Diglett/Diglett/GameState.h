@@ -18,6 +18,12 @@ public:
     // it, eg: if this is a menu overlaying the main game.
     virtual bool drawUnderlyingState() = 0;
 
+    // Indicates that the state should be removed from the GameWindow stack.
+    bool isDead();
+
+protected:
+    bool dead;
+
 private: 
 
 };
