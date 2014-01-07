@@ -85,10 +85,10 @@ GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
 
 void GameWindow::drawStateStack() {
     GameState *topState = gameStates.top();
-    draw( *topState );
     if( topState->drawUnderlyingState() ) {
         gameStates.pop();
         drawStateStack();
         gameStates.push( topState );
     }
+    draw( *topState );
 }
