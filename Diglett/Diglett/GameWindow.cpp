@@ -62,6 +62,19 @@ sf::Sprite *GameWindow::makeCircleSprite( sf::Color color ) {
     return new sf::Sprite( *texturePointer );
 }
 
+void GameWindow::mainLoop() {
+    while( this->isOpen() ) {
+        // Cleanup dead game states.
+        while( gameStates.top()->isDead() ) {
+            delete gameStates.top();
+            gameStates.pop();
+        }
+        gameStates.top()->gameTick();
+        drawStateStack();
+        this->display();
+    }
+}
+
 void GameWindow::pushNewState( GameState *state ) {
     gameStates.push( state );
 }

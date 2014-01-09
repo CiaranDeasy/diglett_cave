@@ -16,6 +16,7 @@ public:
     // Constructs a circular sprite of the specified colour.
     static sf::Sprite *makeCircleSprite( sf::Color );
     
+    // The top-level main loop of the program.
     void mainLoop();
 
     // Adds a new GameState to the stack.
