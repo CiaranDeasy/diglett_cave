@@ -69,4 +69,7 @@ private:
     void drawPlayer( sf::RenderTarget& target ) const;
     void drawGUI( sf::RenderTarget& target ) const;
 
+    // Ages the NewItemVisuals by one tick, and deletes any that die.
+    void processNewItemVisuals();
+
 };

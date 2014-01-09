@@ -45,18 +45,8 @@ void MainGameState::gameTick() {
     // Create NewItemVisuals.
     triggerNewItemVisuals();
     // Age the NewItemVisuals, and clean up any dead ones.
-    std::vector<NewItemVisual *>::iterator next = 
-         newItemVisuals.begin();
-    while( next != newItemVisuals.end() ) {
-        if( (*next)->isAlive() ) {
-            (*next)->tick();
-            next++;
-        } else {
-            // Cleanup dead NewItemVisuals.
-            delete *next;
-            next = newItemVisuals.erase( next );
-        }
-    }
+    processNewItemVisuals();
+    // Test if the player is dead.
     if( Player::getPlayer().isDead() ) {
         GameState *deadGameState = new DeadGameState( gameWindow );
         gameWindow->pushNewState( deadGameState );
@@ -199,4 +189,19 @@ void MainGameState::drawGUI( sf::RenderTarget& target ) const {
     }
     // Display the hull strength GUI.
     target.draw( hullGUI );
+}
+
+void MainGameState::processNewItemVisuals() {
+    std::vector<NewItemVisual *>::iterator next = 
+         newItemVisuals.begin();
+    while( next != newItemVisuals.end() ) {
+        if( (*next)->isAlive() ) {
+            (*next)->tick();
+            next++;
+        } else {
+            // Cleanup dead NewItemVisuals.
+            delete *next;
+            next = newItemVisuals.erase( next );
+        }
+    }
 }
