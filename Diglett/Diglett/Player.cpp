@@ -141,7 +141,8 @@ bool Player::clipLeft( float oldX, float oldY, float newX, float newY,
         Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
         Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
         // Test if the player is trying to dig.
-        if( directionOfInput >= 11 && directionOfInput <= 13 && 
+        if( directionOfInput >= Westsouthwest && 
+                directionOfInput <= Westnorthwest && 
                 onGround == DIG_DELAY && topTile.isDiggable() ) {
             initiateDigging( topTileCoords );
         }
@@ -162,7 +163,8 @@ bool Player::clipRight( float oldX, float oldY, float newX, float newY,
         Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
         Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
         // Test if the player is trying to dig.
-        if( directionOfInput >= 3 && directionOfInput <= 5 &&
+        if( directionOfInput >= Eastnortheast && 
+                directionOfInput <= Eastsoutheast &&
                 onGround == DIG_DELAY && topTile.isDiggable()) {
             initiateDigging( topTileCoords );
         }
@@ -199,7 +201,8 @@ bool Player::clipBelow( float oldX, float oldY, float newX, float newY,
         Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
         Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
         // Test if the player is trying to dig.
-        if( directionOfInput >= 7 && directionOfInput <= 9 &&
+        if( directionOfInput >= Southsoutheast && 
+                directionOfInput <= Southsouthwest &&
                 onGround == DIG_DELAY ) {
             float offSet = oldX - floor( oldX );
             // Dig the tile that the player is more over, or neither if they 
