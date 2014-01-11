@@ -17,8 +17,12 @@ Chunk::Chunk( sf::Vector2i pos, int type ) {
     position = pos;
     for( int i = 0; i < CHUNK_SIDE; i++ ) {
         for( int j = 0; j < CHUNK_SIDE; j++ ) {
+#ifdef DIGLETT_DEBUG
+            // Hack in some gold tiles for quicker testing.
             if( j == CHUNK_SIDE-1 ) tiles[i][j] = Tile( 3 );
-            else if(type == 1)
+            else 
+#endif
+            if(type == 1)
                 tiles[i][j] = Tile( type );
             else {
                 tiles[i][j] = Chunk::randomTileType(position.y);
