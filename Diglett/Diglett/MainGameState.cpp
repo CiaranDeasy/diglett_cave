@@ -11,9 +11,9 @@ MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) :
         font( font ), 
         inventoryGUI( font, Player::getPlayer().getInventory() ),
         hullGUI( font ), 
+        debugOverlayGUI( font ),
         inputHandler( *this ) {
     createSprites();
-    showDebugOverlay = false;
     this->gameWindow = gameWindow;
     expectedInventorySize = 
             Player::getPlayer().getInventory().getCurrentSize();
@@ -64,7 +64,7 @@ void MainGameState::draw(
 bool MainGameState::drawUnderlyingState() { return false; }
 
 void MainGameState::toggleDebugOverlay() {
-    showDebugOverlay = !showDebugOverlay;
+    debugOverlayGUI.toggle();
 }
 
 void MainGameState::triggerNewItemVisuals() {
@@ -90,37 +90,6 @@ void MainGameState::createSprites() {
     playerSprite->setOrigin( 32, 32 );
     playerDeadSprite = GameWindow::makeCircleSprite( sf::Color::Red );
     playerDeadSprite->setOrigin( 32, 32 );
-    debugOverlayBackground = makeDebugOverlayBackground();
-}
-
-sf::Sprite *MainGameState::makeDebugOverlayBackground() {
-    sf::RenderTexture renderer;
-    renderer.create( 120, 100 );
-    renderer.clear( sf::Color( 0, 0, 0, 207 ) );
-    renderer.display();
-    
-    sf::Texture texture = renderer.getTexture();
-    sf::Texture *texturePointer = new sf::Texture( texture );
-    sf::Sprite* debugOverlay = new sf::Sprite( *texturePointer );
-
-    return debugOverlay;
-}
-
-void MainGameState::drawDebugOverlay( sf::RenderTarget& target ) const {
-    sf::Text text;
-    text.setFont( font );
-    float xPos = Player::getPlayer().getPosition().x;
-    std::ostringstream o;
-    o << "Player Position = \n(" << Player::getPlayer().getPosition().x 
-        << ", " << Player::getPlayer().getPosition().y << ")";
-    text.setString( o.str() );
-    text.setCharacterSize( 12 );
-    text.setColor( sf::Color::White);
-    text.setPosition( 5, WINDOW_RESOLUTION.y - 95 );
-
-    debugOverlayBackground->setPosition( 0, WINDOW_RESOLUTION.y - 100 );
-    target.draw( *debugOverlayBackground );
-    target.draw( text );
 }
 
 void MainGameState::handleWindowEvents() {
@@ -175,9 +144,8 @@ void MainGameState::drawPlayer( sf::RenderTarget& target ) const {
 
 void MainGameState::drawGUI( sf::RenderTarget& target ) const {
     setInterfaceView( target );
-    if( showDebugOverlay ) {
-        drawDebugOverlay( target );
-    }
+    if( debugOverlayGUI.isVisible() )
+        target.draw( debugOverlayGUI );
     if( inventoryGUI.isVisible() ) {
         target.draw( inventoryGUI );
     }

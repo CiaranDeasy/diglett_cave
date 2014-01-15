@@ -4,6 +4,7 @@
 #include "NewItemVisual.h"
 #include "HullGUI.h"
 #include "GameWindow.h"
+#include "DebugOverlayGUI.h"
 
 /* This abstract class represents a state that the game can be in, such as the
    main game, or a particular menu. */
@@ -57,17 +58,14 @@ private:
     sf::Font& font;
     sf::Sprite *playerSprite;
     sf::Sprite *playerDeadSprite;
-    sf::Sprite *debugOverlayBackground;
-    bool showDebugOverlay;
     InventoryGUI inventoryGUI;
     std::vector<NewItemVisual *> newItemVisuals;
     HullGUI hullGUI;
+    DebugOverlayGUI debugOverlayGUI;
     MainInputHandler inputHandler;
     int expectedInventorySize;
     
     void createSprites();
-    sf::Sprite *makeDebugOverlayBackground();
-    void drawDebugOverlay( sf::RenderTarget& target ) const;
     void handleWindowEvents();
     void drawWorld( sf::RenderTarget& target ) const;
     void drawPlayer( sf::RenderTarget& target ) const;
