@@ -13,6 +13,10 @@ public:
     ~WorldData(void);
 private:
     static WorldData singleton;
+
+    // Number of chunks to store in RAM.
+    static const int HORIZONTAL_CHUNKS = 20;
+    static const int VERTICAL_CHUNKS = 20;
     // These offsets can be added to a chunk index in absolute world
     // co-ordinates to map it to a chunk index in this object's internal array.
     int xOffset;

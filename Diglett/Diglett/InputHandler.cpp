@@ -11,3 +11,5 @@ InputHandler::~InputHandler(void) {
 void InputHandler::addEvent( sf::Event e ) {
     buttonsPressed.push_back( e );
 }
+
+const float InputHandler::CONTROLLER_DEADZONE = 20;

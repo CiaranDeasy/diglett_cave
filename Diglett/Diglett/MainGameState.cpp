@@ -83,6 +83,8 @@ void MainGameState::toggleInventoryGUI() {
     inventoryGUI.toggle();
 }
 
+const float MainGameState::CAMERA_ZOOM = 1.0;
+
 void MainGameState::createSprites() {
     playerSprite = GameWindow::makeCircleSprite( sf::Color::Magenta );
     playerSprite->setOrigin( 32, 32 );

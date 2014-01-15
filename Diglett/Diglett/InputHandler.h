@@ -18,7 +18,10 @@ public:
     // A list of button events since the last processInputs().
     std::vector<sf::Event> buttonsPressed;
 
-private:
+protected:
+    // Minimum displacement required on analogue stick axis to accept as movement.
+    // Value 0-100.
+    static const float CONTROLLER_DEADZONE;
 
 };
 

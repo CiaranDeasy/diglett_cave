@@ -37,6 +37,13 @@ public:
 private:
     static Player singleton;
     static const int DEFAULT_HULL = 150;
+    static const int DEFAULT_MONEY = 100000;
+
+    // Number of ticks the player must spend on the ground before allowed to dig.
+    static const int DIG_DELAY = 15;
+
+    // Number of ticks it takes the player to dig a block.
+    static const int DIG_STEPS = 60;
 
     // Values used to track the digging state.
     bool digging;

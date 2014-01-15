@@ -96,6 +96,9 @@ GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
     gameStates.push( new MainGameState( font, this ) );
 }
 
+const std::string GameWindow::WINDOW_TITLE = "Diglett";
+const std::string GameWindow::DEBUG_FONT = "Fonts/segoeui.ttf";
+
 void GameWindow::drawStateStack() {
     GameState *topState = gameStates.top();
     if( topState->drawUnderlyingState() ) {

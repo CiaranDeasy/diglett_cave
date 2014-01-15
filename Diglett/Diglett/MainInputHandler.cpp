@@ -114,6 +114,10 @@ void MainGameState::MainInputHandler::processInputs() {
     Physics::getPhysics().updatePlayer( movement, directionOfMovement );
 }
 
+const float MainGameState::MainInputHandler::PLAYER_SPEED = 0.008;
+const float MainGameState::MainInputHandler::DIAG_PLAYER_SPEED = 
+        PLAYER_SPEED / 1.414;
+
 Direction MainGameState::MainInputHandler::classifyDirectionOfMovement(
         float stickPositionX, float stickPositionY) {
 
@@ -153,3 +157,4 @@ Direction MainGameState::MainInputHandler::classifyDirectionOfMovement(
         }
     }
 }
+

@@ -12,6 +12,13 @@ public:
     void reset();
 private:
     static Physics singleton;
+    static const float GRAVITY_STRENGTH;
+    static const float PLAYER_MASS;
+    static const float HORIZONTAL_AIR_RESISTANCE;
+    static const float VERTICAL_AIR_RESISTANCE;
+    static const float MINIMUM_VELOCITY;
+    static const float BOUNCE_FACTOR;
+    static const float PLAYER_MAX_SPEED;
     static const float HULL_DAMAGE_THRESHOLD;
     static const float HULL_DAMAGE_SCALER;
     Physics(void);

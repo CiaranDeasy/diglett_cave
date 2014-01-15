@@ -26,6 +26,10 @@ private:
     GameWindow( sf::VideoMode videoMode, std::string title );
 
     static GameWindow *singleton;
+    static const std::string WINDOW_TITLE;
+
+    // Path to font file for debug overlay.
+    static const std::string DEBUG_FONT;
 
     sf::Font font;
     std::stack<GameState *> gameStates;

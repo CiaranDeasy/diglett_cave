@@ -42,12 +42,16 @@ private:
         void processInputs();
         Direction getDirectionOfMovement() { return directionOfMovement; }
     private:
+        static const float PLAYER_SPEED;
+        static const float DIAG_PLAYER_SPEED;
         Direction directionOfMovement;
         MainGameState& gameState;
 
         Direction classifyDirectionOfMovement(
             float stickPositionX, float stickPositionY);
     };
+    
+    static const float CAMERA_ZOOM;
 
     GameWindow *gameWindow;
     sf::Font& font;

@@ -76,6 +76,13 @@ Physics& Physics::getPhysics(){ return singleton; }
 
 Physics Physics::singleton = Physics();
 
+const float Physics::GRAVITY_STRENGTH = 0.003;
+const float Physics::PLAYER_MASS = 1.0;
+const float Physics::HORIZONTAL_AIR_RESISTANCE = 0.05;
+const float Physics::VERTICAL_AIR_RESISTANCE = 0.001;
+const float Physics::MINIMUM_VELOCITY = 0.01;
+const float Physics::BOUNCE_FACTOR = 0.2;
+const float Physics::PLAYER_MAX_SPEED = 0.2;
 const float Physics::HULL_DAMAGE_THRESHOLD = 0.028;
 const float Physics::HULL_DAMAGE_SCALER = 1000;
 
