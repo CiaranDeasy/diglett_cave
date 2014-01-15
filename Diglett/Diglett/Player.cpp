@@ -83,7 +83,9 @@ bool Player::isDead() {
 }
 
 void Player::respawn() {
+    // Reset the hull.
     currentHull = maxHull;
+    // Empty the inventory, deleting each item.
     std::vector<Item *> contents = inventory.getContents();
     std::vector<Item *>::iterator next = contents.begin();
     while( next != contents.end() ) {
@@ -91,6 +93,8 @@ void Player::respawn() {
         next++;
     }
     inventory.clear();
+    // Reset the player's position.
+    position = sf::Vector2f( 1, 1 );
 }
 
 Player Player::singleton = Player();

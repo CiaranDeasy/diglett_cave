@@ -31,7 +31,8 @@ public:
     // Returns true if the player's hull is zero.
     bool isDead();
 
-    // Restores the player's hull and empties their inventory.
+    // Restores the player's hull, empties their inventory, and resets their 
+    // position.
     void respawn();
 
 private:
