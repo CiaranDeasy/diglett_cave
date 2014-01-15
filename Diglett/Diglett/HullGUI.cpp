@@ -10,11 +10,16 @@ HullGUI::~HullGUI(void) {
 void HullGUI::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
+    // Determine the position vector. Negative values indicate offsets from the
+    // right/bottom.
+    sf::Vector2i position = POSITION;
+    if( position.x < 0 ) position.x = target.getSize().x + position.x;
+    if( position.y < 0 ) position.y = target.getSize().y + position.y;
     // Draw the background.
     sf::RectangleShape background = sf::RectangleShape( 
             sf::Vector2f( GUI_SIZE.x, GUI_SIZE.y ) );
     background.setFillColor( BACKGROUND_COLOR );
-    background.setPosition( POSITION.x, POSITION.y );
+    background.setPosition( position.x, position.y );
     target.draw( background );
     // Fill according to current hull strength.
     float currentHullFraction = (float) Player::getPlayer().getCurrentHull() / 
@@ -24,8 +29,8 @@ void HullGUI::draw(
                 currentHullFraction * ( GUI_SIZE.x - 2*BORDER_THICKNESS ), 
                 ( GUI_SIZE.y - 2*BORDER_THICKNESS ) ) );
     fill.setFillColor( FILL_COLOR );
-    fill.setPosition( POSITION.x + BORDER_THICKNESS, 
-            POSITION.y + BORDER_THICKNESS );
+    fill.setPosition( position.x + BORDER_THICKNESS, 
+            position.y + BORDER_THICKNESS );
     target.draw( fill );
     // Draw the text.
     std::string textString = 
@@ -35,14 +40,14 @@ void HullGUI::draw(
     text.setStyle( sf::Text::Bold );
     text.setOrigin( text.getLocalBounds().width / 2, 
             text.getLocalBounds().height / 2 );
-    text.setPosition( POSITION.x + (GUI_SIZE.x/2), 
-            POSITION.y + (GUI_SIZE.y/2) );
+    text.setPosition( position.x + (GUI_SIZE.x/2), 
+            position.y + (GUI_SIZE.y/2) );
     target.draw( text );
 }
 
-const sf::Vector2i HullGUI::POSITION = 
-        sf::Vector2i( WINDOW_RESOLUTION.x -110, 10 );
 const sf::Vector2i HullGUI::GUI_SIZE = sf::Vector2i( 100, 20 );
+const sf::Vector2i HullGUI::POSITION = 
+        sf::Vector2i( -10 - GUI_SIZE.x, 10 );
 const int HullGUI::TEXT_SIZE = 12;
 const sf::Color HullGUI::BACKGROUND_COLOR = sf::Color( 0, 0, 0, 255 );
 const sf::Color HullGUI::FILL_COLOR = sf::Color( 255, 0, 0, 255 );

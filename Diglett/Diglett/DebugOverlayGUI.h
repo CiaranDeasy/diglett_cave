@@ -24,8 +24,8 @@ private:
     
     // The position of the GUI in the game window. Positive values indicate 
     // offset from the top/left, negative from the bottom/right.
-    static const sf::Vector2i POSITION;
     static const sf::Vector2i GUI_SIZE;
+    static const sf::Vector2i POSITION;
     static const int TEXT_SIZE;
     static const sf::Color BACKGROUND_COLOR;
     static const sf::Color TEXT_COLOR;

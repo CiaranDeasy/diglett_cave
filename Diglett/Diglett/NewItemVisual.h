@@ -25,8 +25,11 @@ public:
 private: 
     
     static const int TICKS_TO_LIVE;
-    static const sf::Vector2f INITIAL_POSITION;
-    static const sf::Vector2f FINAL_POSITION;
+
+    // Represents the final displacement of the visual relative to its initial 
+    // position at the centre of the screen.
+    static const sf::Vector2i FINAL_DISPLACEMENT;
+
     static const int TEXT_SIZE;
     static const sf::Color BACKGROUND_COLOR;
     static const sf::Color TEXT_COLOR;
@@ -35,7 +38,6 @@ private:
     static const int SPRITE_SEPARATION;
 
     sf::Font& font;
-    //sf::Vector2f currentPosition;
     sf::Sprite *sprite;
 
     // Texture pointer for cleanup.

@@ -4,8 +4,8 @@
 NewItemVisual::NewItemVisual( sf::Font& font, Item *item ) : font(font) {
     ticksRemaining = TICKS_TO_LIVE;
     stepSize = sf::Vector2f( 
-            ( FINAL_POSITION.x - INITIAL_POSITION.x ) / TICKS_TO_LIVE, 
-            ( FINAL_POSITION.y - INITIAL_POSITION.y ) / TICKS_TO_LIVE );
+            ( (float) FINAL_DISPLACEMENT.x ) / TICKS_TO_LIVE, 
+            ( (float) FINAL_DISPLACEMENT.y ) / TICKS_TO_LIVE );
 
     // Make the text object, to determine the size of the sprite renderer.
     sf::Text text = sf::Text( item->getName(), font, TEXT_SIZE );
@@ -35,7 +35,6 @@ NewItemVisual::NewItemVisual( sf::Font& font, Item *item ) : font(font) {
     texturePointer = new sf::Texture( texture );
     sprite = new sf::Sprite( *texturePointer );
     sprite->setOrigin( renderer.getSize().x / 2, renderer.getSize().y / 2 );
-    sprite->setPosition( INITIAL_POSITION );
 }
 
 NewItemVisual::~NewItemVisual(void) {
@@ -47,6 +46,9 @@ void NewItemVisual::draw(
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
     // Draw the sprite.
+    int stepsSoFar = TICKS_TO_LIVE - ticksRemaining;
+    sprite->setPosition( target.getSize().x /2 + ( stepSize.x * stepsSoFar ), 
+            target.getSize().y /2 + ( stepSize.y * stepsSoFar ) );
     target.draw( *sprite );
 }
 
@@ -60,10 +62,7 @@ void NewItemVisual::tick() {
 }
 
 const int NewItemVisual::TICKS_TO_LIVE = 60;
-const sf::Vector2f NewItemVisual::INITIAL_POSITION = 
-        sf::Vector2f( WINDOW_RESOLUTION.x /2, WINDOW_RESOLUTION.y /2 );
-const sf::Vector2f NewItemVisual::FINAL_POSITION = 
-        INITIAL_POSITION + sf::Vector2f( 0, -50 );
+const sf::Vector2i NewItemVisual::FINAL_DISPLACEMENT = sf::Vector2i( 0, -50 );
 const int NewItemVisual::TEXT_SIZE = 12;
 const sf::Color NewItemVisual::BACKGROUND_COLOR = 
         sf::Color( 0, 0, 0, 128 );

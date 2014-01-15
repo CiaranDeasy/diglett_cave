@@ -40,9 +40,9 @@ void DebugOverlayGUI::draw(
     target.draw( text );
 }
 
-const sf::Vector2i DebugOverlayGUI::POSITION = 
-        sf::Vector2i( 0, -100 );
 const sf::Vector2i DebugOverlayGUI::GUI_SIZE = sf::Vector2i( 130, 100 );
+const sf::Vector2i DebugOverlayGUI::POSITION = 
+        sf::Vector2i( 0, -GUI_SIZE.y );
 const int DebugOverlayGUI::TEXT_SIZE = 12;
 const sf::Color DebugOverlayGUI::BACKGROUND_COLOR = sf::Color( 0, 0, 0, 207 );
 const sf::Color DebugOverlayGUI::TEXT_COLOR = 

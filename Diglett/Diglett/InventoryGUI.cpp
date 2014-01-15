@@ -26,19 +26,22 @@ void InventoryGUI::toggle() {
 void InventoryGUI::draw( 
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
+    sf::Vector2i absPosition = position;
+    if( absPosition.x < 0 ) absPosition.x = target.getSize().x + absPosition.x;
+    if( absPosition.y < 0 ) absPosition.y = target.getSize().y + absPosition.y;
     std::vector<Item *> contents = inventory.getContents();
     // Draw the inventory background.
     sf::RectangleShape *inventoryBackground = 
             makeInventoryBackground( contents );
-    inventoryBackground->setPosition( sf::Vector2f( position ) );
+    inventoryBackground->setPosition( sf::Vector2f( absPosition ) );
     target.draw( *inventoryBackground );
     delete inventoryBackground;
     for( int i = 0; i < inventory.getCurrentSize(); i++ ) {
         // Calculate the position of the sprite.
         int spritePositionX = 
-            position.x + border + ( i / itemsPerCol ) * entrySize.x;
+            absPosition.x + border + ( i / itemsPerCol ) * entrySize.x;
         int spritePositionY =
-            position.y + border + ( i % itemsPerCol ) * entrySize.y;
+            absPosition.y + border + ( i % itemsPerCol ) * entrySize.y;
         // Draw the sprite.
         contents[i]->getSprite()->setPosition( 
                 spritePositionX, spritePositionY );

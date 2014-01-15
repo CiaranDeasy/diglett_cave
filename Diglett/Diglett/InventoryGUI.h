@@ -19,8 +19,11 @@ public:
     bool isVisible() const;
 
 private: 
-
+    
+    // The position of the GUI in the game window. Positive values indicate 
+    // offset from the top/left, negative from the bottom/right.
     static const sf::Vector2i InventoryGUI::DEFAULT_POSITION;
+
     static const int DEFAULT_BORDER;
     static const int DEFAULT_ITEMS_PER_COL;
     static const sf::Vector2i DEFAULT_ENTRY_SIZE;
