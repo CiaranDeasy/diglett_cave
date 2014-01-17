@@ -2,13 +2,14 @@
 #include "GameState.h"
 #include <SFML/Graphics.hpp>
 #include "GameWindow.h"
+#include "TextPopUp.h"
 
 /* This abstract class represents a state that the game can be in, such as the
    main game, or a particular menu. */
 
 class DeadGameState : public GameState {
 public:
-    DeadGameState( GameWindow *gameWindow );
+    DeadGameState( GameWindow *gameWindow, sf::Font& font );
     ~DeadGameState();
 
     // Represents the behaviour that should be performed each game tick when 
@@ -23,7 +24,6 @@ public:
     virtual bool drawUnderlyingState();
 
 private: 
-
     class DeadInputHandler : public InputHandler {
     public:
         DeadInputHandler( DeadGameState& gameState );
@@ -35,8 +35,13 @@ private:
     };
     friend class DeadInputHandler;
 
+    // The message displayed, telling the player they are dead.
+    static const std::string DEATH_MESSAGE;
+
     DeadInputHandler inputHandler;
     GameWindow *gameWindow;
+    TextPopUp deadNotification;
+    sf::Font font;
 
     // Polls the GameWindow for window events and responds to them accordingly.
     void handleWindowEvents();

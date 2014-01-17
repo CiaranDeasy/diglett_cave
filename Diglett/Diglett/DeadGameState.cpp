@@ -2,8 +2,9 @@
 #include "Player.h"
 #include "Physics.h"
 
-DeadGameState::DeadGameState( GameWindow *gameWindow ) : 
-        inputHandler( *this ) {
+DeadGameState::DeadGameState( GameWindow *gameWindow, sf::Font& font ) : 
+        inputHandler( *this ), 
+        deadNotification( DEATH_MESSAGE, font ) {
     this->gameWindow = gameWindow;
 }
 
@@ -17,7 +18,7 @@ void DeadGameState::gameTick() {
 
 void DeadGameState::draw(sf::RenderTarget& target, sf::RenderStates states) 
         const {
-    // TODO
+    target.draw( deadNotification );
 }
 
 void DeadGameState::respawn() {
@@ -30,6 +31,9 @@ void DeadGameState::respawn() {
 }
 
 bool DeadGameState::drawUnderlyingState() { return true; }
+
+const std::string DeadGameState::DEATH_MESSAGE = 
+        "You have died. Press SPACE or CONTROLLER \"A\" to respawn.";
 
 void DeadGameState::handleWindowEvents() {
     sf::Event event = sf::Event();

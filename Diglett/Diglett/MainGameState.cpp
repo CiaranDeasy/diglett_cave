@@ -48,7 +48,7 @@ void MainGameState::gameTick() {
     processNewItemVisuals();
     // Test if the player is dead.
     if( Player::getPlayer().isDead() ) {
-        GameState *deadGameState = new DeadGameState( gameWindow );
+        GameState *deadGameState = new DeadGameState( gameWindow, font );
         gameWindow->pushNewState( deadGameState );
     }
 }
