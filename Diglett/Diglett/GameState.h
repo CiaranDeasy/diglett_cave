@@ -21,6 +21,8 @@ public:
     // Indicates that the state should be removed from the GameWindow stack.
     bool isDead();
 
+    friend class DismissInputHandler;
+
 protected:
     bool dead;
 
