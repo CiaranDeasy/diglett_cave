@@ -21,6 +21,7 @@ public:
 
     bool isDiggable();
     bool isSolid();
+    bool isOre();
     sf::Sprite *getSprite();
 
 private:

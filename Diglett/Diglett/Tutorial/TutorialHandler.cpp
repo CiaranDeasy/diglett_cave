@@ -1,11 +1,15 @@
 #include "TutorialHandler.h"
 #include "InitialTutorial.h"
+#include "OreTutorial.h"
+#include "InventoryTutorial.h"
 
 TutorialHandler::TutorialHandler( GameWindow *gameWindow, sf::Font& font ) 
         : font( font ) {
     this->gameWindow = gameWindow;
     tutorials = std::vector<Tutorial *>();
     tutorials.push_back( new InitialTutorial() );
+    tutorials.push_back( new OreTutorial() );
+    tutorials.push_back( new InventoryTutorial() );
 }
 
 TutorialHandler::~TutorialHandler() {

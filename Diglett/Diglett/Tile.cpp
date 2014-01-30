@@ -32,6 +32,10 @@ bool Tile::isSolid() {
    return lookupType( this->type ).isSolid();
 }
 
+bool Tile::isOre() {
+    return ( this->type != 0 && this->type != 1 && this->type != 2 );
+}
+
 sf::Sprite *Tile::getSprite() {
     return lookupType( this->type ).getSprite();
 }

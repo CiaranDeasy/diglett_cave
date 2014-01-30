@@ -17,7 +17,7 @@ void InitialTutorial::activate( GameWindow *gameWindow, sf::Font& font ) {
 
 const std::string InitialTutorial::message = 
         "Welcome to Project Diglett!\n"
-        "Use the WASD keys to move.\n"
+        "Use the WASD keys or Gamepad left stick to move.\n"
         "Move into a dirt block to dig it.\n"
         "Dig down to find some gold!\n"
-        "Press SPACE to begin.";
+        "Press SPACE or Gamepad \"A\" to begin.";
