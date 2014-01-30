@@ -5,6 +5,7 @@
 #include "HullGUI.h"
 #include "GameWindow.h"
 #include "DebugOverlayGUI.h"
+#include "Tutorial/TutorialHandler.h"
 
 /* This abstract class represents a state that the game can be in, such as the
    main game, or a particular menu. */
@@ -64,6 +65,7 @@ private:
     DebugOverlayGUI debugOverlayGUI;
     MainInputHandler inputHandler;
     int expectedInventorySize;
+    TutorialHandler tutorials;
     
     void createSprites();
     void handleWindowEvents();

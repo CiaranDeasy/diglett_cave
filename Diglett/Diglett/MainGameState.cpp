@@ -12,7 +12,8 @@ MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) :
         inventoryGUI( font, Player::getPlayer().getInventory() ),
         hullGUI( font ), 
         debugOverlayGUI( font ),
-        inputHandler( *this ) {
+        inputHandler( *this ),
+        tutorials( gameWindow, font ) {
     createSprites();
     this->gameWindow = gameWindow;
     expectedInventorySize = 
@@ -51,6 +52,8 @@ void MainGameState::gameTick() {
         GameState *deadGameState = new DeadGameState( gameWindow, font );
         gameWindow->pushNewState( deadGameState );
     }
+    // Test for tutorial triggers.
+    tutorials.testTriggers();
 }
     
 void MainGameState::draw( 
