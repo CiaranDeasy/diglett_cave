@@ -15,6 +15,7 @@ public:
     ~Item(void);
     std::string getName();
     sf::Sprite *getSprite();
+    int getValue();
 
 private:
     

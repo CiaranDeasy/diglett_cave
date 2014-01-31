@@ -5,14 +5,16 @@
 class ItemType
 {
 public:
-    ItemType( std::string name, sf::Sprite *sprite );
+    ItemType( std::string name, sf::Sprite *sprite, int value );
     ~ItemType(void);
     std::string getName();
     sf::Sprite *getSprite();
+    int getValue();
 
 private:
     std::string name;
     sf::Sprite *sprite;
+    int value;
 
 };
 
