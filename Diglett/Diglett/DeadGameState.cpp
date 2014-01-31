@@ -60,7 +60,7 @@ void DeadGameState::DeadInputHandler::processInputs() {
          buttonsPressed.begin();
     while( next != buttonsPressed.end() ) {
         if( next->type == sf::Event::JoystickButtonPressed && 
-                next->joystickButton.button == 3 ) {
+                next->joystickButton.button == 0 ) {
             gameState.respawn();
         } else if( next->type == sf::Event::KeyPressed && 
                 next->key.code == sf::Keyboard::Space ) {

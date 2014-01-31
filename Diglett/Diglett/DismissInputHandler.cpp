@@ -14,7 +14,7 @@ void DismissInputHandler::processInputs() {
         sf::Event& e = buttonsPressed[i];
         // Joystick buttons.
         if( e.type == sf::Event::JoystickButtonPressed ) {
-          if( e.joystickButton.button == 3 ) {
+          if( e.joystickButton.button == 0 ) {
               gameState.dead = true;
           }
         }
