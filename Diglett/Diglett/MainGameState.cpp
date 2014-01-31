@@ -5,6 +5,7 @@
 #include "WorldData.h"
 #include <sstream>
 #include "DeadGameState.h"
+#include "ShopGameState.h"
 
 MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) : 
         GameState(),
@@ -13,7 +14,8 @@ MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) :
         hullGUI( font ), 
         debugOverlayGUI( font ),
         inputHandler( *this ),
-        tutorials( gameWindow, font ) {
+        tutorials( gameWindow, font ),
+        moneyGUI( font ) {
     createSprites();
     this->gameWindow = gameWindow;
     expectedInventorySize = 
@@ -162,6 +164,8 @@ void MainGameState::drawGUI( sf::RenderTarget& target ) const {
     }
     // Display the hull strength GUI.
     target.draw( hullGUI );
+    // Display the money GUI.
+    target.draw( moneyGUI );
 }
 
 void MainGameState::processNewItemVisuals() {
@@ -177,4 +181,8 @@ void MainGameState::processNewItemVisuals() {
             next = newItemVisuals.erase( next );
         }
     }
+}
+
+void MainGameState::openShop() {
+    gameWindow->pushNewState( new ShopGameState( gameWindow, font ) );
 }

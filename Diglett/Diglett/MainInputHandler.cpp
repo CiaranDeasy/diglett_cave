@@ -96,6 +96,8 @@ void MainGameState::MainInputHandler::processInputs() {
               gameState.toggleDebugOverlay();
           } else if( e.joystickButton.button == 3 ) {
               gameState.toggleInventoryGUI();
+          } else if( e.joystickButton.button == 2 ) {
+              gameState.openShop();
           }
         }
         // Keyboard keys.
@@ -104,6 +106,8 @@ void MainGameState::MainInputHandler::processInputs() {
               gameState.toggleDebugOverlay();
           } else if( e.key.code == sf::Keyboard::I ) {
               gameState.toggleInventoryGUI();
+          } else if( e.key.code == sf::Keyboard::U ) {
+              gameState.openShop();
           }
         }
     }

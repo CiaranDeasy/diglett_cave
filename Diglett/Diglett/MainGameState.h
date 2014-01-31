@@ -6,6 +6,7 @@
 #include "GameWindow.h"
 #include "DebugOverlayGUI.h"
 #include "Tutorial/TutorialHandler.h"
+#include "MoneyGUI.h"
 
 /* This abstract class represents a state that the game can be in, such as the
    main game, or a particular menu. */
@@ -32,6 +33,8 @@ public:
     void toggleDebugOverlay();
     void toggleInventoryGUI();
     void triggerNewItemVisuals();
+
+    void openShop();
 
 private: 
     class MainInputHandler : public InputHandler {
@@ -66,6 +69,7 @@ private:
     MainInputHandler inputHandler;
     int expectedInventorySize;
     TutorialHandler tutorials;
+    MoneyGUI moneyGUI;
     
     void createSprites();
     void handleWindowEvents();
