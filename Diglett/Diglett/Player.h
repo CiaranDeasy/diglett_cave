@@ -16,6 +16,8 @@ public:
 
     Inventory<Item *>& getInventory();
 
+    int getMoney();
+
     // Increases the player's money by the specified amount. Negative input
     // decreases money. If money is decreased by an amount that would make it 
     // negative, no change is made, and the return value is false, otherwise 
@@ -38,7 +40,7 @@ public:
 private:
     static Player singleton;
     static const int DEFAULT_HULL = 150;
-    static const int DEFAULT_MONEY = 100000;
+    static const int DEFAULT_MONEY = 0;
 
     // Number of ticks the player must spend on the ground before allowed to dig.
     static const int DIG_DELAY = 15;

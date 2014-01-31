@@ -64,6 +64,8 @@ void Player::move( float x, float y, Direction directionOfInput ) {
 
 Inventory<Item *>& Player::getInventory() { return inventory; }
 
+int Player::getMoney() { return money; }
+
 bool Player::addMoney( int amount ) {
     if( -amount > money ) return false;
     money += amount;
