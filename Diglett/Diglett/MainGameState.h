@@ -7,6 +7,7 @@
 #include "DebugOverlayGUI.h"
 #include "Tutorial/TutorialHandler.h"
 #include "MoneyGUI.h"
+#include "InteractiveEntity.h"
 
 /* This abstract class represents a state that the game can be in, such as the
    main game, or a particular menu. */
@@ -34,6 +35,10 @@ public:
     void triggerNewItemVisuals();
 
     void openShop();
+
+    // Scans the list of interactive entities and interacts with one if it's 
+    // in range of the player.
+    void interact();
 
 private: 
     class MainInputHandler : public InputHandler {
@@ -69,6 +74,7 @@ private:
     int expectedInventorySize;
     TutorialHandler tutorials;
     MoneyGUI moneyGUI;
+    std::vector<InteractiveEntity *> interactiveEntities;
     
     void createSprites();
     void handleWindowEvents();
@@ -78,5 +84,4 @@ private:
 
     // Ages the NewItemVisuals by one tick, and deletes any that die.
     void processNewItemVisuals();
-
 };

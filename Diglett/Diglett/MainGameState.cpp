@@ -6,6 +6,7 @@
 #include <sstream>
 #include "DeadGameState.h"
 #include "ShopGameState.h"
+#include "Shop.h"
 
 MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) : 
         GameState(),
@@ -20,6 +21,7 @@ MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) :
     this->gameWindow = gameWindow;
     expectedInventorySize = 
             Player::getPlayer().getInventory().getCurrentSize();
+    interactiveEntities.push_back( new Shop( gameWindow, font ) );
 }
 
 MainGameState::~MainGameState() {
@@ -82,6 +84,23 @@ void MainGameState::toggleInventoryGUI() {
     inventoryGUI.toggle();
 }
 
+void MainGameState::interact() {
+    std::vector<InteractiveEntity *>::iterator next = 
+            interactiveEntities.begin();
+    while( next != interactiveEntities.end() ) {
+        sf::Vector2f player = Player::getPlayer().getPosition();
+        sf::Vector2f entity = (*next)->getPosition();
+        if( player.x > entity.x - 1 && player.x < entity.x + 1 && 
+                player.y > entity.y - 1 && player.y < entity.y + 1 ) {
+            (*next)->interact();
+            next++;
+        }
+        else {
+            next++;
+        }
+    }
+}
+
 const float MainGameState::CAMERA_ZOOM = 1.0;
 
 void MainGameState::createSprites() {
@@ -125,6 +144,12 @@ void MainGameState::drawWorld( sf::RenderTarget& target ) const {
           }
         }
       }
+    }
+    std::vector<InteractiveEntity *>::const_iterator next = 
+            interactiveEntities.begin();
+    while( next != interactiveEntities.end() ) {
+        target.draw( **next );
+        next++;
     }
 }
 
