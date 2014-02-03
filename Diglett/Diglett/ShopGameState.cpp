@@ -18,6 +18,7 @@ void ShopGameState::gameTick() {
 
 void ShopGameState::draw(sf::RenderTarget& target, sf::RenderStates states) 
         const {
+    setInterfaceView( target );
     target.draw( shopGUI );
 }
 

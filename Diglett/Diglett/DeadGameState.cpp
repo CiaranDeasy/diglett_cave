@@ -18,6 +18,7 @@ void DeadGameState::gameTick() {
 
 void DeadGameState::draw(sf::RenderTarget& target, sf::RenderStates states) 
         const {
+    setInterfaceView( target );
     target.draw( deadNotification );
 }
 

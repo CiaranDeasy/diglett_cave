@@ -24,6 +24,8 @@ public:
     friend class DismissInputHandler;
 
 protected:
+    static void setInterfaceView( sf::RenderTarget& target );
+
     bool dead;
 
 private: 

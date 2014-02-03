@@ -19,6 +19,7 @@ void PopUpGameState::gameTick() {
 
 void PopUpGameState::draw(sf::RenderTarget& target, sf::RenderStates states) 
         const {
+    setInterfaceView( target );
     target.draw( popUp );
 }
 

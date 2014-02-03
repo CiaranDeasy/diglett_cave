@@ -25,12 +25,6 @@ MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) :
 MainGameState::~MainGameState() {
 }
 
-void MainGameState::setInterfaceView( sf::RenderTarget& target ) {
-    sf::View interfaceView = sf::View( sf::FloatRect( 
-            0, 0, target.getSize().x, target.getSize().y ) );
-    target.setView( interfaceView );
-}
-
 void MainGameState::setWorldView( sf::RenderTarget& target ) {
     sf::Vector2f centerPoint = 
         ( Utility::coordsGameToWindow( Player::getPlayer().getPosition() ) );

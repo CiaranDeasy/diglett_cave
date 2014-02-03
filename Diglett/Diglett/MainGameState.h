@@ -16,7 +16,6 @@ public:
     MainGameState( sf::Font& font, GameWindow *gameWindow );
     ~MainGameState();
     
-    static void setInterfaceView( sf::RenderTarget& target );
     static void setWorldView( sf::RenderTarget& target );
 
     // Represents the behaviour that should be performed each game tick when 
