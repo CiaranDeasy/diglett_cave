@@ -2,9 +2,7 @@
 #include "ShopGameState.h"
 #include "Utility.h"
 
-Shop::Shop( GameWindow *gameWindow, sf::Font& font ) :
-        font( font ) {
-    this->gameWindow = gameWindow;
+Shop::Shop() {
     this->position = POSITION;
     this->sprite = GameWindow::makeCircleSprite( sf::Color::Black );
     sprite->setPosition( Utility::coordsGameToWindow( position ) );
@@ -14,7 +12,7 @@ Shop::~Shop() {
     delete sprite;
 }
 
-void Shop::interact() {
+void Shop::interact( GameWindow *gameWindow, sf::Font& font ) {
     gameWindow->pushNewState( new ShopGameState( gameWindow, font ) );
 }
 

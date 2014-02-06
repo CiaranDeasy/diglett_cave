@@ -13,12 +13,10 @@ MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) :
         font( font ), 
         inputHandler( *this ),
         tutorials( gameWindow, font ),
-        GUI( font, Player::getPlayer().getInventory() ) {
+        GUI( font, Player::getPlayer().getInventory() ),
+        world( Player::getPlayer() ) {
     createSprites();
     this->gameWindow = gameWindow;
-    expectedInventorySize = 
-            Player::getPlayer().getInventory().getCurrentSize();
-    interactiveEntities.push_back( new Shop( gameWindow, font ) );
 }
 
 MainGameState::~MainGameState() {
@@ -50,32 +48,15 @@ void MainGameState::gameTick() {
 }
     
 void MainGameState::draw( 
-        sf::RenderTarget& target, 
-        sf::RenderStates states ) const {
-    drawWorld( target );
+        sf::RenderTarget& target, sf::RenderStates states ) const {
+    setWorldView( target );
+    target.draw( world );
     drawPlayer( target );
     setInterfaceView( target );
     target.draw( GUI );
 }
 
 bool MainGameState::drawUnderlyingState() { return false; }
-
-void MainGameState::interact() {
-    std::vector<InteractiveEntity *>::iterator next = 
-            interactiveEntities.begin();
-    while( next != interactiveEntities.end() ) {
-        sf::Vector2f player = Player::getPlayer().getPosition();
-        sf::Vector2f entity = (*next)->getPosition();
-        if( player.x > entity.x - 1 && player.x < entity.x + 1 && 
-                player.y > entity.y - 1 && player.y < entity.y + 1 ) {
-            (*next)->interact();
-            next++;
-        }
-        else {
-            next++;
-        }
-    }
-}
 
 const float MainGameState::CAMERA_ZOOM = 1.0;
 
@@ -97,35 +78,6 @@ void MainGameState::handleWindowEvents() {
             event.type == sf::Event::KeyPressed ) {
             inputHandler.addEvent( event );
         }
-    }
-}
-
-void MainGameState::drawWorld( sf::RenderTarget& target ) const {
-    setWorldView( target );
-    target.clear();
-    sf::Vector2i playerChunk = Utility::coordsGameToChunk( 
-        Player::getPlayer().getPosition() );
-    for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
-      for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
-        Chunk nextChunk = WorldData::getWorldData().getChunk( x, y );
-        for( int i = 0; i < CHUNK_SIDE; i++ ) {
-          for( int j = 0; j < CHUNK_SIDE; j++ ) {
-            Tile nextTile = nextChunk.getRelativeTile( i, j );
-            sf::Vector2i tilePosition = sf::Vector2i( 
-                    nextChunk.getPosition().x + i,
-                    nextChunk.getPosition().y + j );
-            nextTile.getSprite()->setPosition( 
-                Utility::coordsTileToWindow( tilePosition ) );
-            target.draw( *nextTile.getSprite() );
-          }
-        }
-      }
-    }
-    std::vector<InteractiveEntity *>::const_iterator next = 
-            interactiveEntities.begin();
-    while( next != interactiveEntities.end() ) {
-        target.draw( **next );
-        next++;
     }
 }
 

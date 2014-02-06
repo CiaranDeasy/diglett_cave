@@ -9,6 +9,7 @@
 #include "MoneyGUI.h"
 #include "InteractiveEntity.h"
 #include "MainGUI.h"
+#include "World.h"
 
 /* This abstract class represents a state that the game can be in, such as the
    main game, or a particular menu. */
@@ -35,10 +36,6 @@ public:
     void toggleInventoryGUI();
 
     void openShop();
-
-    // Scans the list of interactive entities and interacts with one if it's 
-    // in range of the player.
-    void interact();
 
 private: 
     class MainInputHandler : public InputHandler {
@@ -67,13 +64,11 @@ private:
     sf::Sprite *playerSprite;
     sf::Sprite *playerDeadSprite;
     MainInputHandler inputHandler;
-    int expectedInventorySize;
     TutorialHandler tutorials;
-    std::vector<InteractiveEntity *> interactiveEntities;
     MainGUI GUI;
+    World world;
     
     void createSprites();
     void handleWindowEvents();
-    void drawWorld( sf::RenderTarget& target ) const;
     void drawPlayer( sf::RenderTarget& target ) const;
 };

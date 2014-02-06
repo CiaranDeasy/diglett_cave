@@ -99,7 +99,7 @@ void MainGameState::MainInputHandler::processInputs() {
           } else if( e.joystickButton.button == 2 ) {
               gameState.openShop();
           } else if( e.joystickButton.button == 0 ) {
-              gameState.interact();
+              gameState.world.interact( gameState.gameWindow, gameState.font );
           }
         }
         // Keyboard keys.
@@ -111,7 +111,7 @@ void MainGameState::MainInputHandler::processInputs() {
           } else if( e.key.code == sf::Keyboard::U ) {
               gameState.openShop();
           } else if( e.key.code == sf::Keyboard::Space ) {
-              gameState.interact();
+              gameState.world.interact( gameState.gameWindow, gameState.font );
           }
         }
     }

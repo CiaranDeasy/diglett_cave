@@ -7,16 +7,13 @@
 class Shop : public InteractiveEntity {
 
 public:
-    Shop( GameWindow *gameWindow, sf::Font& font );
+    Shop();
     ~Shop();
-    virtual void interact();
+    virtual void interact( GameWindow *gameWindow, sf::Font& font );
     virtual void draw( 
             sf::RenderTarget& target, sf::RenderStates states ) const;
 
 private:
     static const sf::Vector2f POSITION;
-
-    GameWindow *gameWindow;
-    sf::Font& font;
 
 };
