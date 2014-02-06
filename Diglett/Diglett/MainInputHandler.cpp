@@ -93,9 +93,9 @@ void MainGameState::MainInputHandler::processInputs() {
         // Joystick buttons.
         if( e.type == sf::Event::JoystickButtonPressed ) {
           if( e.joystickButton.button == 6 ) {
-              gameState.toggleDebugOverlay();
+              gameState.GUI.toggleDebugOverlay();
           } else if( e.joystickButton.button == 3 ) {
-              gameState.toggleInventoryGUI();
+              gameState.GUI.toggleInventoryGUI();
           } else if( e.joystickButton.button == 2 ) {
               gameState.openShop();
           } else if( e.joystickButton.button == 0 ) {
@@ -105,9 +105,9 @@ void MainGameState::MainInputHandler::processInputs() {
         // Keyboard keys.
         else if( e.type == sf::Event::KeyPressed ) {
           if( e.key.code == sf::Keyboard::F3 ) {
-              gameState.toggleDebugOverlay();
+              gameState.GUI.toggleDebugOverlay();
           } else if( e.key.code == sf::Keyboard::I ) {
-              gameState.toggleInventoryGUI();
+              gameState.GUI.toggleInventoryGUI();
           } else if( e.key.code == sf::Keyboard::U ) {
               gameState.openShop();
           } else if( e.key.code == sf::Keyboard::Space ) {

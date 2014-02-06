@@ -11,12 +11,9 @@
 MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) : 
         GameState(),
         font( font ), 
-        inventoryGUI( font, Player::getPlayer().getInventory() ),
-        hullGUI( font ), 
-        debugOverlayGUI( font ),
         inputHandler( *this ),
         tutorials( gameWindow, font ),
-        moneyGUI( font ) {
+        GUI( font, Player::getPlayer().getInventory() ) {
     createSprites();
     this->gameWindow = gameWindow;
     expectedInventorySize = 
@@ -41,10 +38,8 @@ void MainGameState::gameTick() {
     handleWindowEvents();
     // Process the player's input.
     inputHandler.processInputs();
-    // Create NewItemVisuals.
-    triggerNewItemVisuals();
-    // Age the NewItemVisuals, and clean up any dead ones.
-    processNewItemVisuals();
+    // Advance the GUI.
+    GUI.tick();
     // Test if the player is dead.
     if( Player::getPlayer().isDead() ) {
         GameState *deadGameState = new DeadGameState( gameWindow, font );
@@ -59,30 +54,11 @@ void MainGameState::draw(
         sf::RenderStates states ) const {
     drawWorld( target );
     drawPlayer( target );
-    drawGUI( target );
+    setInterfaceView( target );
+    target.draw( GUI );
 }
 
 bool MainGameState::drawUnderlyingState() { return false; }
-
-void MainGameState::toggleDebugOverlay() {
-    debugOverlayGUI.toggle();
-}
-
-void MainGameState::triggerNewItemVisuals() {
-    // Check if the player's inventory grew.
-    int currentInventorySize = 
-            Player::getPlayer().getInventory().getCurrentSize();
-    if( currentInventorySize > expectedInventorySize ) {
-        Item *item = Player::getPlayer().getInventory().getContents()
-                [currentInventorySize - 1];
-        newItemVisuals.push_back( new NewItemVisual( font, item ) );
-    }
-    expectedInventorySize = currentInventorySize;
-}
-
-void MainGameState::toggleInventoryGUI() {
-    inventoryGUI.toggle();
-}
 
 void MainGameState::interact() {
     std::vector<InteractiveEntity *>::iterator next = 
@@ -163,42 +139,6 @@ void MainGameState::drawPlayer( sf::RenderTarget& target ) const {
        playerSprite->setPosition( Utility::coordsGameToWindow( 
               Player::getPlayer().getPosition() ) );
        target.draw( *playerSprite );
-    }
-}
-
-void MainGameState::drawGUI( sf::RenderTarget& target ) const {
-    setInterfaceView( target );
-    if( debugOverlayGUI.isVisible() )
-        target.draw( debugOverlayGUI );
-    if( inventoryGUI.isVisible() ) {
-        target.draw( inventoryGUI );
-    }
-    // Display the NewItemVisuals.
-    std::vector<NewItemVisual *>::const_iterator next = newItemVisuals.begin();
-    while( next != newItemVisuals.end() ) {
-        if( (*next)->isAlive() ) {
-            target.draw(**next);
-            next++;
-        } else next++;
-    }
-    // Display the hull strength GUI.
-    target.draw( hullGUI );
-    // Display the money GUI.
-    target.draw( moneyGUI );
-}
-
-void MainGameState::processNewItemVisuals() {
-    std::vector<NewItemVisual *>::iterator next = 
-         newItemVisuals.begin();
-    while( next != newItemVisuals.end() ) {
-        if( (*next)->isAlive() ) {
-            (*next)->tick();
-            next++;
-        } else {
-            // Cleanup dead NewItemVisuals.
-            delete *next;
-            next = newItemVisuals.erase( next );
-        }
     }
 }
 

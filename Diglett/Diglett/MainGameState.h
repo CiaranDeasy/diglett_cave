@@ -8,6 +8,7 @@
 #include "Tutorial/TutorialHandler.h"
 #include "MoneyGUI.h"
 #include "InteractiveEntity.h"
+#include "MainGUI.h"
 
 /* This abstract class represents a state that the game can be in, such as the
    main game, or a particular menu. */
@@ -32,7 +33,6 @@ public:
     
     void toggleDebugOverlay();
     void toggleInventoryGUI();
-    void triggerNewItemVisuals();
 
     void openShop();
 
@@ -66,22 +66,14 @@ private:
     sf::Font& font;
     sf::Sprite *playerSprite;
     sf::Sprite *playerDeadSprite;
-    InventoryGUI inventoryGUI;
-    std::vector<NewItemVisual *> newItemVisuals;
-    HullGUI hullGUI;
-    DebugOverlayGUI debugOverlayGUI;
     MainInputHandler inputHandler;
     int expectedInventorySize;
     TutorialHandler tutorials;
-    MoneyGUI moneyGUI;
     std::vector<InteractiveEntity *> interactiveEntities;
+    MainGUI GUI;
     
     void createSprites();
     void handleWindowEvents();
     void drawWorld( sf::RenderTarget& target ) const;
     void drawPlayer( sf::RenderTarget& target ) const;
-    void drawGUI( sf::RenderTarget& target ) const;
-
-    // Ages the NewItemVisuals by one tick, and deletes any that die.
-    void processNewItemVisuals();
 };
