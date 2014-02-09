@@ -13,7 +13,7 @@ public:
     // If a tutorial has been triggered, it is activated. No more than one 
     // tutorial is activated by a single call to this method. Tutorials are 
     // deleted after activation, but not on the same call to testTriggers().
-   void testTriggers();
+   void testTriggers( World& world );
 
 private:
     GameWindow *gameWindow;

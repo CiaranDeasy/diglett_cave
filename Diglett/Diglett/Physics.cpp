@@ -7,7 +7,8 @@ sf::Vector2f acceleration;
 sf::Vector2f velocity;
 sf::Vector2f previousLocation;
 
-void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput ) {
+void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput, 
+            World& world ) {
     acceleration.x = input.x / PLAYER_MASS;
     acceleration.y = input.y / PLAYER_MASS;
 
@@ -45,7 +46,7 @@ void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput ) {
     }
 
     //Move player
-    Player::getPlayer().move( velocity.x, velocity.y, directionOfInput );
+    Player::getPlayer().move( velocity.x, velocity.y, directionOfInput, world );
     
 }
 

@@ -5,13 +5,17 @@ sf::Vector2i Chunk::getPosition() {
     return position;
 }
 
-Tile& Chunk::getRelativeTile( int x, int y ) {
+const Tile& Chunk::getRelativeTile( int x, int y ) const {
     return tiles[x][y];
 }
 
-Tile& Chunk::getAbsoluteTile( int x, int y ) {
+const Tile& Chunk::getAbsoluteTile( int x, int y ) const {
     return tiles[x-position.x][y-position.y];
-}//
+}
+
+void Chunk::digAbsoluteTile( int x, int y, Player& player ) {
+    tiles[x-position.x][y-position.y].dig( player );
+}
 
 Chunk::Chunk( sf::Vector2i pos, int type ) {
     position = pos;

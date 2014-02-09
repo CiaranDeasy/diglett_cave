@@ -5,7 +5,7 @@ InitialTutorial::InitialTutorial() {}
 
 InitialTutorial::~InitialTutorial() {}
 
-bool InitialTutorial::testTrigger() {
+bool InitialTutorial::testTrigger( World& world ) {
     // Activate this tutorial when the game starts.
     return true;
 }

@@ -20,14 +20,14 @@ TutorialHandler::~TutorialHandler() {
     }
 };
 
-void TutorialHandler::testTriggers() {
+void TutorialHandler::testTriggers( World& world ) {
     std::vector<Tutorial *>::iterator next = tutorials.begin();
     while( next != tutorials.end() ) {
         if( (*next)->isTriggered() ) {
             delete *next;
             next = tutorials.erase( next );
         }
-        else if( (*next)->testTrigger() ) {
+        else if( (*next)->testTrigger( world ) ) {
             (*next)->activate( gameWindow, font );
             return; // Only want to activate one tutorial at most.
         } else {

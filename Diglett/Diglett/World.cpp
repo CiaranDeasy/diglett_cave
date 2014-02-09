@@ -5,7 +5,7 @@
 #include "InteractiveEntity.h"
 #include "Shop.h"
 
-World::World( Player& player ) : player( player ) {
+World::World( Player& player ) : player( player ), worldData() {
     interactiveEntities.push_back( new Shop() );
 }
 
@@ -18,7 +18,7 @@ void World::draw( sf::RenderTarget& target, sf::RenderStates states ) const {
         player.getPosition() );
     for( int x = playerChunk.x - 1; x <= playerChunk.x + 1; x++ ) {
       for( int y = playerChunk.y - 1;  y <= playerChunk.y + 1; y++ ) {
-        Chunk nextChunk = WorldData::getWorldData().getChunk( x, y );
+        Chunk nextChunk = worldData.getChunk( x, y );
         for( int i = 0; i < CHUNK_SIDE; i++ ) {
           for( int j = 0; j < CHUNK_SIDE; j++ ) {
             Tile nextTile = nextChunk.getRelativeTile( i, j );
@@ -57,3 +57,14 @@ void World::interact( GameWindow *gameWindow, sf::Font& font ) {
     }
 }
 
+const Tile& World::getTile( int x, int y ) const {
+    return worldData.getTile( x, y );
+}
+
+const Tile& World::getTile( sf::Vector2i in ) const {
+    return worldData.getTile( in.x, in.y );
+}
+
+void World::digTile( sf::Vector2i tileCoords, Player& player ) {
+    worldData.digTile( tileCoords.x, tileCoords.y, player );
+}

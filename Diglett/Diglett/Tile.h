@@ -1,6 +1,7 @@
 #pragma once
 #include "TileType.h"
 #include <vector>
+#include "Player.h"
 
 class Tile {
 
@@ -17,11 +18,11 @@ public:
     ~Tile(void);
 
     // Changes the tile to air, and adds an item to the player's inventory.
-    void dig();
+    void dig( Player& player );
 
-    bool isDiggable();
-    bool isSolid();
-    bool isOre();
+    bool isDiggable() const;
+    bool isSolid() const;
+    bool isOre() const;
     sf::Sprite *getSprite();
 
 private:

@@ -8,7 +8,7 @@ public:
     ~InitialTutorial();
 
     // Returns true if the condition for this tutorial is satisfied.
-    virtual bool testTrigger();
+    virtual bool testTrigger( World& world );
 
     // Activates this tutorial.
     virtual void activate( GameWindow *gameWindow, sf::Font& font );

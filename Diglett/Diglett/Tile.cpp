@@ -14,25 +14,25 @@ Tile::Tile(int type) {
 Tile::~Tile(void) {
 }
 
-void Tile::dig() {
+void Tile::dig( Player& player ) {
     Item *item = this->lookupType( type ).createItem();
     if( item->getName() != "NULL" ) {
         // Add the item to the player's inventory.
-        Player::getPlayer().getInventory().addItem( item );
+        player.getInventory().addItem( item );
     }
     // Change this block to air.
     type = 0; //Air
 }
 
-bool Tile::isDiggable() {
+bool Tile::isDiggable() const {
    return lookupType( this->type ).isDiggable();
 }
 
-bool Tile::isSolid() {
+bool Tile::isSolid() const {
    return lookupType( this->type ).isSolid();
 }
 
-bool Tile::isOre() {
+bool Tile::isOre() const {
     return ( this->type != 0 && this->type != 1 && this->type != 2 );
 }
 

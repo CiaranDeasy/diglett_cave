@@ -2,25 +2,26 @@
 #include "Chunk.h"
 #include "Tile.h"
 
-Chunk& WorldData::getChunk( int x, int y ) {
+const Chunk& WorldData::getChunk( int x, int y ) const {
     return chunks[x + xOffset][ y + yOffset];
 }
 
-Tile& WorldData::getTile( int x, int y ) {
-    Chunk& chunk = getChunk( floor( ((float) x)/CHUNK_SIDE ), 
+const Tile& WorldData::getTile( int x, int y ) const {
+    const Chunk& chunk = getChunk( floor( ((float) x)/CHUNK_SIDE ), 
             floor( ((float) y)/CHUNK_SIDE ));
     return chunk.getAbsoluteTile(x, y);
 }
 
-Tile& WorldData::getTile( sf::Vector2i in ) {
+const Tile& WorldData::getTile( sf::Vector2i in ) const {
     return getTile( in.x, in.y );
 }
 
-WorldData& WorldData::getWorldData() {
-    return singleton;
+void WorldData::digTile( int x, int y, Player& player ) {
+    int chunksX = floor( ((float) x)/CHUNK_SIDE );
+    int chunksY = floor( ((float) y)/CHUNK_SIDE );
+    chunks[chunksX + xOffset][ chunksY + yOffset]
+            .digAbsoluteTile( x, y, player );
 }
-
-WorldData WorldData::singleton = WorldData();
 
 WorldData::WorldData(void) {
     xOffset = 10;

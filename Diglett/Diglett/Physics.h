@@ -1,11 +1,13 @@
 #pragma once
 #include <SFML/System.hpp>
 #include "Direction.h"
+#include "World.h"
 
 class Physics{
 public:
     static Physics& getPhysics();
-    void updatePlayer( sf::Vector2f input, Direction directionOfInput );
+    void updatePlayer( sf::Vector2f input, Direction directionOfInput, 
+            World& world );
     // Methods to update velocity when a collision is detected.
     void collideX();
     void collideY();

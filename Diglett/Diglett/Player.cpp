@@ -3,6 +3,7 @@
 #include "WorldData.h"
 #include "Physics.h"
 #include "Constants.h"
+#include "World.h"
 
 #define TAN30 0.57735
 #define TAN60 1.73205
@@ -18,7 +19,7 @@ sf::Vector2f Player::getPosition() {
     return position;
 }
 
-void Player::move( float x, float y, Direction directionOfInput ) {
+void Player::move( float x, float y, Direction directionOfInput, World& world ) {
     // The program will crash if attempting to load a chunk outside the world.
     // Constrain movement until infinite worlds are implemented.
     if( position.x + x > 150 || position.x + x < -150 ) {
@@ -42,17 +43,17 @@ void Player::move( float x, float y, Direction directionOfInput ) {
     float newX = oldX + x;
     float newY = oldY + y;
 
-    if( clipLeft( oldX, oldY, newX, newY, directionOfInput ) ) {
+    if( clipLeft( oldX, oldY, newX, newY, directionOfInput, world ) ) {
             newX = floor( oldX ) - leftClip + 0.001;
             Physics::getPhysics().collideX();
-    } else if( clipRight( oldX, oldY, newX, newY, directionOfInput ) ) {
+    } else if( clipRight( oldX, oldY, newX, newY, directionOfInput, world ) ) {
         newX = floor( oldX + 1 ) - 0.001 - rightClip;
         Physics::getPhysics().collideX();
     }
-    if( clipAbove( oldX, oldY, newX, newY, directionOfInput ) ) {
+    if( clipAbove( oldX, oldY, newX, newY, directionOfInput, world ) ) {
         newY = floor( oldY + 1 ) - 0.001 - topClip;
         Physics::getPhysics().collideY();
-    } else if( clipBelow( oldX, oldY, newX, newY, directionOfInput ) ) {
+    } else if( clipBelow( oldX, oldY, newX, newY, directionOfInput, world ) ) {
         newY = floor( oldY ) - bottomClip + 0.001;
         Physics::getPhysics().collideY();
         if( onGround < DIG_DELAY ) onGround++;
@@ -112,7 +113,7 @@ Player::Player(void) {
     currentHull = DEFAULT_HULL;
 }
 
-void Player::initiateDigging( sf::Vector2i target ) {
+void Player::initiateDigging( sf::Vector2i target, World& world ) {
     digging = true;
     // Calculate the step size in the X direction.
     float distanceToTravelX = ( target.x + 0.5 ) - position.x;
@@ -124,6 +125,7 @@ void Player::initiateDigging( sf::Vector2i target ) {
     diggingStepSize = sf::Vector2f(diggingStepSizeX, diggingStepSizeY);
     diggingStepsRemaining = DIG_STEPS;
     diggingTowards = target;
+    worldToDig = &world;
 }
 
 void Player::processDiggingStep() {
@@ -133,24 +135,24 @@ void Player::processDiggingStep() {
         digging = false;
         Physics::getPhysics().reset();
         // Dig the tile.
-        WorldData::getWorldData().getTile( diggingTowards ).dig();
+        worldToDig->digTile( diggingTowards, *this );
     }
 }
 
 bool Player::clipLeft( float oldX, float oldY, float newX, float newY,
-        Direction directionOfInput ) {
+        Direction directionOfInput, World& world ) {
     if( floor( oldX + leftClip ) > floor( newX + leftClip ) ) {
         sf::Vector2i topTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + leftClip, oldY + topClip ) );
         sf::Vector2i bottomTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + leftClip, oldY + bottomClip ) );
-        Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
-        Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
+        const Tile& topTile = world.getTile( topTileCoords );
+        const Tile& bottomTile = world.getTile(bottomTileCoords);
         // Test if the player is trying to dig.
         if( directionOfInput >= Westsouthwest && 
                 directionOfInput <= Westnorthwest && 
                 onGround == DIG_DELAY && topTile.isDiggable() ) {
-            initiateDigging( topTileCoords );
+            initiateDigging( topTileCoords, world );
         }
         if( topTile.isSolid() || bottomTile.isSolid() ) {
             return true;
@@ -160,19 +162,19 @@ bool Player::clipLeft( float oldX, float oldY, float newX, float newY,
 }
 
 bool Player::clipRight( float oldX, float oldY, float newX, float newY,
-        Direction directionOfInput ) {
+        Direction directionOfInput, World& world ) {
     if( floor( oldX + rightClip ) < floor( newX + rightClip ) ) {
         sf::Vector2i topTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + rightClip, oldY + topClip ) );
         sf::Vector2i bottomTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + rightClip, oldY + bottomClip ) );
-        Tile& topTile = WorldData::getWorldData().getTile( topTileCoords );
-        Tile& bottomTile = WorldData::getWorldData().getTile(bottomTileCoords);
+        const Tile& topTile = world.getTile( topTileCoords );
+        const Tile& bottomTile = world.getTile(bottomTileCoords);
         // Test if the player is trying to dig.
         if( directionOfInput >= Eastnortheast && 
                 directionOfInput <= Eastsoutheast &&
                 onGround == DIG_DELAY && topTile.isDiggable()) {
-            initiateDigging( topTileCoords );
+            initiateDigging( topTileCoords, world );
         }
         if( topTile.isSolid() || bottomTile.isSolid() ) {
             return true;
@@ -182,14 +184,14 @@ bool Player::clipRight( float oldX, float oldY, float newX, float newY,
 }
 
 bool Player::clipAbove( float oldX, float oldY, float newX, float newY,
-        Direction directionOfInput ) {
+        Direction directionOfInput, World& world ) {
     if( floor( oldY + topClip ) < floor( newY + topClip ) ) {
         sf::Vector2i leftTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + leftClip, newY + topClip ) );
         sf::Vector2i rightTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + rightClip, newY + topClip ) );
-        Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
-        Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
+        const Tile& leftTile = world.getTile( leftTileCoords );
+        const Tile& rightTile = world.getTile( rightTileCoords );
         if( leftTile.isSolid() || rightTile.isSolid() ) {
             return true;
         }
@@ -198,14 +200,14 @@ bool Player::clipAbove( float oldX, float oldY, float newX, float newY,
 }
 
 bool Player::clipBelow( float oldX, float oldY, float newX, float newY,
-        Direction directionOfInput ) {
+        Direction directionOfInput, World& world ) {
     if( floor( oldY + bottomClip ) > floor( newY + bottomClip ) ) {
         sf::Vector2i leftTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + leftClip, newY + bottomClip ) );
         sf::Vector2i rightTileCoords = Utility::coordsGameToTile(
                 sf::Vector2f( newX + rightClip, newY + bottomClip ) );
-        Tile& leftTile = WorldData::getWorldData().getTile( leftTileCoords );
-        Tile& rightTile = WorldData::getWorldData().getTile( rightTileCoords );
+        const Tile& leftTile = world.getTile( leftTileCoords );
+        const Tile& rightTile = world.getTile( rightTileCoords );
         // Test if the player is trying to dig.
         if( directionOfInput >= Southsoutheast && 
                 directionOfInput <= Southsouthwest &&
@@ -214,9 +216,9 @@ bool Player::clipBelow( float oldX, float oldY, float newX, float newY,
             // Dig the tile that the player is more over, or neither if they 
             // are too close to the middle.
             if( offSet > 0.2 && offSet <= 0.5 && rightTile.isDiggable() ) {
-                initiateDigging(rightTileCoords);
+                initiateDigging( rightTileCoords, world );
             } else if( offSet > 0.5 && offSet <= 0.8 && leftTile.isDiggable() ) {
-                initiateDigging(leftTileCoords);
+                initiateDigging( leftTileCoords, world );
             }
         }
         // Do the actual clipping.

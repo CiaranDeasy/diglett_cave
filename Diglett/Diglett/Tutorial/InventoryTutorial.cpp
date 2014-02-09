@@ -6,7 +6,7 @@ InventoryTutorial::InventoryTutorial() {}
 
 InventoryTutorial::~InventoryTutorial() {}
 
-bool InventoryTutorial::testTrigger() {
+bool InventoryTutorial::testTrigger( World& world ) {
     // Activate this tutorial after the player digs an ore.
    return Player::getPlayer().getInventory().getCurrentSize() != 0;
 }

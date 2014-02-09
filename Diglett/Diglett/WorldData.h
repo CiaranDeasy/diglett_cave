@@ -2,15 +2,23 @@
 
 #include "Chunk.h"
 #include "Tile.h"
+#include <array>
+#include "Player.h"
 
 class WorldData {
 public:
-    // Inputs to "get" are in absolute world co-ordinates.
-    Tile& getTile( int x, int y );
-    Tile& getTile( sf::Vector2i in );
-    Chunk& getChunk( int x, int y );
-    static WorldData& getWorldData();
+    // Default constructor makes simple world: half dirt, half surface.
+    WorldData(void);
     ~WorldData(void);
+
+    // Inputs to "get" are in absolute world co-ordinates.
+    const Tile& getTile( int x, int y ) const;
+    const Tile& getTile( sf::Vector2i in ) const;
+    const Chunk& getChunk( int x, int y ) const;
+
+    // Digs the tile at the given co-ordinates and adds an item to the player's
+    // inventory if appropriate.
+    void digTile( int x, int y, Player& player );
 private:
     static WorldData singleton;
 
@@ -21,7 +29,5 @@ private:
     // co-ordinates to map it to a chunk index in this object's internal array.
     int xOffset;
     int yOffset;
-    // Default constructor makes simple world: half dirt, half surface.
-    Chunk chunks[HORIZONTAL_CHUNKS][VERTICAL_CHUNKS];
-    WorldData(void);
+    std::array<std::array<Chunk, VERTICAL_CHUNKS>, HORIZONTAL_CHUNKS> chunks;
 };

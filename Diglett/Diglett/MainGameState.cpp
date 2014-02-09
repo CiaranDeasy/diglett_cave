@@ -44,7 +44,7 @@ void MainGameState::gameTick() {
         gameWindow->pushNewState( deadGameState );
     }
     // Test for tutorial triggers.
-    tutorials.testTriggers();
+    tutorials.testTriggers( world );
 }
     
 void MainGameState::draw( 

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/System.hpp>
 #include "GameWindow.h"
+#include "World.h"
 
 class Tutorial {
 public:
@@ -8,7 +9,7 @@ public:
     ~Tutorial();
 
     // Returns true if the condition for this tutorial is satisfied.
-    virtual bool testTrigger() = 0;
+    virtual bool testTrigger( World& world ) = 0;
 
     // Activates this tutorial.
     virtual void activate( GameWindow *gameWindow, sf::Font& font ) = 0;
