@@ -12,8 +12,8 @@ Shop::~Shop() {
     delete sprite;
 }
 
-void Shop::interact( GameWindow *gameWindow, sf::Font& font ) {
-    gameWindow->pushNewState( new ShopGameState( gameWindow, font ) );
+void Shop::interact( GameWindow *gameWindow, sf::Font& font, Player& player ) {
+    gameWindow->pushNewState( new ShopGameState( gameWindow, font, player ) );
 }
 
 void Shop::draw( sf::RenderTarget& target, sf::RenderStates states ) const {

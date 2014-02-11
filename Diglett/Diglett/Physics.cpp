@@ -8,7 +8,7 @@ sf::Vector2f velocity;
 sf::Vector2f previousLocation;
 
 void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput, 
-            World& world ) {
+            World& world, Player& player ) {
     acceleration.x = input.x / PLAYER_MASS;
     acceleration.y = input.y / PLAYER_MASS;
 
@@ -46,25 +46,25 @@ void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput,
     }
 
     //Move player
-    Player::getPlayer().move( velocity.x, velocity.y, directionOfInput, world );
+    player.move( velocity.x, velocity.y, directionOfInput, world );
     
 }
 
-void Physics::collideX() {
+void Physics::collideX( Player& player ) {
     velocity.x = -BOUNCE_FACTOR * velocity.x;
-    damagePlayerHull( velocity.x );
+    damagePlayerHull( velocity.x, player );
 }
 
-void Physics::collideY() {
+void Physics::collideY( Player& player ) {
     velocity.y = -BOUNCE_FACTOR * velocity.y;
-    damagePlayerHull( velocity.y );
+    damagePlayerHull( velocity.y, player );
 }
 
-void Physics::damagePlayerHull( float velocity ) {
+void Physics::damagePlayerHull( float velocity, Player& player ) {
     if( velocity >= HULL_DAMAGE_THRESHOLD ) {
-        Player::getPlayer().damageHull( velocity * HULL_DAMAGE_SCALER );
+        player.damageHull( velocity * HULL_DAMAGE_SCALER );
     } else if( velocity <= -HULL_DAMAGE_THRESHOLD ) {
-        Player::getPlayer().damageHull( -velocity * HULL_DAMAGE_SCALER );
+        player.damageHull( -velocity * HULL_DAMAGE_SCALER );
     }
 }
 

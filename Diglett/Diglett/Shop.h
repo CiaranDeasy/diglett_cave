@@ -9,7 +9,8 @@ class Shop : public InteractiveEntity {
 public:
     Shop();
     ~Shop();
-    virtual void interact( GameWindow *gameWindow, sf::Font& font );
+    virtual void interact( 
+            GameWindow *gameWindow, sf::Font& font, Player& player );
     virtual void draw( 
             sf::RenderTarget& target, sf::RenderStates states ) const;
 

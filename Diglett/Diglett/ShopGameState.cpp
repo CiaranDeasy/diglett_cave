@@ -2,9 +2,10 @@
 #include "Player.h"
 
 ShopGameState::ShopGameState( 
-        GameWindow *gameWindow, sf::Font& font ) : 
+        GameWindow *gameWindow, sf::Font& font, Player& player ) : 
             inputHandler( *this ),
-            shopGUI( font, Player::getPlayer().getInventory() ) {
+            shopGUI( font, player.getInventory() ),
+            player( player ) {
     this->gameWindow = gameWindow;
 }
 
@@ -25,14 +26,13 @@ void ShopGameState::draw(sf::RenderTarget& target, sf::RenderStates states)
 bool ShopGameState::drawUnderlyingState() { return true; }
 
 void ShopGameState::sell() {
-    std::vector<Item *> contents = 
-            Player::getPlayer().getInventory().getContents();
+    std::vector<Item *> contents = player.getInventory().getContents();
     std::vector<Item *>::iterator next = contents.begin();
     while( next != contents.end() ) {
-        Player::getPlayer().addMoney( (*next)->getValue() );
+        player.addMoney( (*next)->getValue() );
         next++;
     }
-    Player::getPlayer().getInventory().clear();
+    player.getInventory().clear();
 }
 
 void ShopGameState::handleWindowEvents() {

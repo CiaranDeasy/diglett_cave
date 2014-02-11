@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "GameWindow.h"
+#include "Player.h"
 
 class InteractiveEntity : public sf::Drawable {
 
@@ -11,7 +12,8 @@ public:
     sf::Sprite *getSprite();
     
     // This function is called when the player interacts with the entity.
-    virtual void interact( GameWindow *gameWindow, sf::Font& font ) = 0;
+    virtual void interact( 
+            GameWindow *gameWindow, sf::Font& font, Player& player ) = 0;
 
 protected:
     // Position of the entity in the game world.

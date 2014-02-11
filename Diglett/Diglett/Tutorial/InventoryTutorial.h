@@ -8,7 +8,7 @@ public:
     ~InventoryTutorial();
 
     // Returns true if the condition for this tutorial is satisfied.
-    virtual bool testTrigger( World& world );
+    virtual bool testTrigger( World& world, Player& player );
 
     // Activates this tutorial.
     virtual void activate( GameWindow *gameWindow, sf::Font& font );

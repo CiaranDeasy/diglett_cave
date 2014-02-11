@@ -10,11 +10,12 @@
 
 MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) : 
         GameState(),
-        font( font ), 
+        font( font ),
+        player(), 
         inputHandler( *this ),
         tutorials( gameWindow, font ),
-        GUI( font, Player::getPlayer().getInventory() ),
-        world( Player::getPlayer() ) {
+        GUI( font, player ),
+        world( player ) {
     createSprites();
     this->gameWindow = gameWindow;
 }
@@ -22,9 +23,9 @@ MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) :
 MainGameState::~MainGameState() {
 }
 
-void MainGameState::setWorldView( sf::RenderTarget& target ) {
+void MainGameState::setWorldView( sf::RenderTarget& target ) const {
     sf::Vector2f centerPoint = 
-        ( Utility::coordsGameToWindow( Player::getPlayer().getPosition() ) );
+        ( Utility::coordsGameToWindow( player.getPosition() ) );
     sf::View worldView = sf::View( centerPoint, 
             sf::Vector2f( target.getSize().x, target.getSize().y ) );
     worldView.zoom( CAMERA_ZOOM );
@@ -39,12 +40,13 @@ void MainGameState::gameTick() {
     // Advance the GUI.
     GUI.tick();
     // Test if the player is dead.
-    if( Player::getPlayer().isDead() ) {
-        GameState *deadGameState = new DeadGameState( gameWindow, font );
+    if( player.isDead() ) {
+        GameState *deadGameState = 
+                new DeadGameState( gameWindow, font, player );
         gameWindow->pushNewState( deadGameState );
     }
     // Test for tutorial triggers.
-    tutorials.testTriggers( world );
+    tutorials.testTriggers( world, player );
 }
     
 void MainGameState::draw( 
@@ -83,17 +85,17 @@ void MainGameState::handleWindowEvents() {
 
 void MainGameState::drawPlayer( sf::RenderTarget& target ) const {
     setWorldView( target );
-    if( Player::getPlayer().isDead() ) {
+    if( player.isDead() ) {
        playerDeadSprite->setPosition( Utility::coordsGameToWindow( 
-              Player::getPlayer().getPosition() ) );
+              player.getPosition() ) );
        target.draw( *playerDeadSprite );
     } else {
        playerSprite->setPosition( Utility::coordsGameToWindow( 
-              Player::getPlayer().getPosition() ) );
+              player.getPosition() ) );
        target.draw( *playerSprite );
     }
 }
 
 void MainGameState::openShop() {
-    gameWindow->pushNewState( new ShopGameState( gameWindow, font ) );
+    gameWindow->pushNewState( new ShopGameState( gameWindow, font, player ) );
 }

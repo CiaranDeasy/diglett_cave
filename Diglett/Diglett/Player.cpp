@@ -8,26 +8,23 @@
 #define TAN30 0.57735
 #define TAN60 1.73205
 
-Player& Player::getPlayer() {
-    return singleton;
-}
-
 Player::~Player(void) {
 }
 
-sf::Vector2f Player::getPosition() {
+sf::Vector2f Player::getPosition() const {
     return position;
 }
 
 void Player::move( float x, float y, Direction directionOfInput, World& world ) {
+    std::cout<< "x = " << x << ", y = " << y << std::endl;
     // The program will crash if attempting to load a chunk outside the world.
     // Constrain movement until infinite worlds are implemented.
     if( position.x + x > 150 || position.x + x < -150 ) {
-        Physics::getPhysics().collideX();
+        Physics::getPhysics().collideX( *this );
         return;
     }
     if( position.y + y > 150 || position.y + y < -150 ) {
-        Physics::getPhysics().collideY();
+        Physics::getPhysics().collideY( *this );
         return;
     }
 
@@ -45,22 +42,26 @@ void Player::move( float x, float y, Direction directionOfInput, World& world ) 
 
     if( clipLeft( oldX, oldY, newX, newY, directionOfInput, world ) ) {
             newX = floor( oldX ) - leftClip + 0.001;
-            Physics::getPhysics().collideX();
+            Physics::getPhysics().collideX( *this );
     } else if( clipRight( oldX, oldY, newX, newY, directionOfInput, world ) ) {
         newX = floor( oldX + 1 ) - 0.001 - rightClip;
-        Physics::getPhysics().collideX();
+        Physics::getPhysics().collideX( *this );
     }
     if( clipAbove( oldX, oldY, newX, newY, directionOfInput, world ) ) {
         newY = floor( oldY + 1 ) - 0.001 - topClip;
-        Physics::getPhysics().collideY();
+        Physics::getPhysics().collideY( *this );
     } else if( clipBelow( oldX, oldY, newX, newY, directionOfInput, world ) ) {
         newY = floor( oldY ) - bottomClip + 0.001;
-        Physics::getPhysics().collideY();
+        Physics::getPhysics().collideY( *this );
         if( onGround < DIG_DELAY ) onGround++;
     }
 
-    if( digging ) processDiggingStep();
-    else position = sf::Vector2f( newX, newY );
+    if( digging ) {
+        processDiggingStep();
+    }
+    else {
+        position = sf::Vector2f( newX, newY );
+    }
 }
 
 Inventory<Item *>& Player::getInventory() { return inventory; }
@@ -81,7 +82,7 @@ void Player::damageHull( int damage ) {
     if( currentHull < 0 ) currentHull = 0;
 }
 
-bool Player::isDead() {
+bool Player::isDead() const {
     return currentHull == 0;
 }
 
@@ -100,8 +101,6 @@ void Player::respawn() {
     position = sf::Vector2f( 1, 1 );
 }
 
-Player Player::singleton = Player();
-
 Player::Player(void) {
     position = sf::Vector2f( 1.0f, 1.0f );
     topClip = 0.45;
@@ -111,6 +110,7 @@ Player::Player(void) {
     money = DEFAULT_MONEY;
     maxHull = DEFAULT_HULL;
     currentHull = DEFAULT_HULL;
+    digging = false;
 }
 
 void Player::initiateDigging( sf::Vector2i target, World& world ) {

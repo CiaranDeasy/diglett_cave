@@ -19,7 +19,7 @@ public:
     MainGameState( sf::Font& font, GameWindow *gameWindow );
     ~MainGameState();
     
-    static void setWorldView( sf::RenderTarget& target );
+    void setWorldView( sf::RenderTarget& target ) const;
 
     // Represents the behaviour that should be performed each game tick when 
     // the game is in this state.
@@ -67,6 +67,7 @@ private:
     TutorialHandler tutorials;
     MainGUI GUI;
     World world;
+    Player player;
     
     void createSprites();
     void handleWindowEvents();

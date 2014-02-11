@@ -5,6 +5,7 @@
 #include "InventoryGUI.h"
 #include "MoneyGUI.h"
 #include "NewItemVisual.h"
+#include "Player.h"
 
 /* An instance of this class represents the whole game GUI overlaying the world.
 */
@@ -12,7 +13,7 @@
 class MainGUI : public sf::Drawable {
 public:
 
-    MainGUI( sf::Font& font, Inventory<Item *>& inventory );
+    MainGUI( sf::Font& font, Player& player );
     ~MainGUI();
 
     // Draws the GUI to the given RenderTarget using the options specified 
@@ -34,6 +35,7 @@ private:
     InventoryGUI inventoryGUI;
     MoneyGUI moneyGUI;
     std::vector<NewItemVisual *> newItemVisuals;
+    Inventory<Item *>& inventory;
 
     // Records the last observed inventory size to detect when the player picks
     // up an item.

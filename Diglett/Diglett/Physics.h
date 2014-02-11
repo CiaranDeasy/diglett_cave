@@ -7,10 +7,10 @@ class Physics{
 public:
     static Physics& getPhysics();
     void updatePlayer( sf::Vector2f input, Direction directionOfInput, 
-            World& world );
+            World& world, Player& player );
     // Methods to update velocity when a collision is detected.
-    void collideX();
-    void collideY();
+    void collideX( Player& player );
+    void collideY( Player& player );
     void reset();
 private:
     static Physics singleton;
@@ -25,7 +25,7 @@ private:
     static const float HULL_DAMAGE_SCALER;
     Physics(void);
 
-    void damagePlayerHull( float velocity );
+    void damagePlayerHull( float velocity, Player& player );
 
     float speed;
     sf::Vector2f velocity;

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "GameWindow.h"
 #include "ShopGUI.h"
+#include "Player.h"
 
 /* This class represents the game state where the main game is suspended and a 
    text pop-up is displayed until the player dismisses it. */
@@ -10,7 +11,7 @@
 class ShopGameState : public GameState {
 public:
     ShopGameState( 
-            GameWindow *gameWindow, sf::Font& font );
+            GameWindow *gameWindow, sf::Font& font, Player& player );
     ~ShopGameState();
 
     class ShopInputHandler : public InputHandler {
@@ -45,6 +46,7 @@ private:
     GameWindow *gameWindow;
     sf::Font font;
     ShopGUI shopGUI;
+    Player& player;
 
     // Polls the GameWindow for window events and responds to them accordingly.
     void handleWindowEvents();

@@ -120,7 +120,7 @@ void MainGameState::MainInputHandler::processInputs() {
     buttonsPressed.clear();
 
     Physics::getPhysics().updatePlayer( movement, directionOfMovement, 
-            gameState.world );
+            gameState.world, gameState.player );
 }
 
 const float MainGameState::MainInputHandler::PLAYER_SPEED = 0.008;

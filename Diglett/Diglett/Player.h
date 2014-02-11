@@ -8,11 +8,10 @@
 class World;
 class Player {
 public:
-    static Player& getPlayer();
-
+    Player(void);
     ~Player(void);
 
-    sf::Vector2f getPosition();
+    sf::Vector2f getPosition() const;
     void move( float x, float y, Direction directionOfInput, World& world );
 
     Inventory<Item *>& getInventory();
@@ -32,14 +31,13 @@ public:
     void damageHull( int damage );
 
     // Returns true if the player's hull is zero.
-    bool isDead();
+    bool isDead() const;
 
     // Restores the player's hull, empties their inventory, and resets their 
     // position.
     void respawn();
 
 private:
-    static Player singleton;
     static const int DEFAULT_HULL = 150;
     static const int DEFAULT_MONEY = 0;
 
@@ -78,8 +76,6 @@ private:
     int money;
     int maxHull;
     int currentHull;
-
-    Player(void);
 
     // Sets the digging state and initialises the digging-related variables.
     void initiateDigging( sf::Vector2i target, World& world );

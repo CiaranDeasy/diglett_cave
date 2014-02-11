@@ -1,12 +1,13 @@
 #include "MainGUI.h"
 #include "GameState.h"
 
-MainGUI::MainGUI( sf::Font& font, Inventory<Item *>& inventory ) :
+MainGUI::MainGUI( sf::Font& font, Player& player ) :
         font( font ),
-        hullGUI( font ),
-        debugOverlay( font ),
-        inventoryGUI( font, inventory ),
-        moneyGUI( font ) {
+        hullGUI( font, player ),
+        debugOverlay( font, player ),
+        inventoryGUI( font, player.getInventory() ),
+        moneyGUI( font, player ),
+        inventory( player.getInventory() ) {
     expectedInventorySize = inventory.getCurrentSize();
 }
 
@@ -48,14 +49,12 @@ void MainGUI::toggleInventoryGUI() {
 
 void MainGUI::triggerNewItemVisual() {
     // Check if the player's inventory grew.
-    int currentInventorySize = 
-            Player::getPlayer().getInventory().getCurrentSize();
-    if( currentInventorySize > expectedInventorySize ) {
-        Item *item = Player::getPlayer().getInventory().getContents()
-                [currentInventorySize - 1];
+    int currentSize = inventory.getCurrentSize();
+    if( currentSize > expectedInventorySize ) {
+        Item *item = inventory.getContents()[currentSize - 1];
         newItemVisuals.push_back( new NewItemVisual( font, item ) );
     }
-    expectedInventorySize = currentInventorySize;
+    expectedInventorySize = currentSize;
 }
 
 void MainGUI::processNewItemVisuals() {

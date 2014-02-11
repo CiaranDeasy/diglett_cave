@@ -1,7 +1,8 @@
 #include "DebugOverlayGUI.h"
-#include "Player.h"
 
-DebugOverlayGUI::DebugOverlayGUI( sf::Font& font ) : font(font) {
+DebugOverlayGUI::DebugOverlayGUI( sf::Font& font, Player& player ) : 
+        font(font),
+        player( player ) {
     visible = false;
 }
 
@@ -32,8 +33,8 @@ void DebugOverlayGUI::draw(
     // Draw the text.
     std::string textString = 
             "Player Position = \n(" + 
-            std::to_string( Player::getPlayer().getPosition().x ) + "," + 
-            std::to_string( Player::getPlayer().getPosition().y ) + ")";
+            std::to_string( player.getPosition().x ) + "," + 
+            std::to_string( player.getPosition().y ) + ")";
     sf::Text text = sf::Text( textString, font, TEXT_SIZE );
     text.setPosition( position.x + 5, position.y + 5 );
     text.setColor( TEXT_COLOR ); 

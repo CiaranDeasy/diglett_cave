@@ -48,7 +48,7 @@ void World::interact( GameWindow *gameWindow, sf::Font& font ) {
         sf::Vector2f entity = (*next)->getPosition();
         if( playerPos.x > entity.x - 1 && playerPos.x < entity.x + 1 && 
                 playerPos.y > entity.y - 1 && playerPos.y < entity.y + 1 ) {
-            (*next)->interact( gameWindow, font );
+            (*next)->interact( gameWindow, font, player );
             next++;
         }
         else {

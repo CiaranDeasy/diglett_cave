@@ -1,7 +1,9 @@
 #include "HullGUI.h"
 #include "Constants.h"
 
-HullGUI::HullGUI( sf::Font& font ) : font(font) {
+HullGUI::HullGUI( sf::Font& font, Player& player ) : 
+        font(font), 
+        player( player ) {
 }
 
 HullGUI::~HullGUI(void) {
@@ -22,8 +24,8 @@ void HullGUI::draw(
     background.setPosition( position.x, position.y );
     target.draw( background );
     // Fill according to current hull strength.
-    float currentHullFraction = (float) Player::getPlayer().getCurrentHull() / 
-            (float) Player::getPlayer().getMaxHull();
+    float currentHullFraction = (float) player.getCurrentHull() / 
+            (float) player.getMaxHull();
     sf::RectangleShape fill = sf::RectangleShape( 
             sf::Vector2f( 
                 currentHullFraction * ( GUI_SIZE.x - 2*BORDER_THICKNESS ), 
@@ -34,8 +36,8 @@ void HullGUI::draw(
     target.draw( fill );
     // Draw the text.
     std::string textString = 
-            std::to_string( Player::getPlayer().getCurrentHull() ) + "/" + 
-            std::to_string( Player::getPlayer().getMaxHull() );
+            std::to_string( player.getCurrentHull() ) + "/" + 
+            std::to_string( player.getMaxHull() );
     sf::Text text = sf::Text( textString, font, TEXT_SIZE );
     text.setStyle( sf::Text::Bold );
     text.setOrigin( text.getLocalBounds().width / 2, 

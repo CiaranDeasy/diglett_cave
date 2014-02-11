@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Player.h"
 
 /* An instance of this class represents an interface element displaying the 
    player's current hull strength.
@@ -8,7 +9,7 @@
 class DebugOverlayGUI : public sf::Drawable {
 public:
 
-    DebugOverlayGUI( sf::Font& font );
+    DebugOverlayGUI( sf::Font& font, Player& player );
     ~DebugOverlayGUI();
 
     // Shows or hides the GUI.
@@ -29,6 +30,9 @@ private:
     static const int TEXT_SIZE;
     static const sf::Color BACKGROUND_COLOR;
     static const sf::Color TEXT_COLOR;
+
+    // Reference to the player to record their position.
+    Player& player;
 
     // Indicates whether the GUI is visible in the game window.
     bool visible;

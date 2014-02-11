@@ -2,9 +2,11 @@
 #include "Player.h"
 #include "Physics.h"
 
-DeadGameState::DeadGameState( GameWindow *gameWindow, sf::Font& font ) : 
+DeadGameState::DeadGameState( 
+            GameWindow *gameWindow, sf::Font& font, Player& player ) : 
         inputHandler( *this ), 
-        deadNotification( DEATH_MESSAGE, font ) {
+        deadNotification( DEATH_MESSAGE, font ),
+        player( player ) {
     this->gameWindow = gameWindow;
 }
 
@@ -24,7 +26,7 @@ void DeadGameState::draw(sf::RenderTarget& target, sf::RenderStates states)
 
 void DeadGameState::respawn() {
     // Reset the player's hull to max, and empty their inventory.
-    Player::getPlayer().respawn();
+    player.respawn();
     // Reset the player's velocity to zero.
     Physics::getPhysics().reset();
     // Mark this state as dead so the MainGameState takes over again.

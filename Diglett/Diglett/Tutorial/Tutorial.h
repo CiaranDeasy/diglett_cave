@@ -9,7 +9,7 @@ public:
     ~Tutorial();
 
     // Returns true if the condition for this tutorial is satisfied.
-    virtual bool testTrigger( World& world ) = 0;
+    virtual bool testTrigger( World& world, Player& player ) = 0;
 
     // Activates this tutorial.
     virtual void activate( GameWindow *gameWindow, sf::Font& font ) = 0;

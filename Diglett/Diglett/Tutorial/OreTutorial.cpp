@@ -7,10 +7,10 @@ OreTutorial::OreTutorial() {}
 
 OreTutorial::~OreTutorial() {}
 
-bool OreTutorial::testTrigger( World& world ) {
+bool OreTutorial::testTrigger( World& world, Player& player ) {
     // Activate this tutorial when the player is near an ore.
     // Test all blocks within two tiles.
-    sf::Vector2f& position = Player::getPlayer().getPosition();
+    sf::Vector2f& position = player.getPosition();
     for( int i = 0; i < 5; i++ ) {
       for( int j = 0; j < 5; j++ ) {
         if( world.getTile( floor( position.x - 2 + i ),

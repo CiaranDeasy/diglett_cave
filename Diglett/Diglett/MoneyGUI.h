@@ -9,11 +9,11 @@
 class MoneyGUI : public sf::Drawable {
 public:
 
-    MoneyGUI( sf::Font& font );
+    MoneyGUI( sf::Font& font, Player& player );
     ~MoneyGUI();
 
     // Draws the GUI to the given RenderTarget.
-    virtual void draw( sf::RenderTarget& target, sf::RenderStates states ) const;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private: 
     
@@ -24,6 +24,7 @@ private:
     static const sf::Color TEXT_COLOR;
 
     sf::Font& font;
+    Player& player;
 
 };
 
