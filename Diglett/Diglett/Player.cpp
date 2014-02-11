@@ -16,7 +16,6 @@ sf::Vector2f Player::getPosition() const {
 }
 
 void Player::move( float x, float y, Direction directionOfInput, World& world ) {
-    std::cout<< "x = " << x << ", y = " << y << std::endl;
     // The program will crash if attempting to load a chunk outside the world.
     // Constrain movement until infinite worlds are implemented.
     if( position.x + x > 150 || position.x + x < -150 ) {
