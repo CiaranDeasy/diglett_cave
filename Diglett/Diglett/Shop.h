@@ -16,5 +16,7 @@ public:
 
 private:
     static const sf::Vector2f POSITION;
+    static const std::string SPRITE_FILE;
+    sf::Texture *texture;
 
 };

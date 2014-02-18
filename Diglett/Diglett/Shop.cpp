@@ -4,12 +4,24 @@
 
 Shop::Shop() {
     this->position = POSITION;
-    this->sprite = GameWindow::makeCircleSprite( sf::Color::Black );
+    texture = new sf::Texture();
+    if ( !texture->loadFromFile( SPRITE_FILE ) ) {
+        std::cerr << "Failed to load file: " << SPRITE_FILE << "\n";
+        exit(1);
+    }
+    sprite = new sf::Sprite();
+    this->sprite->setTexture( *texture );
+    /*sprite->setOrigin( sprite->getLocalBounds().height / 2, 
+            sprite->getLocalBounds().width / 2 );*/
+    sf::FloatRect bounds = sprite->getLocalBounds();
+    sprite->setOrigin( bounds .left + bounds.width / 2, 
+            bounds.top + bounds.height / 2 );
     sprite->setPosition( Utility::coordsGameToWindow( position ) );
 }
 
 Shop::~Shop() {
     delete sprite;
+    delete texture;
 }
 
 void Shop::interact( GameWindow *gameWindow, sf::Font& font, Player& player ) {
@@ -21,3 +33,5 @@ void Shop::draw( sf::RenderTarget& target, sf::RenderStates states ) const {
 }
 
 const sf::Vector2f Shop::POSITION = sf::Vector2f( 5, 1 );
+
+const std::string Shop::SPRITE_FILE = "Sprites/shop.png";
