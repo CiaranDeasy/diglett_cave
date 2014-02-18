@@ -55,6 +55,20 @@ void ShopGUI::draw(
         // Draw the text.
         target.draw( text );
     }
+    // Add the button prompts.
+    sf::Text text = sf::Text();
+    text.setFont( font );
+    text.setCharacterSize( TEXT_SIZE );
+    text.setColor( TEXT_COLOR );
+    if( inventory.getCurrentSize() == 0 ) {
+        text.setString( SHORT_BUTTON_PROMPT );
+    }
+    else {
+        text.setString( LONG_BUTTON_PROMPT );
+    }
+    text.setPosition( position.x + BORDER, 
+            position.y + BORDER + ITEMS_PER_COL * ENTRY_SIZE.y );
+    target.draw( text );
 }
 
 const int ShopGUI::TOP_BORDER = 40;
@@ -66,3 +80,6 @@ const int ShopGUI::SPRITE_SEPARATION = 6;
 const int ShopGUI::TEXT_SIZE = 12;
 const sf::Color ShopGUI::TEXT_COLOR = sf::Color( 255, 255, 255, 255 );
 const std::string ShopGUI::BACKGROUND_FILE = "Sprites/ShopBackground.png";
+const std::string ShopGUI::SHORT_BUTTON_PROMPT = "ESC/Gamepad B: Exit.";
+const std::string ShopGUI::LONG_BUTTON_PROMPT = 
+        "SPACE/Gamepad A: Sell all.           ESC/Gamepad B: Exit.";
