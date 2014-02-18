@@ -45,7 +45,11 @@ private:
     static const int DIG_DELAY = 15;
 
     // Number of ticks it takes the player to dig a block.
+#ifdef DIGLETT_DEBUG
+    static const int DIG_STEPS = 15;
+#else
     static const int DIG_STEPS = 60;
+#endif
 
     // Values used to track the digging state.
     // True if the player is in the digging state.
