@@ -11,10 +11,8 @@ Shop::Shop() {
     }
     sprite = new sf::Sprite();
     this->sprite->setTexture( *texture );
-    /*sprite->setOrigin( sprite->getLocalBounds().height / 2, 
-            sprite->getLocalBounds().width / 2 );*/
     sf::FloatRect bounds = sprite->getLocalBounds();
-    sprite->setOrigin( bounds .left + bounds.width / 2, 
+    sprite->setOrigin( bounds.left + bounds.width / 2, 
             bounds.top + bounds.height / 2 );
     sprite->setPosition( Utility::coordsGameToWindow( position ) );
 }
