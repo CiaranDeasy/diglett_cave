@@ -36,7 +36,8 @@ Chunk::Chunk( sf::Vector2i pos, int type ) {
 }
 
 Tile Chunk::randomTileType(int depth){
-    //Randomise the chunks which are below surface level, with the ore rate being a funciton of depth
+    // Randomise the chunks which are below surface level, with the ore rate 
+    // being a function of depth
     int i = rand() % 20;
     if ( i <= 1 )
         return Tile( 0 ); //Air
@@ -48,13 +49,13 @@ Tile Chunk::randomTileType(int depth){
 
 int Chunk::scaledDepth( int depth ){
     if(depth >= -20)
-        return 20;
-    else if(depth > -80)
         return 19;
-    else if(depth > -120)
+    else if(depth > -80)
         return 18;
-    else
+    else if(depth > -120)
         return 17;
+    else
+        return 16;
 }
 
 Chunk::Chunk( void ) {
