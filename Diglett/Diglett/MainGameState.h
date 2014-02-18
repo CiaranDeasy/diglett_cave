@@ -35,8 +35,6 @@ public:
     void toggleDebugOverlay();
     void toggleInventoryGUI();
 
-    void openShop();
-
 private: 
     class MainInputHandler : public InputHandler {
     public:

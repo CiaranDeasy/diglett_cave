@@ -95,7 +95,3 @@ void MainGameState::drawPlayer( sf::RenderTarget& target ) const {
        target.draw( *playerSprite );
     }
 }
-
-void MainGameState::openShop() {
-    gameWindow->pushNewState( new ShopGameState( gameWindow, font, player ) );
-}
