@@ -1,0 +1,131 @@
+\documentclass[10pt,twoside,a4paper]{article}
+
+\usepackage{a4}             % Adjust margins for A4 media
+
+\usepackage{fancyhdr}
+
+\renewcommand{\headrulewidth}{0.4pt}
+
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancyheadoffset[LO,LE,RO,RE]{0pt}
+
+\fancyfootoffset[LO,LE,RO,RE]{0pt}
+
+\pagestyle{fancy}
+
+\fancyfoot{}
+
+\fancyfoot[RO,LE]{\thepage\ / \pageref{LastPage}}
+
+\fancyfoot[C]{\today}
+
+
+
+\usepackage{lastpage}       % "n of m" page numbering
+
+\usepackage{lscape}         % Makes landscape easier
+
+\usepackage{portland}       % Switch between portrait and landscape
+
+\usepackage{graphics}       % Graphics commands
+
+\usepackage{wrapfig}        % Wrapping text around figures
+
+\usepackage{epsfig}         % Embed encapsulated postscript
+
+\usepackage{rotating}       % Extra graphics rotation
+
+\usepackage{longtable}      % Page breaks within tables
+
+\usepackage{supertabular}   % Page breaks within tables
+
+\usepackage{multicol}       % Allows table cells to span cols
+
+\usepackage{multirow}       % Allows table cells to span rows
+
+\usepackage{texnames}       % Macros for common tex names
+
+\usepackage{trees}          % Tree-like layout
+
+\usepackage{float}			% Eliminate pesky floating figures
+
+\usepackage{textcomp}		% Adds more math symbols.
+
+\usepackage{array}          % Array environment
+
+\usepackage{url}            % URL formatting
+
+\usepackage{amsmath}        % American Mathematical Society
+
+\usepackage{amssymb}        % Maths symbols
+
+\usepackage{amsthm}         % Theorems
+
+\usepackage{verbatim}       % Verbatim blocks
+\usepackage{moreverb}
+\let\verbatiminput=\verbatimtabinput
+
+\usepackage{ifthen}         % Conditional processing in tex
+
+\usepackage{xcolor}         % X11 colour names
+
+
+
+\renewcommand{\oddsidemargin}{-20pt}
+
+\renewcommand{\evensidemargin}{-20pt}
+
+\renewcommand{\topmargin}{-30pt}
+
+\renewcommand{\textwidth}{410pt}
+
+\renewcommand{\marginparwidth}{100pt}
+
+
+
+\setlength{\parindent}{0em}
+
+\addtolength{\parskip}{1ex}
+
+
+
+\begin{document}
+
+\section*{Project Diglett Code Overview}
+
+\subsection*{Introduction}
+
+This document provides an \textbf{informal, non-exhaustive} description of the code layout of Project Diglett. It is intended to give potential employers a good enough idea of the code's structure and design to be able to evaluate it usefully.
+
+\begin{figure}[H]
+\centering \includegraphics[scale=0.5]{diagram.png}
+\end{figure}
+
+\subsection*{Basic structure}
+
+The \verb|MainGameState| class represents the ``main'' state where the player is moving around and digging. On each frame, the \verb|gameTick()| method is called to take inputs and update the game state, and the \verb|draw()| method is called to draw the updated game state.
+
+The class has a \verb|Player| object representing the player's status (health, inventory, etc) and containing the methods for moving the player.
+
+There is also a \verb|World| object containing information about the game world, and a \verb|MainGUI| object containing drawable GUI panels to overlay the game world.
+
+\subsection*{Input}
+
+The \verb|MainInputHandler| class is defined within the \verb|MainGameState| class and contains a \verb|processInputs()| method that polls the window for input events and calls appropriate methods on \verb|MainGameState| based on what input was received.
+
+\subsection*{World}
+
+The \verb|World| class contains a \verb|WorldData| object encapsulating information about tiles in the game world. It contains a 2D array of \verb|Chunk|s, where each \verb|Chunk| is a $20 \times 20$ array of \verb|Tile|s. The ambition behind the potentially peculiar design is to be able to implement an infinite world, but this feature hasn't been developed yet.
+
+There are also \verb|InteractiveEntity|s, of which there is currently only the \verb|Shop|.
+
+\subsection*{Entry point}
+
+The \verb|main()| method is in \verb|Game.cpp|. It creates a \verb|GameWindow| object and passes control to the \verb|mainLoop()| method in that object. \verb|GameWindow| extends the \verb|RenderWindow| class provided by the SFML library, which provides framerate control such that the main loop is repeated once every frame for as long as the game is running.
+
+\subsection*{GameState stack}
+
+The \verb|GameWindow| contains a stack of \verb|GameState| objects, and calls \verb|gameTick()| and \verb|draw()| on the top state every tick. During normal play, the \verb|MainGameState| will be active. Another state may be pushed if, for example, the player dies or the shop is opened. Pushing a new state lets us change the behaviour of the game, including how it handles inputs, as each \verb|GameState| will have its own \verb|InputHandler| specifying how inputs affect the game in that state.
+
+\end{document}
