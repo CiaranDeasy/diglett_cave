@@ -4,7 +4,15 @@
 #include "Constants.h"
 
 ShopGUI::ShopGUI( sf::Font& font, Inventory<Item *>& inventory ) : 
-        inventory(inventory), font(font) {
+        inventory(inventory), 
+        font(font),
+        background(),
+        backgroundTexture() {
+    if ( !backgroundTexture.loadFromFile( BACKGROUND_FILE ) ) {
+        std::cerr << "Failed to load file: " << BACKGROUND_FILE << "\n";
+        exit(1);
+    }
+    background.setTexture( backgroundTexture );
 }
 
 ShopGUI::~ShopGUI(void) {
@@ -22,10 +30,7 @@ void ShopGUI::draw(
             ( target.getSize().y / 2 ) - size.y / 2 );
     std::vector<Item *> contents = inventory.getContents();
     // Draw the inventory background.
-    sf::RectangleShape background = 
-            sf::RectangleShape( sf::Vector2f( size.x, size.y ) );
-    background.setFillColor( BACKGROUND_COLOR );
-    background.setPosition( sf::Vector2f( position.x, position.y ) );
+    background.setPosition( sf::Vector2f( position.x, position.y - TOP_BORDER ) );
     target.draw( background );
     for( int i = 0; i < inventory.getCurrentSize(); i++ ) {
         // Calculate the position of the sprite.
@@ -52,14 +57,12 @@ void ShopGUI::draw(
     }
 }
 
+const int ShopGUI::TOP_BORDER = 40;
 const int ShopGUI::BORDER = 10;
 const int ShopGUI::COLUMNS = 4;
 const int ShopGUI::ITEMS_PER_COL = 8;
-const sf::Vector2i ShopGUI::ENTRY_SIZE = 
-        sf::Vector2i( 128, 19 );
+const sf::Vector2i ShopGUI::ENTRY_SIZE = sf::Vector2i( 128, 19 );
 const int ShopGUI::SPRITE_SEPARATION = 6;
 const int ShopGUI::TEXT_SIZE = 12;
-const sf::Color ShopGUI::BACKGROUND_COLOR = 
-        sf::Color( 0, 0, 0, 255 );
-const sf::Color ShopGUI::TEXT_COLOR = 
-        sf::Color( 255, 255, 255, 255 );
+const sf::Color ShopGUI::TEXT_COLOR = sf::Color( 255, 255, 255, 255 );
+const std::string ShopGUI::BACKGROUND_FILE = "Sprites/ShopBackground.png";

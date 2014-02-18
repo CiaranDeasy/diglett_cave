@@ -17,6 +17,7 @@ public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private: 
+    static const int TOP_BORDER;
     static const int BORDER;
     static const int COLUMNS;
     static const int ITEMS_PER_COL;
@@ -25,11 +26,14 @@ private:
     static const int TEXT_SIZE;
     static const sf::Color BACKGROUND_COLOR;
     static const sf::Color TEXT_COLOR;
+    static const std::string BACKGROUND_FILE;
 
     // The player inventory to be displayed.
     Inventory<Item *>& inventory;
 
     sf::Font& font;
+    sf::Texture backgroundTexture;
+    mutable sf::Sprite background;
 
 };
 
