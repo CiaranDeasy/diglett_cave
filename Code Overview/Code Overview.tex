@@ -104,7 +104,8 @@ This document provides an \textbf{informal, non-exhaustive} description of the c
 
 \subsection*{Basic structure}
 
-The \verb|MainGameState| class represents the ``main'' state where the player is moving around and digging. On each frame, the \verb|gameTick()| method is called to take inputs and update the game state, and the \verb|draw()| method is called to draw the updated game state.
+The \verb|MainGameState| class represents the ``main'' state where the player is moving around and digging. 
+On each frame, the \verb|gameTick()| method is called to take inputs and update the game state, and the \verb|draw()| method is called to draw the updated game state.
 
 The class has a \verb|Player| object representing the player's status (health, inventory, etc) and containing the methods for moving the player.
 
@@ -116,16 +117,23 @@ The \verb|MainInputHandler| class is defined within the \verb|MainGameState| cla
 
 \subsection*{World}
 
-The \verb|World| class contains a \verb|WorldData| object encapsulating information about tiles in the game world. It contains a 2D array of \verb|Chunk|s, where each \verb|Chunk| is a $20 \times 20$ array of \verb|Tile|s. The ambition behind the potentially peculiar design is to be able to implement an infinite world, but this feature hasn't been developed yet.
+The \verb|World| class contains a \verb|WorldData| object encapsulating information about tiles in the game world. 
+It contains a 2D array of \verb|Chunk|s, where each \verb|Chunk| is a $20 \times 20$ array of \verb|Tile|s. 
+The ambition behind the potentially peculiar design is to be able to implement an infinite world, but this feature hasn't been developed yet.
 
 There are also \verb|InteractiveEntity|s, of which there is currently only the \verb|Shop|.
 
 \subsection*{Entry point}
 
-The \verb|main()| method is in \verb|Game.cpp|. It creates a \verb|GameWindow| object and passes control to the \verb|mainLoop()| method in that object. \verb|GameWindow| extends the \verb|RenderWindow| class provided by the SFML library, which provides framerate control such that the main loop is repeated once every frame for as long as the game is running.
+The \verb|main()| method is in \verb|Game.cpp|. 
+It creates a \verb|GameWindow| object and passes control to the \verb|mainLoop()| method in that object. 
+\verb|GameWindow| extends the \verb|RenderWindow| class provided by the SFML library, which provides framerate control such that the main loop is repeated once every frame for as long as the game is running.
 
 \subsection*{GameState stack}
 
-The \verb|GameWindow| contains a stack of \verb|GameState| objects, and calls \verb|gameTick()| and \verb|draw()| on the top state every tick. During normal play, the \verb|MainGameState| will be active. Another state may be pushed if, for example, the player dies or the shop is opened. Pushing a new state lets us change the behaviour of the game, including how it handles inputs, as each \verb|GameState| will have its own \verb|InputHandler| specifying how inputs affect the game in that state.
+The \verb|GameWindow| contains a stack of \verb|GameState| objects, and calls \verb|gameTick()| and \verb|draw()| on the top state every tick. 
+During normal play, the \verb|MainGameState| will be active. 
+Another state may be pushed if, for example, the player dies or the shop is opened. 
+Pushing a new state lets us change the behaviour of the game, including how it handles inputs, as each \verb|GameState| will have its own \verb|InputHandler| specifying how inputs affect the game in that state.
 
 \end{document}
