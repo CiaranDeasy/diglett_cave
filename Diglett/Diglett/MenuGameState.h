@@ -35,11 +35,16 @@ private:
         MenuGameState& gameState;
     };
     friend class MenuInputHandler;
+	
+	static const std::string SPRITE_FILE;
 
     MenuInputHandler inputHandler;
     GameWindow *gameWindow;
     Player& player;
 	sf::Font& font;
+	sf::Texture* logoTexture;
+	sf::Sprite* logoSprite;
+	sf::Text* text;
 
     // Polls the GameWindow for window events and responds to them accordingly.
     void handleWindowEvents();
