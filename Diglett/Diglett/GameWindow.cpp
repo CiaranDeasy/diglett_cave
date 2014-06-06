@@ -2,7 +2,7 @@
 #include "Constants.h"
 #include "Tile.h"
 #include "Item.h"
-#include "MainGameState.h"
+#include "MenuGameState.h"
 
 GameWindow::~GameWindow(void) {
 }
@@ -93,7 +93,7 @@ GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
         exit(1);
     }
 
-    gameStates.push( new MainGameState( font, this ) );
+    gameStates.push( new MenuGameState( this, font ) );
 }
 
 const std::string GameWindow::WINDOW_TITLE = "Diglett";
