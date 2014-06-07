@@ -19,5 +19,5 @@ void InventoryTutorial::activate( GameWindow *gameWindow, sf::Font& font ) {
 const std::string InventoryTutorial::message = 
         "You dug an ore!\n"
         "Press I or Gamepad \"Y\" to open your inventory.\n"
-        "Press U or Gamepad \"X\" to open the shop.\n"
+        "Visit the shop to sell your ore.\n"
         "Press SPACE or Gamepad \"A\" to continue.";
