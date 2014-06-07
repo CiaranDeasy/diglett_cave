@@ -68,3 +68,7 @@ const Tile& World::getTile( sf::Vector2i in ) const {
 void World::digTile( sf::Vector2i tileCoords, Player& player ) {
     worldData.digTile( tileCoords.x, tileCoords.y, player );
 }
+
+const sf::Vector2f& World::getShopPosition() {
+	return interactiveEntities[keShop]->getPosition();
+}

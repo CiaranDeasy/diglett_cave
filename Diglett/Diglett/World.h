@@ -26,7 +26,14 @@ public:
     // inventory if appropriate.
     void digTile( sf::Vector2i tileCoords, Player& player );
 
+	// Returns the position vector of the shop.
+	const sf::Vector2f& getShopPosition();
+
 private: 
+	static enum InteractiveEntities {
+		keShop = 0
+	};
+
     Player& player;
     WorldData worldData;
     std::vector<InteractiveEntity *> interactiveEntities;

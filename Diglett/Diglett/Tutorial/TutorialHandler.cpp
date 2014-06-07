@@ -2,6 +2,7 @@
 #include "InitialTutorial.h"
 #include "OreTutorial.h"
 #include "InventoryTutorial.h"
+#include "OpenShopTutorial.h"
 
 TutorialHandler::TutorialHandler( GameWindow *gameWindow, sf::Font& font ) 
         : font( font ) {
@@ -10,6 +11,7 @@ TutorialHandler::TutorialHandler( GameWindow *gameWindow, sf::Font& font )
     tutorials.push_back( new InitialTutorial() );
     tutorials.push_back( new OreTutorial() );
     tutorials.push_back( new InventoryTutorial() );
+	tutorials.push_back( new OpenShopTutorial() );
 }
 
 TutorialHandler::~TutorialHandler() {
