@@ -34,3 +34,7 @@ Resources::~Resources(void) {
 const sf::Font& Resources::getFont() const {
     return *m_SegoeuiFont;
 }
+
+const sf::Texture& Resources::getShopTexture() const {
+    return *m_ShopTexture;
+}

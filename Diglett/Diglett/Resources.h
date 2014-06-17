@@ -14,6 +14,7 @@ public:
     ~Resources();
 
 	const sf::Font& getFont() const;
+	const sf::Texture& getShopTexture() const;
 
 private: 
 	static const std::string SHOP_TEXTURE_FILE;
