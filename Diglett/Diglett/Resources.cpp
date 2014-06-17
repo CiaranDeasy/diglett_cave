@@ -1,8 +1,10 @@
 #include "Resources.h"
 #include <iostream>
 
-const std::string Resources::SHOP_TEXTURE_FILE = "Sprites/shop.png";
 const std::string Resources::SEGOEUI_FONT_FILE = "Fonts/segoeui.ttf";
+const std::string Resources::SHOP_TEXTURE_FILE = "Sprites/shop.png";
+const std::string Resources::SHOP_BACKGROUND_TEXTURE_FILE = 
+	    "Sprites/ShopBackground.png";
 
 const Resources& Resources::getResources() {
     if( singleton == NULL ) {
@@ -24,11 +26,19 @@ Resources::Resources() {
         std::cerr << "Failed to load file: " << SHOP_TEXTURE_FILE << "\n";
         exit(1);
     }
+	m_ShopBackgroundTexture = new sf::Texture();
+    if ( !m_ShopBackgroundTexture->loadFromFile( 
+		    SHOP_BACKGROUND_TEXTURE_FILE ) ) {
+        std::cerr << "Failed to load file: " << 
+			    SHOP_BACKGROUND_TEXTURE_FILE << "\n";
+        exit(1);
+    }
 }
 
 Resources::~Resources(void) {
 	delete m_SegoeuiFont;
 	delete m_ShopTexture;
+	delete m_ShopBackgroundTexture;
 }
 
 const sf::Font& Resources::getFont() const {
@@ -37,4 +47,8 @@ const sf::Font& Resources::getFont() const {
 
 const sf::Texture& Resources::getShopTexture() const {
     return *m_ShopTexture;
+}
+
+const sf::Texture& Resources::getShopBackgroundTexture() const {
+    return *m_ShopBackgroundTexture;
 }

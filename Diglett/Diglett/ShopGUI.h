@@ -26,14 +26,12 @@ private:
     static const int TEXT_SIZE;
     static const sf::Color BACKGROUND_COLOR;
     static const sf::Color TEXT_COLOR;
-    static const std::string BACKGROUND_FILE;
     static const std::string SHORT_BUTTON_PROMPT;
     static const std::string LONG_BUTTON_PROMPT;
 
     // The player inventory to be displayed.
     Inventory<Item *>& inventory;
 
-    sf::Texture backgroundTexture;
     mutable sf::Sprite background;
 
 };

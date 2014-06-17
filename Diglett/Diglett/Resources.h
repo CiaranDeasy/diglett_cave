@@ -15,15 +15,18 @@ public:
 
 	const sf::Font& getFont() const;
 	const sf::Texture& getShopTexture() const;
+	const sf::Texture& getShopBackgroundTexture() const;
 
 private: 
-	static const std::string SHOP_TEXTURE_FILE;
 	static const std::string SEGOEUI_FONT_FILE;
+	static const std::string SHOP_TEXTURE_FILE;
+	static const std::string SHOP_BACKGROUND_TEXTURE_FILE;
 
 	static Resources* singleton;
     
 	sf::Font* m_SegoeuiFont;
 	sf::Texture* m_ShopTexture;
+	sf::Texture* m_ShopBackgroundTexture;
 
 };
 

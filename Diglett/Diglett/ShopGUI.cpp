@@ -6,13 +6,9 @@
 
 ShopGUI::ShopGUI( Inventory<Item *>& inventory ) : 
         inventory(inventory), 
-        background(),
-        backgroundTexture() {
-    if ( !backgroundTexture.loadFromFile( BACKGROUND_FILE ) ) {
-        std::cerr << "Failed to load file: " << BACKGROUND_FILE << "\n";
-        exit(1);
-    }
-    background.setTexture( backgroundTexture );
+        background() {
+    background.setTexture( 
+		    Resources::getResources().getShopBackgroundTexture() );
 }
 
 ShopGUI::~ShopGUI(void) {
@@ -79,7 +75,6 @@ const sf::Vector2i ShopGUI::ENTRY_SIZE = sf::Vector2i( 128, 19 );
 const int ShopGUI::SPRITE_SEPARATION = 6;
 const int ShopGUI::TEXT_SIZE = 12;
 const sf::Color ShopGUI::TEXT_COLOR = sf::Color( 255, 255, 255, 255 );
-const std::string ShopGUI::BACKGROUND_FILE = "Sprites/ShopBackground.png";
 const std::string ShopGUI::SHORT_BUTTON_PROMPT = "ESC/Gamepad B: Exit.";
 const std::string ShopGUI::LONG_BUTTON_PROMPT = 
         "SPACE/Gamepad A: Sell all.           ESC/Gamepad B: Exit.";
