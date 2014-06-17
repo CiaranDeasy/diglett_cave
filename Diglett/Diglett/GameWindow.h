@@ -8,13 +8,6 @@ public:
     ~GameWindow(void);
 
     static GameWindow *getGameWindow();
-
-    // Constructs a square sprite of the specified color, with sides of the 
-    // given size, and with a black outline.
-    static sf::Sprite *makeSquareSprite( sf::Color color, int size );
-
-    // Constructs a circular sprite of the specified colour.
-    static sf::Sprite *makeCircleSprite( sf::Color );
     
     // The top-level main loop of the program.
     void mainLoop();

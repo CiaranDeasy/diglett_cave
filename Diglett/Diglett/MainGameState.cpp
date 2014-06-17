@@ -7,6 +7,7 @@
 #include "DeadGameState.h"
 #include "ShopGameState.h"
 #include "Shop.h"
+#include "Resources.h"
 
 MainGameState::MainGameState( GameWindow *gameWindow ) : 
         GameState(),
@@ -62,9 +63,11 @@ bool MainGameState::drawUnderlyingState() { return false; }
 const float MainGameState::CAMERA_ZOOM = 1.0;
 
 void MainGameState::createSprites() {
-    playerSprite = GameWindow::makeCircleSprite( sf::Color::Magenta );
+    playerSprite = 
+		    new sf::Sprite( Resources::getResources().getPlayerTexture() );
     playerSprite->setOrigin( 32, 32 );
-    playerDeadSprite = GameWindow::makeCircleSprite( sf::Color::Red );
+    playerDeadSprite =  
+		    new sf::Sprite( Resources::getResources().getPlayerDeadTexture() );
     playerDeadSprite->setOrigin( 32, 32 );
 }
 

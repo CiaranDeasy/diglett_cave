@@ -2,6 +2,7 @@
 #include "GameWindow.h"
 #include "Constants.h"
 #include "Player.h"
+#include "Resources.h"
 
 Tile::Tile(void) {
     this->type = 0; //Air
@@ -42,20 +43,16 @@ sf::Sprite *Tile::getSprite() {
 
 void Tile::initialiseTypes() {
     types.push_back( TileType( "Air", 
-            GameWindow::makeSquareSprite( 
-                sf::Color( 156, 94, 0, 255 ), PIXELS_PER_TILE ), 
+            new sf::Sprite( Resources::getResources().getAirTileTexture() ), 
             false, false, 0 ) );
     types.push_back( TileType( "Surface", 
-            GameWindow::makeSquareSprite( 
-                sf::Color::Blue, PIXELS_PER_TILE ), 
+            new sf::Sprite(Resources::getResources().getSurfaceTileTexture()),
             false, false, 0 ) );
     types.push_back( TileType( "Dirt", 
-            GameWindow::makeSquareSprite( 
-                sf::Color( 126, 64, 0, 255 ), PIXELS_PER_TILE ), 
+            new sf::Sprite( Resources::getResources().getDirtTileTexture() ),
             true, true, 0 ) );
     types.push_back( TileType( "Gold", 
-            GameWindow::makeSquareSprite( 
-                sf::Color( 255, 215, 0, 255 ), PIXELS_PER_TILE ), 
+            new sf::Sprite( Resources::getResources().getGoldTileTexture() ),
             true, true, 1 ) );
 }
 
