@@ -11,7 +11,7 @@
 class ShopGameState : public GameState {
 public:
     ShopGameState( 
-            GameWindow *gameWindow, sf::Font& font, Player& player );
+            GameWindow *gameWindow, Player& player );
     ~ShopGameState();
 
     class ShopInputHandler : public InputHandler {
@@ -44,7 +44,6 @@ public:
 private: 
     ShopInputHandler inputHandler;
     GameWindow *gameWindow;
-    sf::Font font;
     ShopGUI shopGUI;
     Player& player;
 

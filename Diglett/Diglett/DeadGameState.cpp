@@ -1,11 +1,12 @@
 #include "DeadGameState.h"
 #include "Player.h"
 #include "Physics.h"
+#include "Resources.h"
 
 DeadGameState::DeadGameState( 
-            GameWindow *gameWindow, sf::Font& font, Player& player ) : 
+            GameWindow *gameWindow, Player& player ) : 
         inputHandler( *this ), 
-        deadNotification( DEATH_MESSAGE, font ),
+        deadNotification( DEATH_MESSAGE, Resources::getResources().getFont() ),
         player( player ) {
     this->gameWindow = gameWindow;
 }

@@ -9,7 +9,7 @@
 class MoneyGUI : public sf::Drawable {
 public:
 
-    MoneyGUI( sf::Font& font, Player& player );
+    MoneyGUI( Player& player );
     ~MoneyGUI();
 
     // Draws the GUI to the given RenderTarget.
@@ -23,7 +23,6 @@ private:
     static const sf::Color BACKGROUND_COLOR;
     static const sf::Color TEXT_COLOR;
 
-    sf::Font& font;
     Player& player;
 
 };

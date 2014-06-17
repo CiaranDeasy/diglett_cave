@@ -22,8 +22,8 @@ Shop::~Shop() {
     delete texture;
 }
 
-void Shop::interact( GameWindow *gameWindow, sf::Font& font, Player& player ) {
-    gameWindow->pushNewState( new ShopGameState( gameWindow, font, player ) );
+void Shop::interact( GameWindow *gameWindow, Player& player ) {
+    gameWindow->pushNewState( new ShopGameState( gameWindow, player ) );
 }
 
 void Shop::draw( sf::RenderTarget& target, sf::RenderStates states ) const {

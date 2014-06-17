@@ -9,7 +9,7 @@
 class DebugOverlayGUI : public sf::Drawable {
 public:
 
-    DebugOverlayGUI( sf::Font& font, Player& player );
+    DebugOverlayGUI( Player& player );
     ~DebugOverlayGUI();
 
     // Shows or hides the GUI.
@@ -36,9 +36,6 @@ private:
 
     // Indicates whether the GUI is visible in the game window.
     bool visible;
-
-    // Font object for the GUI text.
-    sf::Font& font;
 
 };
 

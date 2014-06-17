@@ -9,7 +9,7 @@
 class HullGUI : public sf::Drawable {
 public:
 
-    HullGUI( sf::Font& font, Player& player );
+    HullGUI( Player& player );
     ~HullGUI();
 
     // Draws the GUI to the given RenderTarget using the options specified 
@@ -28,7 +28,6 @@ private:
     static const sf::Color TEXT_COLOR;
     static const int BORDER_THICKNESS;
 
-    sf::Font& font;
     Player& player;
 
 };

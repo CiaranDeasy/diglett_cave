@@ -17,7 +17,7 @@ public:
     virtual void draw( 
             sf::RenderTarget& target, sf::RenderStates states ) const;
 
-    void interact( GameWindow *gamewindow, sf::Font& font );
+    void interact( GameWindow *gamewindow );
     
     const Tile& getTile( int x, int y ) const;
     const Tile& getTile( sf::Vector2i in ) const;

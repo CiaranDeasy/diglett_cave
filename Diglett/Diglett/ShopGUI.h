@@ -9,7 +9,7 @@
 class ShopGUI : public sf::Drawable {
 public:
 
-    ShopGUI( sf::Font& font, Inventory<Item *>& inventory );
+    ShopGUI( Inventory<Item *>& inventory );
     ~ShopGUI();
 
     // Draws the inventory GUI to the given RenderTarget using the options
@@ -33,7 +33,6 @@ private:
     // The player inventory to be displayed.
     Inventory<Item *>& inventory;
 
-    sf::Font& font;
     sf::Texture backgroundTexture;
     mutable sf::Sprite background;
 

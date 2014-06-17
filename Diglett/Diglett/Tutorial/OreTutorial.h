@@ -12,7 +12,7 @@ public:
     virtual bool testTrigger( World& world, Player& player );
 
     // Activates this tutorial.
-    virtual void activate( GameWindow *gameWindow, sf::Font& font );
+    virtual void activate( GameWindow *gameWindow );
 
 private:
     // The message displayed when this tutorial is activated.

@@ -2,10 +2,10 @@
 #include "Player.h"
 #include "GameWindow.h"
 #include "Constants.h"
+#include "Resources.h"
 
-ShopGUI::ShopGUI( sf::Font& font, Inventory<Item *>& inventory ) : 
+ShopGUI::ShopGUI( Inventory<Item *>& inventory ) : 
         inventory(inventory), 
-        font(font),
         background(),
         backgroundTexture() {
     if ( !backgroundTexture.loadFromFile( BACKGROUND_FILE ) ) {
@@ -44,7 +44,7 @@ void ShopGUI::draw(
         target.draw( *contents[i]->getSprite() );
         // Make the text.
         sf::Text text;
-        text.setFont( font );
+        text.setFont( Resources::getResources().getFont() );
         text.setCharacterSize( TEXT_SIZE );
         text.setColor( TEXT_COLOR );
         text.setString( contents[i]->getName() );
@@ -57,7 +57,7 @@ void ShopGUI::draw(
     }
     // Add the button prompts.
     sf::Text text = sf::Text();
-    text.setFont( font );
+    text.setFont( Resources::getResources().getFont() );
     text.setCharacterSize( TEXT_SIZE );
     text.setColor( TEXT_COLOR );
     if( inventory.getCurrentSize() == 0 ) {

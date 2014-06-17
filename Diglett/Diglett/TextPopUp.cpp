@@ -1,7 +1,7 @@
 #include "TextPopUp.h"
 #include <iostream>
 
-TextPopUp::TextPopUp( std::string message, sf::Font& font ) : font(font) {
+TextPopUp::TextPopUp( std::string message, const sf::Font& font ) : font(font) {
     this->message = message;
 }
 

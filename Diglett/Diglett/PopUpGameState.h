@@ -10,8 +10,7 @@
 
 class PopUpGameState : public GameState {
 public:
-    PopUpGameState( 
-            GameWindow *gameWindow, sf::Font& font, std::string message );
+    PopUpGameState( GameWindow *gameWindow, std::string message );
     ~PopUpGameState();
 
     // Represents the behaviour that should be performed each game tick when 
@@ -29,7 +28,6 @@ private:
     DismissInputHandler inputHandler;
     GameWindow *gameWindow;
     TextPopUp popUp;
-    sf::Font font;
 
     // Polls the GameWindow for window events and responds to them accordingly.
     void handleWindowEvents();

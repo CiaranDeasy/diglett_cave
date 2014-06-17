@@ -2,9 +2,9 @@
 #include "Player.h"
 
 ShopGameState::ShopGameState( 
-        GameWindow *gameWindow, sf::Font& font, Player& player ) : 
+        GameWindow *gameWindow, Player& player ) : 
             inputHandler( *this ),
-            shopGUI( font, player.getInventory() ),
+            shopGUI( player.getInventory() ),
             player( player ) {
     this->gameWindow = gameWindow;
 }

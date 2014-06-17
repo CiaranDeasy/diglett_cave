@@ -10,7 +10,7 @@
 
 class MenuGameState : public GameState {
 public:
-    MenuGameState( GameWindow *gameWindow, sf::Font& font );
+    MenuGameState( GameWindow *gameWindow );
     ~MenuGameState();
 
     // Represents the behaviour that should be performed each game tick when 
@@ -41,7 +41,6 @@ private:
     MenuInputHandler inputHandler;
     GameWindow *gameWindow;
     Player& player;
-	sf::Font& font;
 	sf::Texture* logoTexture;
 	sf::Sprite* logoSprite;
 	sf::Text* text;

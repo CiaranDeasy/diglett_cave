@@ -9,7 +9,7 @@
 class NewItemVisual : public sf::Drawable {
 public:
 
-    NewItemVisual( sf::Font& font, Item *item );
+    NewItemVisual( Item *item );
     ~NewItemVisual();
 
     // Draws the visual to the given RenderTarget using the options specified 
@@ -37,7 +37,6 @@ private:
     // Number of pixels separating the item sprite and its name.
     static const int SPRITE_SEPARATION;
 
-    sf::Font& font;
     sf::Sprite *sprite;
 
     // Texture pointer for cleanup.

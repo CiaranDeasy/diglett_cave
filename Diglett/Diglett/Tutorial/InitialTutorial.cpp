@@ -10,8 +10,8 @@ bool InitialTutorial::testTrigger( World& world, Player& player ) {
     return true;
 }
 
-void InitialTutorial::activate( GameWindow *gameWindow, sf::Font& font ) {
-    gameWindow->pushNewState( new PopUpGameState( gameWindow, font, message ) );
+void InitialTutorial::activate( GameWindow *gameWindow ) {
+    gameWindow->pushNewState( new PopUpGameState( gameWindow, message ) );
     triggered = true;
 }
 

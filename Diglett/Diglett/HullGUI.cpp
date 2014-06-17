@@ -1,8 +1,8 @@
 #include "HullGUI.h"
 #include "Constants.h"
+#include "Resources.h"
 
-HullGUI::HullGUI( sf::Font& font, Player& player ) : 
-        font(font), 
+HullGUI::HullGUI( Player& player ) : 
         player( player ) {
 }
 
@@ -38,7 +38,8 @@ void HullGUI::draw(
     std::string textString = 
             std::to_string( player.getCurrentHull() ) + "/" + 
             std::to_string( player.getMaxHull() );
-    sf::Text text = sf::Text( textString, font, TEXT_SIZE );
+    sf::Text text = sf::Text( 
+		    textString, Resources::getResources().getFont(), TEXT_SIZE );
     text.setStyle( sf::Text::Bold );
     text.setOrigin( text.getLocalBounds().width / 2, 
             text.getLocalBounds().height / 2 );

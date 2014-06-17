@@ -2,9 +2,10 @@
 #include "Player.h"
 #include "GameWindow.h"
 #include "Constants.h"
+#include "Resources.h"
 
-InventoryGUI::InventoryGUI( sf::Font& font, Inventory<Item *>& inventory ) : 
-        inventory(inventory), font(font) {
+InventoryGUI::InventoryGUI( Inventory<Item *>& inventory ) : 
+        inventory(inventory) {
     visible = false;
     position = DEFAULT_POSITION;
     border = DEFAULT_BORDER;
@@ -48,7 +49,7 @@ void InventoryGUI::draw(
         target.draw( *contents[i]->getSprite() );
         // Make the text.
         sf::Text text;
-        text.setFont( font );
+        text.setFont( Resources::getResources().getFont() );
         text.setCharacterSize( textSize );
         text.setColor( textColor );
         text.setString( contents[i]->getName() );

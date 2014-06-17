@@ -2,14 +2,13 @@
 #include "Player.h"
 #include "Physics.h"
 #include "MainGameState.h"
+#include "Resources.h"
 
 const std::string MenuGameState::SPRITE_FILE = "Sprites/Logo.png";
 
-MenuGameState::MenuGameState( 
-            GameWindow *gameWindow, sf::Font& font ) : 
+MenuGameState::MenuGameState( GameWindow *gameWindow ) : 
         inputHandler( *this ), 
-        player( player ),
-		font( font ) {
+        player( player ) {
     this->gameWindow = gameWindow;
 
 	// Create the logo.
@@ -29,7 +28,7 @@ MenuGameState::MenuGameState(
 	// Create the text.
 	text = new sf::Text();
 	text->setString( "Press SPACE or Gamepad A to begin." );
-	text->setFont( font );
+	text->setFont( Resources::getResources().getFont() );
 	text->setPosition( 
 		    gameWindow->getSize().x / 2, 3 * gameWindow->getSize().y / 4 );
 	text->setColor( sf::Color::White );
@@ -82,7 +81,7 @@ void MenuGameState::handleWindowEvents() {
 }
 
 void MenuGameState::launchGame() {
-	gameWindow->pushNewState( new MainGameState( font, gameWindow ) );
+	gameWindow->pushNewState( new MainGameState( gameWindow ) );
 }
 
 

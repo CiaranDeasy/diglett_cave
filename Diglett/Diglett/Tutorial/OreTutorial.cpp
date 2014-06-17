@@ -22,8 +22,8 @@ bool OreTutorial::testTrigger( World& world, Player& player ) {
     return false;
 }
 
-void OreTutorial::activate( GameWindow *gameWindow, sf::Font& font ) {
-    gameWindow->pushNewState( new PopUpGameState( gameWindow, font, message ) );
+void OreTutorial::activate( GameWindow *gameWindow ) {
+    gameWindow->pushNewState( new PopUpGameState( gameWindow, message ) );
     triggered = true;
 }
 

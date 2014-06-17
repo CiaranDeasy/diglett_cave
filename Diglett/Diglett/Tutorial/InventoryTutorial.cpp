@@ -11,8 +11,8 @@ bool InventoryTutorial::testTrigger( World& world, Player& player ) {
    return player.getInventory().getCurrentSize() != 0;
 }
 
-void InventoryTutorial::activate( GameWindow *gameWindow, sf::Font& font ) {
-    gameWindow->pushNewState( new PopUpGameState( gameWindow, font, message ) );
+void InventoryTutorial::activate( GameWindow *gameWindow ) {
+    gameWindow->pushNewState( new PopUpGameState( gameWindow, message ) );
     triggered = true;
 }
 

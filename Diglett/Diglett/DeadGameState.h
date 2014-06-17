@@ -10,7 +10,7 @@
 
 class DeadGameState : public GameState {
 public:
-    DeadGameState( GameWindow *gameWindow, sf::Font& font, Player& player );
+    DeadGameState( GameWindow *gameWindow, Player& player );
     ~DeadGameState();
 
     // Represents the behaviour that should be performed each game tick when 

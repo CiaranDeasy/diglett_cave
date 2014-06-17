@@ -16,7 +16,7 @@
 
 class MainGameState : public GameState {
 public:
-    MainGameState( sf::Font& font, GameWindow *gameWindow );
+    MainGameState( GameWindow *gameWindow );
     ~MainGameState();
     
     void setWorldView( sf::RenderTarget& target ) const;
@@ -58,7 +58,6 @@ private:
     static const float CAMERA_ZOOM;
 
     GameWindow *gameWindow;
-    sf::Font& font;
     sf::Sprite *playerSprite;
     sf::Sprite *playerDeadSprite;
     MainInputHandler inputHandler;

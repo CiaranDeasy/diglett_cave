@@ -1,12 +1,11 @@
 #include "MainGUI.h"
 #include "GameState.h"
 
-MainGUI::MainGUI( sf::Font& font, Player& player ) :
-        font( font ),
-        hullGUI( font, player ),
-        debugOverlay( font, player ),
-        inventoryGUI( font, player.getInventory() ),
-        moneyGUI( font, player ),
+MainGUI::MainGUI( Player& player ) :
+        hullGUI( player ),
+        debugOverlay( player ),
+        inventoryGUI( player.getInventory() ),
+        moneyGUI( player ),
         inventory( player.getInventory() ) {
     expectedInventorySize = inventory.getCurrentSize();
 }
@@ -52,7 +51,7 @@ void MainGUI::triggerNewItemVisual() {
     int currentSize = inventory.getCurrentSize();
     if( currentSize > expectedInventorySize ) {
         Item *item = inventory.getContents()[currentSize - 1];
-        newItemVisuals.push_back( new NewItemVisual( font, item ) );
+        newItemVisuals.push_back( new NewItemVisual( item ) );
     }
     expectedInventorySize = currentSize;
 }

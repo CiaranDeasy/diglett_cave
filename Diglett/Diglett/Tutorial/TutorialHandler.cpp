@@ -4,8 +4,7 @@
 #include "InventoryTutorial.h"
 #include "OpenShopTutorial.h"
 
-TutorialHandler::TutorialHandler( GameWindow *gameWindow, sf::Font& font ) 
-        : font( font ) {
+TutorialHandler::TutorialHandler( GameWindow *gameWindow ) {
     this->gameWindow = gameWindow;
     tutorials = std::vector<Tutorial *>();
     tutorials.push_back( new InitialTutorial() );
@@ -30,7 +29,7 @@ void TutorialHandler::testTriggers( World& world, Player& player ) {
             next = tutorials.erase( next );
         }
         else if( (*next)->testTrigger( world, player ) ) {
-            (*next)->activate( gameWindow, font );
+            (*next)->activate( gameWindow );
             return; // Only want to activate one tutorial at most.
         } else {
             next++;

@@ -13,7 +13,7 @@ public:
     
     // This function is called when the player interacts with the entity.
     virtual void interact( 
-            GameWindow *gameWindow, sf::Font& font, Player& player ) = 0;
+            GameWindow *gameWindow, Player& player ) = 0;
 
 protected:
     // Position of the entity in the game world.

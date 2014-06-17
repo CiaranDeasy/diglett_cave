@@ -5,7 +5,7 @@
 class InventoryGUI : public sf::Drawable {
 public:
 
-    InventoryGUI( sf::Font& font, Inventory<Item *>& inventory );
+    InventoryGUI( Inventory<Item *>& inventory );
     ~InventoryGUI();
 
     // Toggles whether the inventory is visible in the game window.
@@ -54,7 +54,6 @@ private:
     int textSize;
     sf::Color backgroundColor;
     sf::Color textColor;
-    sf::Font& font;
 
     bool visible;
     

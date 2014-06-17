@@ -8,13 +8,12 @@
 #include "ShopGameState.h"
 #include "Shop.h"
 
-MainGameState::MainGameState( sf::Font& font, GameWindow *gameWindow ) : 
+MainGameState::MainGameState( GameWindow *gameWindow ) : 
         GameState(),
-        font( font ),
         player(), 
         inputHandler( *this ),
-        tutorials( gameWindow, font ),
-        GUI( font, player ),
+        tutorials( gameWindow ),
+        GUI( player ),
         world( player ) {
     createSprites();
     this->gameWindow = gameWindow;
@@ -42,7 +41,7 @@ void MainGameState::gameTick() {
     // Test if the player is dead.
     if( player.isDead() ) {
         GameState *deadGameState = 
-                new DeadGameState( gameWindow, font, player );
+                new DeadGameState( gameWindow, player );
         gameWindow->pushNewState( deadGameState );
     }
     // Test for tutorial triggers.

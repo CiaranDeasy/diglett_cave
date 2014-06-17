@@ -13,7 +13,7 @@
 class MainGUI : public sf::Drawable {
 public:
 
-    MainGUI( sf::Font& font, Player& player );
+    MainGUI( Player& player );
     ~MainGUI();
 
     // Draws the GUI to the given RenderTarget using the options specified 
@@ -29,7 +29,6 @@ public:
 
 private: 
 
-    sf::Font& font;
     HullGUI hullGUI;
     DebugOverlayGUI debugOverlay;
     InventoryGUI inventoryGUI;

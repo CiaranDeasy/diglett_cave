@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "Item.h"
 #include "MenuGameState.h"
+#include "Resources.h"
 
 GameWindow::~GameWindow(void) {
 }
@@ -87,17 +88,10 @@ GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
     Tile::initialiseTypes();
     Item::initialiseTypes();
 
-    // Load a font to use for GUI text.
-    if ( !font.loadFromFile( DEBUG_FONT ) ) {
-        std::cerr << "Failed to load font: " << DEBUG_FONT << "\n";
-        exit(1);
-    }
-
-    gameStates.push( new MenuGameState( this, font ) );
+    gameStates.push( new MenuGameState( this ) );
 }
 
 const std::string GameWindow::WINDOW_TITLE = "Diglett";
-const std::string GameWindow::DEBUG_FONT = "Fonts/segoeui.ttf";
 
 void GameWindow::drawStateStack() {
     GameState *topState = gameStates.top();

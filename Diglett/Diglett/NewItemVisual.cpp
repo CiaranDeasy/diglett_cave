@@ -1,14 +1,16 @@
 #include "NewItemVisual.h"
 #include "Constants.h"
+#include "Resources.h"
 
-NewItemVisual::NewItemVisual( sf::Font& font, Item *item ) : font(font) {
+NewItemVisual::NewItemVisual( Item *item ) {
     ticksRemaining = TICKS_TO_LIVE;
     stepSize = sf::Vector2f( 
             ( (float) FINAL_DISPLACEMENT.x ) / TICKS_TO_LIVE, 
             ( (float) FINAL_DISPLACEMENT.y ) / TICKS_TO_LIVE );
 
     // Make the text object, to determine the size of the sprite renderer.
-    sf::Text text = sf::Text( item->getName(), font, TEXT_SIZE );
+    sf::Text text = sf::Text( 
+		    item->getName(), Resources::getResources().getFont(), TEXT_SIZE );
 
     sf::RenderTexture renderer;
     renderer.create( text.getLocalBounds().width + 2, 

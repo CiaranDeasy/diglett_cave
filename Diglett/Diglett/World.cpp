@@ -40,7 +40,7 @@ void World::draw( sf::RenderTarget& target, sf::RenderStates states ) const {
     }
 }
 
-void World::interact( GameWindow *gameWindow, sf::Font& font ) {
+void World::interact( GameWindow *gameWindow ) {
     std::vector<InteractiveEntity *>::iterator next = 
             interactiveEntities.begin();
     while( next != interactiveEntities.end() ) {
@@ -48,7 +48,7 @@ void World::interact( GameWindow *gameWindow, sf::Font& font ) {
         sf::Vector2f entity = (*next)->getPosition();
         if( playerPos.x > entity.x - 1 && playerPos.x < entity.x + 1 && 
                 playerPos.y > entity.y - 1 && playerPos.y < entity.y + 1 ) {
-            (*next)->interact( gameWindow, font, player );
+            (*next)->interact( gameWindow, player );
             next++;
         }
         else {

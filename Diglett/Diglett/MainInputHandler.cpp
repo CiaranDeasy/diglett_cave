@@ -97,7 +97,7 @@ void MainGameState::MainInputHandler::processInputs() {
           } else if( e.joystickButton.button == 3 ) {
               gameState.GUI.toggleInventoryGUI();
           } else if( e.joystickButton.button == 0 ) {
-              gameState.world.interact( gameState.gameWindow, gameState.font );
+              gameState.world.interact( gameState.gameWindow );
           }
         }
         // Keyboard keys.
@@ -107,7 +107,7 @@ void MainGameState::MainInputHandler::processInputs() {
           } else if( e.key.code == sf::Keyboard::I ) {
               gameState.GUI.toggleInventoryGUI();
           } else if( e.key.code == sf::Keyboard::Space ) {
-              gameState.world.interact( gameState.gameWindow, gameState.font );
+              gameState.world.interact( gameState.gameWindow );
           }
         }
     }

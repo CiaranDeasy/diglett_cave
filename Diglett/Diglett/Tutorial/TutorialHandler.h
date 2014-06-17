@@ -6,7 +6,7 @@
 
 class TutorialHandler {
 public:
-    TutorialHandler( GameWindow *gameWindow, sf::Font& font );
+    TutorialHandler( GameWindow *gameWindow );
     ~TutorialHandler();
 
     // Tests the tutorials' triggers to see if any have been triggered. 
@@ -18,7 +18,6 @@ public:
 private:
     GameWindow *gameWindow;
     std::vector<Tutorial *> tutorials;
-    sf::Font& font;
 
 };
 

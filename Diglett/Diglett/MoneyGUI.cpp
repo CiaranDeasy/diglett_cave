@@ -1,7 +1,7 @@
 #include "MoneyGUI.h"
+#include "Resources.h"
 
-MoneyGUI::MoneyGUI( sf::Font& font, Player& player ) : 
-        font(font), 
+MoneyGUI::MoneyGUI( Player& player ) : 
         player( player ) {
 }
 
@@ -23,7 +23,8 @@ void MoneyGUI::draw(
     target.draw( background );
     // Draw the text.
     std::string textString = "£" + std::to_string( player.getMoney() );
-    sf::Text text = sf::Text( textString, font, TEXT_SIZE );
+    sf::Text text = sf::Text( 
+		    textString, Resources::getResources().getFont(), TEXT_SIZE );
     text.setStyle( sf::Text::Bold );
     sf::FloatRect bounds = text.getLocalBounds();
     text.setOrigin( bounds.left + bounds.width / 2, 

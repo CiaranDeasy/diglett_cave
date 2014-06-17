@@ -1,11 +1,12 @@
 #include "PopUpGameState.h"
 #include "Player.h"
 #include "Physics.h"
+#include "Resources.h"
 
 PopUpGameState::PopUpGameState( 
-        GameWindow *gameWindow, sf::Font& font, std::string message ) : 
+        GameWindow *gameWindow, std::string message ) : 
             inputHandler( *this ), 
-            popUp( message, font ) {
+            popUp( message, Resources::getResources().getFont() ) {
     this->gameWindow = gameWindow;
 }
 

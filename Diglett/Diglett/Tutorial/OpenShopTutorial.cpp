@@ -14,8 +14,8 @@ bool OpenShopTutorial::testTrigger( World& world, Player& player ) {
 		    && ( abs( shopPos.y - playerPos.y ) < 1 );
 }
 
-void OpenShopTutorial::activate( GameWindow *gameWindow, sf::Font& font ) {
-    gameWindow->pushNewState( new PopUpGameState( gameWindow, font, message ) );
+void OpenShopTutorial::activate( GameWindow *gameWindow ) {
+    gameWindow->pushNewState( new PopUpGameState( gameWindow, message ) );
     triggered = true;
 }
 

@@ -8,7 +8,7 @@
 class TextPopUp : public sf::Drawable {
 public:
 
-    TextPopUp( std::string message, sf::Font& font );
+    TextPopUp( std::string message, const sf::Font& font );
     ~TextPopUp();
 
     // Draws the pop-up to the given RenderTarget.
@@ -27,7 +27,7 @@ private:
     static const sf::Color BACKGROUND_COLOR;
     static const sf::Color TEXT_COLOR;
 
-    sf::Font& font;
+    const sf::Font& font;
     std::string message;
 
 };
