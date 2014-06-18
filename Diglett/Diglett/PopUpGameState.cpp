@@ -13,7 +13,7 @@ PopUpGameState::PopUpGameState(
 PopUpGameState::~PopUpGameState() {
 }
 
-void PopUpGameState::gameTick() {
+void PopUpGameState::gameTick( float deltaTime ) {
     handleWindowEvents();
     inputHandler.processInputs();
 }

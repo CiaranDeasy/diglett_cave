@@ -42,7 +42,7 @@ MenuGameState::MenuGameState( GameWindow *gameWindow ) :
 MenuGameState::~MenuGameState() {
 }
 
-void MenuGameState::gameTick() {
+void MenuGameState::gameTick( float deltaTime ) {
     handleWindowEvents();
     inputHandler.processInputs();
 }

@@ -16,6 +16,10 @@ MainGameState::MainInputHandler::~MainInputHandler() {
 }
 
 void MainGameState::MainInputHandler::processInputs() {
+	processInputs( 0 );
+}
+
+void MainGameState::MainInputHandler::processInputs( float deltaTime ) {
     bool skipKeyboard = false;
     sf::Vector2f movement = sf::Vector2f(0, 0);
     directionOfMovement = Null;
@@ -115,7 +119,7 @@ void MainGameState::MainInputHandler::processInputs() {
     // Clear all the events.
     buttonsPressed.clear();
 
-    Physics::getPhysics().updatePlayer( movement, directionOfMovement, 
+    Physics::getPhysics().updatePlayer( deltaTime, movement, directionOfMovement, 
             gameState.world, gameState.player );
 }
 

@@ -21,12 +21,14 @@ GameWindow *GameWindow::getGameWindow() {
 
 void GameWindow::mainLoop() {
     while( this->isOpen() ) {
+		float deltaTime = ( (float) clock.getElapsedTime().asMicroseconds() ) / 1000.f;
+		clock.restart();
         // Cleanup dead game states.
         while( gameStates.top()->isDead() ) {
             delete gameStates.top();
             gameStates.pop();
         }
-        gameStates.top()->gameTick();
+        gameStates.top()->gameTick( deltaTime );
         drawStateStack();
         this->display();
     }
@@ -38,7 +40,8 @@ void GameWindow::pushNewState( GameState *state ) {
 
 GameWindow::GameWindow( sf::VideoMode videoMode, std::string title ) :
             sf::RenderWindow( videoMode, title ),
-            gameStates() {
+            gameStates(),
+            clock() {
 	this->setFramerateLimit(60);
 
     Tile::initialiseTypes();

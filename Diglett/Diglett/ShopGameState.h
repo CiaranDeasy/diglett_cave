@@ -32,7 +32,7 @@ public:
 
     // Represents the behaviour that should be performed each game tick when 
     // the game is in this state.
-    virtual void gameTick();
+    virtual void gameTick( float deltaTime );
 
     // Draws all elements of the game state.
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

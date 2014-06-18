@@ -14,7 +14,7 @@ DeadGameState::DeadGameState(
 DeadGameState::~DeadGameState() {
 }
 
-void DeadGameState::gameTick() {
+void DeadGameState::gameTick( float deltaTime ) {
     handleWindowEvents();
     inputHandler.processInputs();
 }

@@ -12,7 +12,7 @@ ShopGameState::ShopGameState(
 ShopGameState::~ShopGameState() {
 }
 
-void ShopGameState::gameTick() {
+void ShopGameState::gameTick( float deltaTime ) {
     handleWindowEvents();
     inputHandler.processInputs();
 }

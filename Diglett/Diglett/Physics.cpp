@@ -7,8 +7,8 @@ sf::Vector2f acceleration;
 sf::Vector2f velocity;
 sf::Vector2f previousLocation;
 
-void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput, 
-            World& world, Player& player ) {
+void Physics::updatePlayer( float deltaTime, sf::Vector2f input, 
+			Direction directionOfInput, World& world, Player& player ) {
     acceleration.x = input.x / PLAYER_MASS;
     acceleration.y = input.y / PLAYER_MASS;
 
@@ -31,7 +31,8 @@ void Physics::updatePlayer( sf::Vector2f input, Direction directionOfInput,
     }
 
     //Apply acceleration
-    velocity += acceleration;
+    velocity.x += ( acceleration.x * .06f * deltaTime );
+    velocity.y += ( acceleration.y * .06f * deltaTime );
 
     //Cap velocity at PLAYER_MAX_SPEED in both y and x directions
     if( velocity.x > PLAYER_MAX_SPEED ){

@@ -23,6 +23,7 @@ private:
 
     static GameWindow *singleton;
     static const std::string WINDOW_TITLE;
+	sf::Clock clock;
 
     std::stack<GameState *> gameStates;
 

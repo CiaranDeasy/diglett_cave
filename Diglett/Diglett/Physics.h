@@ -9,8 +9,8 @@
 class Physics{
 public:
     static Physics& getPhysics();
-    void updatePlayer( sf::Vector2f input, Direction directionOfInput, 
-            World& world, Player& player );
+    void updatePlayer( float deltaTime, sf::Vector2f input, 
+		    Direction directionOfInput, World& world, Player& player );
     // Methods to update velocity when a collision is detected.
     void collideX( Player& player );
     void collideY( Player& player );

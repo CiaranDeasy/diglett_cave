@@ -15,7 +15,7 @@ public:
 
     // Represents the behaviour that should be performed each game tick when 
     // the game is in this state.
-    virtual void gameTick() = 0;
+    virtual void gameTick( float deltaTime ) = 0;
 
     // Indicates whether the game state below this one should be drawn behind 
     // it, eg: if this is a menu overlaying the main game.

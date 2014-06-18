@@ -32,11 +32,11 @@ void MainGameState::setWorldView( sf::RenderTarget& target ) const {
     target.setView( worldView );
 }
 
-void MainGameState::gameTick() {
+void MainGameState::gameTick( float deltaTime ) {
     // Pass window events to the InputHandler.
     handleWindowEvents();
     // Process the player's input.
-    inputHandler.processInputs();
+    inputHandler.processInputs( deltaTime );
     // Advance the GUI.
     GUI.tick();
     // Test if the player is dead.
