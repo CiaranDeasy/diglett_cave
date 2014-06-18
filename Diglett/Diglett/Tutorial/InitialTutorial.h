@@ -1,4 +1,7 @@
 #pragma once
+#ifndef INITIAL_TUTORIAL_H
+#define INITIAL_TUTORIAL_H
+
 #include <SFML/System.hpp>
 #include "Tutorial.h"
 
@@ -18,3 +21,4 @@ private:
     static const std::string message;
 };
 
+#endif // INITIAL_TUTORIAL_H

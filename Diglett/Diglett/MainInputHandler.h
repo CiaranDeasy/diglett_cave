@@ -1,4 +1,7 @@
 #pragma once
+#ifndef MAIN_INPUT_HANDLER_H
+#define MAIN_INPUT_HANDLER_H
+
 #include <SFML/Window.hpp>
 #include "InputHandler.h"
 #include "MainGameState.h"
@@ -44,3 +47,4 @@ private:
         float stickPositionX, float stickPositionY);
 };
 
+#endif // MAIN_INPUT_HANDLER_H

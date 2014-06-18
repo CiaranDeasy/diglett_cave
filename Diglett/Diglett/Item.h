@@ -1,4 +1,7 @@
 #pragma once
+#ifndef ITEM_H
+#define ITEM_H
+
 #include "ItemType.h"
 #include <vector>
 #include <string>
@@ -29,3 +32,4 @@ private:
 
 };
 
+#endif // ITEM_H

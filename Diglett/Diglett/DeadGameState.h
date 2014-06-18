@@ -1,4 +1,7 @@
 #pragma once
+#ifndef DEAD_GAME_STATE_H
+#define DEAD_GAME_STATE_H
+
 #include "GameState.h"
 #include <SFML/Graphics.hpp>
 #include "GameWindow.h"
@@ -51,3 +54,4 @@ private:
     void respawn();
 };
 
+#endif // DEAD_GAME_STATE_H

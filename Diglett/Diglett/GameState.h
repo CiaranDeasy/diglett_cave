@@ -1,4 +1,7 @@
 #pragma once
+#ifndef GAME_STATE_H
+#define GAME_STATE_H
+
 #include "InputHandler.h"
 #include <SFML/Graphics.hpp>
 
@@ -32,3 +35,4 @@ private:
 
 };
 
+#endif // GAME_STATE_H

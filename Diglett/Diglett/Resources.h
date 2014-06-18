@@ -1,4 +1,7 @@
 #pragma once
+#ifndef RESOURCES_H
+#define RESOURCES_H
+
 #include <SFML/Graphics.hpp>
 
 /* This is a singleton class containing textures and fonts used by the game.
@@ -57,3 +60,4 @@ private:
 	sf::Texture* m_PlayerDeadTexture;
 };
 
+#endif // RESOURCES_H

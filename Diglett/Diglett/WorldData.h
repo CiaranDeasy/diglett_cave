@@ -1,4 +1,6 @@
 #pragma once
+#ifndef WORLD_DATA_H
+#define WORLD_DATA_H
 
 #include "Chunk.h"
 #include "Tile.h"
@@ -31,3 +33,5 @@ private:
     int yOffset;
     std::array<std::array<Chunk, VERTICAL_CHUNKS>, HORIZONTAL_CHUNKS> chunks;
 };
+
+#endif //WORLD_DATA_H

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef OPEN_SHOP_TUTORIAL_H
+#define OPEN_SHOP_TUTORIAL_H
+
 #include <SFML/System.hpp>
 #include "Tutorial.h"
 
@@ -18,3 +21,4 @@ private:
     static const std::string message;
 };
 
+#endif // OPEN_SHOP_TUTORIAL_H

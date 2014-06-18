@@ -1,4 +1,7 @@
 #pragma once
+#ifndef MENU_GAME_STATE_H
+#define MENU_GAME_STATE_H
+
 #include "GameState.h"
 #include <SFML/Graphics.hpp>
 #include "GameWindow.h"
@@ -52,3 +55,4 @@ private:
 	void launchGame();
 };
 
+#endif // MENU_GAME_STATE_H

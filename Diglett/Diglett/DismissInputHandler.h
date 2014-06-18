@@ -1,4 +1,7 @@
 #pragma once
+#ifndef DISMISS_INPUT_HANDLER_H
+#define DISMISS_INPUT_HANDLER_H
+
 #include <SFML/Window.hpp>
 #include <vector>
 #include "InputHandler.h"
@@ -21,3 +24,4 @@ protected:
 
 };
 
+#endif // DISMISS_INPUT_HANDLER_H

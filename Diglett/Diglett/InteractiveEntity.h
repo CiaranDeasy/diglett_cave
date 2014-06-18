@@ -1,4 +1,7 @@
 #pragma once
+#ifndef INTERACTIVE_ENTITY_H
+#define INTERACTIVE_ENTITY_H
+
 #include <SFML/Graphics.hpp>
 #include "GameWindow.h"
 #include "Player.h"
@@ -24,3 +27,4 @@ protected:
 
 };
 
+#endif

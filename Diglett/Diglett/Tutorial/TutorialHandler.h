@@ -1,4 +1,7 @@
 #pragma once
+#ifndef TUTORIAL_HANDLER_H
+#define TUTORIAL_HANDLER_H
+
 #include <SFML/System.hpp>
 #include <vector>
 #include "Tutorial.h"
@@ -21,3 +24,4 @@ private:
 
 };
 
+#endif TUTORIAL_HANDLER_H

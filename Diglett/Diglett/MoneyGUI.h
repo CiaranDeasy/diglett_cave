@@ -1,4 +1,7 @@
 #pragma once
+#ifndef MONEY_GUI_H
+#define MONEY_GUI_H
+
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 
@@ -27,3 +30,4 @@ private:
 
 };
 
+#endif // MONEY_GUI_H

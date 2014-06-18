@@ -1,4 +1,7 @@
 #pragma once
+#ifndef ORE_TUTORIAL_H
+#define ORE_TUTORIAL_H
+
 #include <SFML/System.hpp>
 #include "Tutorial.h"
 #include "World.h"
@@ -19,3 +22,4 @@ private:
     static const std::string message;
 };
 
+#endif // ORE_TUTORIAL_H

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <SFML/System.hpp>
 #include <vector>
 #include "Item.h"
@@ -100,3 +103,5 @@ private:
             Direction directionOfInput, World& world );
 
 };
+
+#endif // PLAYER_H

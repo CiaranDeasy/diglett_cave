@@ -1,4 +1,7 @@
 #pragma once
+#ifndef TUTORIAL_H
+#define TUTORIAL_H
+
 #include <SFML/System.hpp>
 #include "GameWindow.h"
 #include "World.h"
@@ -22,3 +25,4 @@ protected:
     bool triggered;
 };
 
+#endif // TUTORIAL_H

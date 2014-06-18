@@ -1,4 +1,7 @@
 #pragma once
+#ifndef TEXT_POP_UP_H
+#define TEXT_POP_UP_H
+
 #include <SFML/Graphics.hpp>
 
 /* An instance of this class represents an interface element displaying the 
@@ -32,3 +35,4 @@ private:
 
 };
 
+#endif // TEXT_POP_UP_H

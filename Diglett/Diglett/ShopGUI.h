@@ -1,4 +1,7 @@
 #pragma once
+#ifndef SHOP_GUI_H
+#define SHOP_GUI_H
+
 #include <SFML/Graphics.hpp>
 #include "Inventory.h"
 #include "Item.h"
@@ -36,3 +39,4 @@ private:
 
 };
 
+#endif // SHOP_GUI_H

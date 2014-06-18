@@ -1,4 +1,7 @@
 #pragma once
+#ifndef INVENTORY_GUI_H
+#define INVENTORY_GUI_H
+
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 
@@ -63,3 +66,4 @@ private:
 
 };
 
+#endif // INVENTORY_GUI_H

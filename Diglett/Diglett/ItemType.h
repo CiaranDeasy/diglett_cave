@@ -1,4 +1,7 @@
 #pragma once
+#ifndef ITEM_TYPE_H
+#define ITEM_TYPE_H
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
@@ -18,3 +21,4 @@ private:
 
 };
 
+#endif // ITEM_TYPE_H

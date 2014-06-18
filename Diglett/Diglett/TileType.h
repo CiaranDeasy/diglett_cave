@@ -1,4 +1,7 @@
 #pragma once
+#ifndef TILE_TYPE_H
+#define TILE_TYPE_H
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Item.h"
@@ -27,3 +30,4 @@ private:
 
 };
 
+#endif // TILE_TYPE_H

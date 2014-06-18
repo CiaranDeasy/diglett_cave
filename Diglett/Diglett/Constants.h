@@ -1,9 +1,10 @@
+
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 #include <iostream>
 #include <SFML/System.hpp>
 #include "Utility.h"
-
-#ifndef CONSTANTS
-#define CONSTANTS
 
 const int PIXELS_PER_TILE = 64;
 const int PIXELS_PER_ITEM_SPRITE = 16;
@@ -14,4 +15,4 @@ const int CHUNK_SIDE = 20;
 // Width and height of the window.
 const sf::Vector2i WINDOW_RESOLUTION( 800, 600 );
 
-#endif
+#endif // CONSTANTS_H

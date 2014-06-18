@@ -1,4 +1,7 @@
 #pragma once
+#ifndef MAIN_GAME_STATE_H
+#define MAIN_GAME_STATE_H
+
 #include "GameState.h"
 #include "InventoryGUI.h"
 #include "NewItemVisual.h"
@@ -70,3 +73,5 @@ private:
     void handleWindowEvents();
     void drawPlayer( sf::RenderTarget& target ) const;
 };
+
+#endif // MAIN_GAME_STATE_H

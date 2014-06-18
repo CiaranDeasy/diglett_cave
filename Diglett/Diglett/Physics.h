@@ -1,4 +1,7 @@
 #pragma once
+#ifndef PHYSICS_H
+#define PHYSICS_H
+
 #include <SFML/System.hpp>
 #include "Direction.h"
 #include "World.h"
@@ -32,3 +35,5 @@ private:
     sf::Vector2f previousLocation;
     sf::Vector2f acceleration;
 };
+
+#endif // PHYSICS_H

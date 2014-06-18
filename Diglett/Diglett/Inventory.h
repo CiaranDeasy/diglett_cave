@@ -1,4 +1,7 @@
 #pragma once
+#ifndef INVENTORY_H
+#define INVENTORY_H
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -56,3 +59,5 @@ template <class T> void Inventory<T>::clear() {
 }
 
 template <class T> const unsigned int Inventory<T>::DEFAULT_MAX_INVENTORY = 32;
+
+#endif // INVENTORY_H

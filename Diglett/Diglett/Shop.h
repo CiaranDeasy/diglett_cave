@@ -1,4 +1,7 @@
 #pragma once
+#ifndef SHOP_H
+#define SHOP_H
+
 #include "InteractiveEntity.h"
 #include "GameWindow.h"
 
@@ -18,3 +21,5 @@ private:
     static const sf::Vector2f POSITION;
 
 };
+
+#endif //SHOP_H

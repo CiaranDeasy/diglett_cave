@@ -1,4 +1,7 @@
 #pragma once
+#ifndef NEW_ITEM_VISUAL_H
+#define NEW_ITEM_VISUAL_H
+
 #include <SFML/Graphics.hpp>
 #include "Item.h"
 
@@ -50,3 +53,4 @@ private:
 
 };
 
+#endif // NEW_ITEM_VISUAL_H

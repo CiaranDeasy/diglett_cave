@@ -1,4 +1,7 @@
 #pragma once
+#ifndef HULL_GUI_H
+#define HULL_GUI_H
+
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 
@@ -32,3 +35,4 @@ private:
 
 };
 
+#endif // HULL_GUI_H

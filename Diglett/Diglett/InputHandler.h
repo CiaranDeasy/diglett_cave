@@ -1,4 +1,7 @@
 #pragma once
+#ifndef INPUT_HANDLER_H
+#define INPUT_HANDLER_H
+
 #include <SFML/Window.hpp>
 #include <vector>
 
@@ -25,3 +28,4 @@ protected:
 
 };
 
+#endif // INPUT_HANDLER_H

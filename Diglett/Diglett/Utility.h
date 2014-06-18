@@ -1,6 +1,6 @@
 #pragma once
-#ifndef UTILITY
-#define UTILITY
+#ifndef UTILITY_H
+#define UTILITY_H
 
 #include <SFML/Graphics.hpp>
 
@@ -15,4 +15,4 @@ public:
     static float max( float x, float y, float z );
 };
 
-#endif
+#endif // UTILITY_H

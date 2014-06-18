@@ -1,4 +1,7 @@
 #pragma once
+#ifndef MAIN_GUI_H
+#define MAIN_GUI_H
+
 #include <SFML/Graphics.hpp>
 #include "HullGUI.h"
 #include "DebugOverlayGUI.h"
@@ -49,3 +52,4 @@ private:
 
 };
 
+#endif // MAIN_GUI_H

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef TILE_H
+#define TILE_H
+
 #include "TileType.h"
 #include <vector>
 #include "Player.h"
@@ -30,3 +33,5 @@ private:
     static std::vector<TileType> types;
     int type;
 };
+
+#endif // TILE_H

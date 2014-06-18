@@ -1,4 +1,7 @@
 #pragma once
+#ifndef DEBUG_OVERLAY_GUI_H
+#define DEBUG_OVERLAY_GUI_H
+
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 
@@ -39,3 +42,4 @@ private:
 
 };
 
+#endif // DEBUG_OVERLAY_GUI_H

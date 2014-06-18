@@ -1,4 +1,7 @@
 #pragma once
+#ifndef POP_UP_GAME_STATE_H
+#define POP_UP_GAME_STATE_H
+
 #include "GameState.h"
 #include <SFML/Graphics.hpp>
 #include "GameWindow.h"
@@ -33,3 +36,4 @@ private:
     void handleWindowEvents();
 };
 
+#endif // POP_UP_GAME_STATE

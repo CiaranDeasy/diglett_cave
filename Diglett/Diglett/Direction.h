@@ -1,4 +1,6 @@
 #pragma once
+#ifndef DIRECTION_H
+#define DIRECTION_H
 
 enum Direction {
     North = 0,
@@ -19,3 +21,5 @@ enum Direction {
     Northnorthwest = 15,
     Null = 16
 };
+
+#endif // DIRECTION_H

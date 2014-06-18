@@ -1,4 +1,7 @@
 #pragma once
+#ifndef CHUNK_H
+#define CHUNK_H
+
 #include "Tile.h"
 #include <SFML/System.hpp>
 #include "Constants.h"
@@ -37,3 +40,4 @@ private:
     int scaledDepth( int depth );
 };
 
+#endif // CHUNK_H

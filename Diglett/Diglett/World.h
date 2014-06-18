@@ -1,4 +1,7 @@
 #pragma once
+#ifndef WORLD_H
+#define WORLD_H
+
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "InteractiveEntity.h"
@@ -38,3 +41,5 @@ private:
     WorldData worldData;
     std::vector<InteractiveEntity *> interactiveEntities;
 };
+
+#endif // WORLD_H

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef GAMEWINDOW_H
+#define GAMEWINDOW_H
+
 #include <SFML/Graphics.hpp>
 #include <stack>
 #include "GameState.h"
@@ -26,3 +29,4 @@ private:
     void drawStateStack();
 };
 
+#endif // GAMEWINDOW_H
