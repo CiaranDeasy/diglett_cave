@@ -24,7 +24,7 @@ private:
     static const int BORDER;
     static const int COLUMNS;
     static const int ITEMS_PER_COL;
-    static const sf::Vector2i ENTRY_SIZE;
+    static const sf::Vector2f ENTRY_SIZE;
     static const int SPRITE_SEPARATION;
     static const int TEXT_SIZE;
     static const sf::Color BACKGROUND_COLOR;

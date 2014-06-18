@@ -23,14 +23,16 @@ MenuGameState::MenuGameState( GameWindow *gameWindow ) :
     logoSprite->setOrigin( bounds.left + bounds.width / 2, 
             bounds.top + bounds.height / 2 );
     logoSprite->setPosition( 
-		    gameWindow->getSize().x / 2, gameWindow->getSize().y / 4 );
+		    (float) ( gameWindow->getSize().x / 2 ), 
+			(float) ( gameWindow->getSize().y / 4 ) );
 
 	// Create the text.
 	text = new sf::Text();
 	text->setString( "Press SPACE or Gamepad A to begin." );
 	text->setFont( Resources::getResources().getFont() );
 	text->setPosition( 
-		    gameWindow->getSize().x / 2, 3 * gameWindow->getSize().y / 4 );
+		    (float) ( gameWindow->getSize().x / 2 ),
+			(float) ( 3 * gameWindow->getSize().y / 4 ) );
 	text->setColor( sf::Color::White );
 	bounds = text->getLocalBounds();
 	text->setOrigin( bounds.left + bounds.width / 2, 
@@ -50,17 +52,19 @@ void MenuGameState::draw(sf::RenderTarget& target, sf::RenderStates states)
     setInterfaceView( target );
 
 	// Draw the background.
-	sf::RectangleShape background = sf::RectangleShape( 
-		    sf::Vector2f( target.getSize().x, target.getSize().y ) );
+	sf::RectangleShape background = sf::RectangleShape( sf::Vector2f( 
+		    (float) target.getSize().x, (float) target.getSize().y ) );
 	background.setFillColor( sf::Color( 156, 94, 0, 255 ) );
 	target.draw( background, states );
 
     // Draw the logo.
-	logoSprite->setPosition( target.getSize().x / 2, target.getSize().y / 4 );
+	logoSprite->setPosition( (float) ( target.getSize().x / 2 ), 
+		    (float) ( target.getSize().y / 4 ) );
 	target.draw( *logoSprite, states );
 
 	// Draw the text.
-	text->setPosition( target.getSize().x / 2, 3 * target.getSize().y / 4 );
+	text->setPosition( (float) ( target.getSize().x / 2 ),
+		    (float) ( 3 * target.getSize().y / 4 ) );
 	target.draw( *text, states );
 }
 

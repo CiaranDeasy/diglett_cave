@@ -26,8 +26,8 @@ MainGameState::~MainGameState() {
 void MainGameState::setWorldView( sf::RenderTarget& target ) const {
     sf::Vector2f centerPoint = 
         ( Utility::coordsGameToWindow( player.getPosition() ) );
-    sf::View worldView = sf::View( centerPoint, 
-            sf::Vector2f( target.getSize().x, target.getSize().y ) );
+    sf::View worldView = sf::View( centerPoint, sf::Vector2f( 
+		    (float) target.getSize().x, (float) target.getSize().y ) );
     worldView.zoom( CAMERA_ZOOM );
     target.setView( worldView );
 }

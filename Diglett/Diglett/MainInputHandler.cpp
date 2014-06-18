@@ -88,7 +88,7 @@ void MainGameState::MainInputHandler::processInputs() {
 
     // Process events passed from the GameWindow.
     // These events will be keys or buttons being pressed.
-    for( int i = 0; i < InputHandler::buttonsPressed.size(); i++ ) {
+    for( unsigned int i = 0; i < InputHandler::buttonsPressed.size(); i++ ) {
         sf::Event& e = buttonsPressed[i];
         // Joystick buttons.
         if( e.type == sf::Event::JoystickButtonPressed ) {
@@ -119,9 +119,9 @@ void MainGameState::MainInputHandler::processInputs() {
             gameState.world, gameState.player );
 }
 
-const float MainGameState::MainInputHandler::PLAYER_SPEED = 0.008;
+const float MainGameState::MainInputHandler::PLAYER_SPEED = 0.008f;
 const float MainGameState::MainInputHandler::DIAG_PLAYER_SPEED = 
-        PLAYER_SPEED / 1.414;
+        PLAYER_SPEED / 1.414f;
 
 Direction MainGameState::MainInputHandler::classifyDirectionOfMovement(
         float stickPositionX, float stickPositionY) {

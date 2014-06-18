@@ -13,8 +13,8 @@ bool OreTutorial::testTrigger( World& world, Player& player ) {
     sf::Vector2f& position = player.getPosition();
     for( int i = 0; i < 5; i++ ) {
       for( int j = 0; j < 5; j++ ) {
-        if( world.getTile( floor( position.x - 2 + i ),
-                floor( position.y - 2 + j ) ).isOre() ) {
+        if( world.getTile( (int) floor( position.x - 2 + i ),
+               (int) floor( position.y - 2 + j ) ).isOre() ) {
             return true;
         }
       }

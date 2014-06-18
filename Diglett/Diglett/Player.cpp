@@ -40,17 +40,17 @@ void Player::move( float x, float y, Direction directionOfInput, World& world ) 
     float newY = oldY + y;
 
     if( clipLeft( oldX, oldY, newX, newY, directionOfInput, world ) ) {
-            newX = floor( oldX ) - leftClip + 0.001;
+            newX = floor( oldX ) - leftClip + 0.001f;
             Physics::getPhysics().collideX( *this );
     } else if( clipRight( oldX, oldY, newX, newY, directionOfInput, world ) ) {
-        newX = floor( oldX + 1 ) - 0.001 - rightClip;
+        newX = floor( oldX + 1 ) - 0.001f - rightClip;
         Physics::getPhysics().collideX( *this );
     }
     if( clipAbove( oldX, oldY, newX, newY, directionOfInput, world ) ) {
-        newY = floor( oldY + 1 ) - 0.001 - topClip;
+        newY = floor( oldY + 1 ) - 0.001f - topClip;
         Physics::getPhysics().collideY( *this );
     } else if( clipBelow( oldX, oldY, newX, newY, directionOfInput, world ) ) {
-        newY = floor( oldY ) - bottomClip + 0.001;
+        newY = floor( oldY ) - bottomClip + 0.001f;
         Physics::getPhysics().collideY( *this );
         if( onGround < DIG_DELAY ) onGround++;
     }
@@ -102,10 +102,10 @@ void Player::respawn() {
 
 Player::Player(void) {
     position = sf::Vector2f( 1.0f, 1.0f );
-    topClip = 0.45;
-    bottomClip = -0.45;
-    leftClip = -0.45;
-    rightClip = 0.45;
+    topClip = 0.45f;
+    bottomClip = -0.45f;
+    leftClip = -0.45f;
+    rightClip = 0.45f;
     money = DEFAULT_MONEY;
     maxHull = DEFAULT_HULL;
     currentHull = DEFAULT_HULL;
@@ -115,10 +115,10 @@ Player::Player(void) {
 void Player::initiateDigging( sf::Vector2i target, World& world ) {
     digging = true;
     // Calculate the step size in the X direction.
-    float distanceToTravelX = ( target.x + 0.5 ) - position.x;
+    float distanceToTravelX = ( target.x + 0.5f ) - position.x;
     float diggingStepSizeX = distanceToTravelX / DIG_STEPS;
     // Calculate the step size in the Y direction.
-    float distanceToTravelY = ( target.y - bottomClip + 0.001 ) - position.y;
+    float distanceToTravelY = ( target.y - bottomClip + 0.001f ) - position.y;
     float diggingStepSizeY = distanceToTravelY / DIG_STEPS;
     // Combine them.
     diggingStepSize = sf::Vector2f(diggingStepSizeX, diggingStepSizeY);

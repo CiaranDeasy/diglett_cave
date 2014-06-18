@@ -10,7 +10,7 @@ DismissInputHandler::~DismissInputHandler() {
 void DismissInputHandler::processInputs() {
     // Process events passed from the GameWindow.
     // These events will be keys or buttons being pressed.
-    for( int i = 0; i < InputHandler::buttonsPressed.size(); i++ ) {
+    for( unsigned int i = 0; i < InputHandler::buttonsPressed.size(); i++ ) {
         sf::Event& e = buttonsPressed[i];
         // Joystick buttons.
         if( e.type == sf::Event::JoystickButtonPressed ) {

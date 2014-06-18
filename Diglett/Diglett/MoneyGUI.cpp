@@ -12,13 +12,14 @@ void MoneyGUI::draw(
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
     // Determine the position vector.
-    sf::Vector2i position = 
-            sf::Vector2i( target.getSize().x / 2, DISPLACEMENT_FROM_TOP );
+    sf::Vector2f position = sf::Vector2f( 
+		    (float) ( target.getSize().x / 2 ), 
+			(float) DISPLACEMENT_FROM_TOP );
     // Draw the background.
     sf::RectangleShape background = sf::RectangleShape( 
-            sf::Vector2f( GUI_SIZE.x, GUI_SIZE.y ) );
+            sf::Vector2f( (float) GUI_SIZE.x, (float) GUI_SIZE.y ) );
     background.setFillColor( BACKGROUND_COLOR );
-    background.setOrigin( GUI_SIZE.x / 2, 0 );
+    background.setOrigin( (float) ( GUI_SIZE.x / 2 ), 0 );
     background.setPosition( position.x, position.y );
     target.draw( background );
     // Draw the text.

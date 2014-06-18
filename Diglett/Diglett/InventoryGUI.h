@@ -28,7 +28,7 @@ private:
     static const sf::Vector2i InventoryGUI::DEFAULT_POSITION;
 
     static const int DEFAULT_BORDER;
-    static const int DEFAULT_ITEMS_PER_COL;
+    static const unsigned int DEFAULT_ITEMS_PER_COL;
     static const sf::Vector2i DEFAULT_ENTRY_SIZE;
     static const int DEFAULT_SPRITE_SEPARATION;
     static const int DEFAULT_TEXT_SIZE;
@@ -46,7 +46,7 @@ private:
 
     // Number of items that should be displayed vertically in the inventory 
     // GUI.
-    int itemsPerCol;
+    unsigned int itemsPerCol;
 
     // Size in pixels of a single entry in the inventory.
     sf::Vector2i entrySize;

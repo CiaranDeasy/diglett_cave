@@ -12,8 +12,9 @@ void TextPopUp::draw(
         sf::RenderTarget& target, 
         sf::RenderStates states ) const {
     // Determine the position vector.
-    sf::Vector2i position = sf::Vector2i( 
-            target.getSize().x / 2, target.getSize().y / 4 );
+    sf::Vector2f position = sf::Vector2f( 
+            (float) ( target.getSize().x / 2 ), 
+			(float) ( target.getSize().y / 4 ) );
     // Make the text.
     sf::Text text = sf::Text( message, font, TEXT_SIZE );
     sf::FloatRect bounds = text.getLocalBounds();

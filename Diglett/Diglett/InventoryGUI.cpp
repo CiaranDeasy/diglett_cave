@@ -39,10 +39,10 @@ void InventoryGUI::draw(
     delete inventoryBackground;
     for( int i = 0; i < inventory.getCurrentSize(); i++ ) {
         // Calculate the position of the sprite.
-        int spritePositionX = 
-            absPosition.x + border + ( i / itemsPerCol ) * entrySize.x;
-        int spritePositionY =
-            absPosition.y + border + ( i % itemsPerCol ) * entrySize.y;
+        float spritePositionX = (float) 
+			    ( absPosition.x + border + ( i / itemsPerCol ) * entrySize.x );
+        float spritePositionY = (float)
+			    ( absPosition.y + border + ( i % itemsPerCol ) * entrySize.y );
         // Draw the sprite.
         contents[i]->getSprite()->setPosition( 
                 spritePositionX, spritePositionY );
@@ -66,7 +66,7 @@ bool InventoryGUI::isVisible() const { return visible; }
 
 const sf::Vector2i InventoryGUI::DEFAULT_POSITION = sf::Vector2i( 25, 25 );
 const int InventoryGUI::DEFAULT_BORDER = 10;
-const int InventoryGUI::DEFAULT_ITEMS_PER_COL = 8;
+const unsigned int InventoryGUI::DEFAULT_ITEMS_PER_COL = 8;
 const sf::Vector2i InventoryGUI::DEFAULT_ENTRY_SIZE = 
         sf::Vector2i( 128, 19 );
 const int InventoryGUI::DEFAULT_SPRITE_SEPARATION = 6;
@@ -78,14 +78,14 @@ const sf::Color InventoryGUI::DEFAULT_TEXT_COLOR =
 
 sf::RectangleShape *InventoryGUI::makeInventoryBackground( 
             std::vector<Item *>& contents ) const {
-    int sizeX = ((( (contents.size() - 1)/ itemsPerCol )
-            + 1 ) * entrySize.x ) + 2 * border;
-    int sizeY;
+    float sizeX = (float) ( ((( (contents.size() - 1)/ itemsPerCol )
+            + 1 ) * entrySize.x ) + 2 * border );
+    float sizeY;
 
     if( contents.size() <= itemsPerCol ) {
-        sizeY = ( contents.size() * entrySize.y ) + 2 * border;
+        sizeY = (float) ( ( contents.size() * entrySize.y ) + 2 * border );
     } else {
-        sizeY = ( itemsPerCol * entrySize.y ) + 2 * border;
+        sizeY = (float) ( ( itemsPerCol * entrySize.y ) + 2 * border );
     }
 
     sf::RectangleShape *background = 

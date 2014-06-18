@@ -62,9 +62,9 @@ void Physics::collideY( Player& player ) {
 
 void Physics::damagePlayerHull( float velocity, Player& player ) {
     if( velocity >= HULL_DAMAGE_THRESHOLD ) {
-        player.damageHull( velocity * HULL_DAMAGE_SCALER );
+        player.damageHull( (int) ( velocity * HULL_DAMAGE_SCALER ) );
     } else if( velocity <= -HULL_DAMAGE_THRESHOLD ) {
-        player.damageHull( -velocity * HULL_DAMAGE_SCALER );
+        player.damageHull( (int) ( -velocity * HULL_DAMAGE_SCALER ) );
     }
 }
 
@@ -77,15 +77,15 @@ Physics& Physics::getPhysics(){ return singleton; }
 
 Physics Physics::singleton = Physics();
 
-const float Physics::GRAVITY_STRENGTH = 0.003;
-const float Physics::PLAYER_MASS = 1.0;
-const float Physics::HORIZONTAL_AIR_RESISTANCE = 0.05;
-const float Physics::VERTICAL_AIR_RESISTANCE = 0.001;
-const float Physics::MINIMUM_VELOCITY = 0.01;
-const float Physics::BOUNCE_FACTOR = 0.2;
-const float Physics::PLAYER_MAX_SPEED = 0.2;
-const float Physics::HULL_DAMAGE_THRESHOLD = 0.028;
-const float Physics::HULL_DAMAGE_SCALER = 1000;
+const float Physics::GRAVITY_STRENGTH = 0.003f;
+const float Physics::PLAYER_MASS = 1.0f;
+const float Physics::HORIZONTAL_AIR_RESISTANCE = 0.05f;
+const float Physics::VERTICAL_AIR_RESISTANCE = 0.001f;
+const float Physics::MINIMUM_VELOCITY = 0.01f;
+const float Physics::BOUNCE_FACTOR = 0.2f;
+const float Physics::PLAYER_MAX_SPEED = 0.2f;
+const float Physics::HULL_DAMAGE_THRESHOLD = 0.028f;
+const float Physics::HULL_DAMAGE_SCALER = 1000.0f;
 
 Physics::Physics(void){
     previousLocation = sf::Vector2f(1.0f,1.0f);

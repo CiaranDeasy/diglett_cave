@@ -7,8 +7,9 @@ const Chunk& WorldData::getChunk( int x, int y ) const {
 }
 
 const Tile& WorldData::getTile( int x, int y ) const {
-    const Chunk& chunk = getChunk( floor( ((float) x)/CHUNK_SIDE ), 
-            floor( ((float) y)/CHUNK_SIDE ));
+    const Chunk& chunk = getChunk( 
+		    (int) floor( ((float) x) / CHUNK_SIDE ),
+            (int) floor( ((float) y) / CHUNK_SIDE ) );
     return chunk.getAbsoluteTile(x, y);
 }
 
@@ -17,8 +18,8 @@ const Tile& WorldData::getTile( sf::Vector2i in ) const {
 }
 
 void WorldData::digTile( int x, int y, Player& player ) {
-    int chunksX = floor( ((float) x)/CHUNK_SIDE );
-    int chunksY = floor( ((float) y)/CHUNK_SIDE );
+    int chunksX = (int) floor( ((float) x) / CHUNK_SIDE );
+    int chunksY = (int) floor( ((float) y) / CHUNK_SIDE );
     chunks[chunksX + xOffset][ chunksY + yOffset]
             .digAbsoluteTile( x, y, player );
 }

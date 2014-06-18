@@ -26,9 +26,9 @@ void DebugOverlayGUI::draw(
     if( position.y < 0 ) position.y = target.getSize().y + position.y;
     // Draw the background.
     sf::RectangleShape background = sf::RectangleShape( 
-            sf::Vector2f( GUI_SIZE.x, GUI_SIZE.y ) );
+            sf::Vector2f( (float) GUI_SIZE.x, (float) GUI_SIZE.y ) );
     background.setFillColor( BACKGROUND_COLOR );
-    background.setPosition( position.x, position.y );
+    background.setPosition( (float) position.x, (float) position.y );
     target.draw( background );
     // Draw the text.
     std::string textString = 
@@ -37,7 +37,7 @@ void DebugOverlayGUI::draw(
             std::to_string( player.getPosition().y ) + ")";
     sf::Text text = sf::Text( 
 		    textString, Resources::getResources().getFont(), TEXT_SIZE );
-    text.setPosition( position.x + 5, position.y + 5 );
+    text.setPosition( (float) ( position.x + 5 ), (float) ( position.y + 5 ) );
     text.setColor( TEXT_COLOR ); 
     target.draw( text );
 }

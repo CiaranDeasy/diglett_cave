@@ -9,7 +9,7 @@ TileType::TileType( std::string name, sf::Sprite *sprite, bool diggable,
                    bool solid, int item ) {
      this->name = name;
      this->sprite = sprite;
-     sprite->setOrigin( 0, PIXELS_PER_TILE );
+     sprite->setOrigin( 0, (float) PIXELS_PER_TILE );
      this->diggable = diggable;
      this->solid = solid;
      this->item = item;

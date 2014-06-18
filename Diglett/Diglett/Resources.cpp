@@ -32,12 +32,12 @@ sf::Texture* Resources::makeSquareTexture( sf::Color color, int size ) {
     renderer.create( size, size );
     renderer.clear();
     // Draw the outline.
-    sf::RectangleShape outline( sf::Vector2f( size, size ) );
+    sf::RectangleShape outline( sf::Vector2f( (float) size, (float) size ) );
     outline.setFillColor( sf::Color::Black );
     renderer.draw( outline );
     // Draw the filling colour over it.
-    sf::RectangleShape fill( sf::Vector2f( size - 2, 
-            size - 2 ) );
+    sf::RectangleShape fill( sf::Vector2f( 
+		    (float) ( size - 2 ), (float)( size - 2 ) ) );
     fill.setFillColor( color );
     fill.move( 1.0f, 1.0f );
     renderer.draw( fill );
@@ -87,12 +87,12 @@ Resources::Resources() {
 	m_ShopTexture = loadTexture( SHOP_TEXTURE_FILE );
 	m_ShopBackgroundTexture = loadTexture( SHOP_BACKGROUND_TEXTURE_FILE );
 
-	m_AirTileTexture = 
-		    makeSquareTexture( sf::Color( 156, 94, 0, 255 ), PIXELS_PER_TILE );
+	m_AirTileTexture = makeSquareTexture( 
+			sf::Color( 156, 94, 0, 255 ), PIXELS_PER_TILE );
 	m_SurfaceTileTexture = 
 		    makeSquareTexture( sf::Color::Blue, PIXELS_PER_TILE );
-	m_DirtTileTexture = 
-		    makeSquareTexture( sf::Color( 126, 64, 0, 255 ), PIXELS_PER_TILE );
+	m_DirtTileTexture = makeSquareTexture( 
+			sf::Color( 126, 64, 0, 255 ), PIXELS_PER_TILE );
 	m_GoldTileTexture = makeSquareTexture( 
 		    sf::Color( 255, 215, 0, 255 ), PIXELS_PER_TILE );
 

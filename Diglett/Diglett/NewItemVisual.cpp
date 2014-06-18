@@ -13,30 +13,33 @@ NewItemVisual::NewItemVisual( Item *item ) {
 		    item->getName(), Resources::getResources().getFont(), TEXT_SIZE );
 
     sf::RenderTexture renderer;
-    renderer.create( text.getLocalBounds().width + 2, 
+    renderer.create( (int) text.getLocalBounds().width + 2, 
             TEXT_SIZE + 2 + SPRITE_SEPARATION + PIXELS_PER_ITEM_SPRITE );
     renderer.clear(sf::Color::Transparent);
     // Draw the sprite.
     item->getSprite()->setPosition( 
-            ( renderer.getSize().x / 2 ) - ( PIXELS_PER_ITEM_SPRITE / 2 ), 0 );
+            (float) ( ( renderer.getSize().x / 2 ) - 
+			    ( PIXELS_PER_ITEM_SPRITE / 2 ) ), 0 );
     renderer.draw( *item->getSprite() );
     // Draw the background.
-    sf::RectangleShape textBackground = sf::RectangleShape( 
-            sf::Vector2f( renderer.getSize().x, renderer.getSize().y ) );
+    sf::RectangleShape textBackground = sf::RectangleShape( sf::Vector2f( 
+		    (float) renderer.getSize().x, (float) renderer.getSize().y ) );
     textBackground.setFillColor( BACKGROUND_COLOR );
     textBackground.setPosition( 
-            0, PIXELS_PER_ITEM_SPRITE + SPRITE_SEPARATION );
+            0, (float) ( PIXELS_PER_ITEM_SPRITE + SPRITE_SEPARATION ) );
     renderer.draw( textBackground );
     // Draw the text.
     text.setColor( TEXT_COLOR );
-    text.setPosition( 1, PIXELS_PER_ITEM_SPRITE + SPRITE_SEPARATION );
+    text.setPosition( 
+		    1, (float) ( PIXELS_PER_ITEM_SPRITE + SPRITE_SEPARATION ) );
     renderer.draw( text );
     // Make the full sprite.
     renderer.display();
     sf::Texture texture = renderer.getTexture();
     texturePointer = new sf::Texture( texture );
     sprite = new sf::Sprite( *texturePointer );
-    sprite->setOrigin( renderer.getSize().x / 2, renderer.getSize().y / 2 );
+    sprite->setOrigin( (float) renderer.getSize().x / 2, 
+		    (float) renderer.getSize().y / 2 );
 }
 
 NewItemVisual::~NewItemVisual(void) {
